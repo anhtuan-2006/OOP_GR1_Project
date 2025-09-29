@@ -13,18 +13,22 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
+ * platforms.
+ */
 public class main extends ApplicationAdapter {
-     // Kích thước logic của thế giới (giữ cố định để không phụ thuộc độ phân giải màn hình)
+    // Kích thước logic của thế giới (giữ cố định để không phụ thuộc độ phân giải
+    // màn hình)
     private static final float WORLD_W = 1280f;
     private static final float WORLD_H = 720f;
 
-    private static final float RADIUS = 24f;  // Bán kính quả bóng
-    private static final float SPEED = 420f;  // Tốc độ di chuyển (pixel/giây)
+    private static final float RADIUS = 24f; // Bán kính quả bóng
+    private static final float SPEED = 420f; // Tốc độ di chuyển (pixel/giây)
 
     private OrthographicCamera cam; // Camera nhìn vào thế giới
-    private Viewport viewport;      // Viewport giữ tỉ lệ khi resize
-    private ShapeRenderer shapes;   // Dùng để vẽ quả bóng
+    private Viewport viewport; // Viewport giữ tỉ lệ khi resize
+    private ShapeRenderer shapes; // Dùng để vẽ quả bóng
 
     private SpriteBatch batch;
 
@@ -34,7 +38,6 @@ public class main extends ApplicationAdapter {
 
     private Texture background;
     private Texture ball;
-
 
     @Override
     public void create() {
@@ -49,7 +52,7 @@ public class main extends ApplicationAdapter {
         cam.update();
 
         batch = new SpriteBatch();
-        
+
         background = new Texture("background.jpg");
         ball = new Texture("ball.png");
     }
@@ -65,17 +68,22 @@ public class main extends ApplicationAdapter {
         float dx = 0, dy = 0; // vector di chuyển
 
         // Kiểm tra phím bấm
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)  || Gdx.input.isKeyPressed(Input.Keys.A)) dx -= 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) dx += 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)  || Gdx.input.isKeyPressed(Input.Keys.S)) dy -= 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)    || Gdx.input.isKeyPressed(Input.Keys.W)) dy += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
+            dx -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
+            dx += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
+            dy -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
+            dy += 1;
 
         // Chuẩn hóa vector để không nhanh hơn khi di chuyển chéo
         if (dx != 0 || dy != 0) {
-            float len = (float)Math.sqrt(dx*dx + dy*dy); // độ dài vector
-            dx /= len; dy /= len;                        // chuẩn hóa
-            x += dx * SPEED * dt;                        // cập nhật x
-            y += dy * SPEED * dt;                        // cập nhật y
+            float len = (float) Math.sqrt(dx * dx + dy * dy); // độ dài vector
+            dx /= len;
+            dy /= len; // chuẩn hóa
+            x += dx * SPEED * dt; // cập nhật x
+            y += dy * SPEED * dt; // cập nhật y
         }
 
         // Giữ bóng trong giới hạn màn hình
@@ -86,7 +94,7 @@ public class main extends ApplicationAdapter {
     @Override
     public void render() {
         float dt = Gdx.graphics.getDeltaTime(); // thời gian giữa 2 khung hình
-        handleInput(dt);                        // xử lý input và di chuyển
+        handleInput(dt); // xử lý input và di chuyển
 
         // Xóa màn hình với màu nền xám đen
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
@@ -95,7 +103,7 @@ public class main extends ApplicationAdapter {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
-        batch.draw(ball, (int)(x - RADIUS / 2), (int)(y - RADIUS / 2), RADIUS, RADIUS);
+        batch.draw(ball, (int) (x - RADIUS / 2), (int) (y - RADIUS / 2), RADIUS, RADIUS);
         batch.end();
     }
 
