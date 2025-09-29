@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Bar {
+    // Phắc
     // Toạ độ của bóng
     // Hình ảnh của bóng
     // Kích thước

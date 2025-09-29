@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Block {
+    // Hoàng Anh
     // Đối tượng là 1 block
     // Hình ảnh của Block
     // Kích thước
