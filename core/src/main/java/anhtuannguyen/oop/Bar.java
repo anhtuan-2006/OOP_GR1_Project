@@ -13,20 +13,27 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+public class Bar {
+    // Toạ độ của bóng
+    // Hình ảnh của bóng
+    // Kích thước
 
-public class picture {
-    
-    static Texture background;
-    static Texture ball;
+    // Khởi tạo bóng
+    Bar(int _x, int _y) {
 
-    public static void create_picture() {
-        background = new Texture("background.jpg");
-        ball = new Texture("ball.png");   
     }
 
-    public static void render_picture(SpriteBatch batch, Texture texture, int u, int v, int x, int y) {
-        batch.begin();
-        batch.draw(texture, u, v, x, y);
-        batch.end();
+    public void create() {
+
+    }
+
+    // Thanh di chuyển
+    public void Move() {
+
+    }
+
+    // Xuất ra màn hình
+    public void render() {
+
     }
 }

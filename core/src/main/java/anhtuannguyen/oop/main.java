@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import anhtuannguyen.oop.picture;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class main extends ApplicationAdapter {
@@ -33,6 +32,10 @@ public class main extends ApplicationAdapter {
     private float x = WORLD_W / 2f;
     private float y = WORLD_H / 2f;
 
+    private Texture background;
+    private Texture ball;
+
+
     @Override
     public void create() {
         // Tạo camera trực giao
@@ -46,7 +49,9 @@ public class main extends ApplicationAdapter {
         cam.update();
 
         batch = new SpriteBatch();
-        picture.create_picture();
+        
+        background = new Texture("background.jpg");
+        ball = new Texture("ball.png");
     }
 
     @Override
@@ -88,8 +93,10 @@ public class main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(cam.combined);
-        picture.render_picture(batch, picture.background, 0, 0, 1280, 720);
-        picture.render_picture(batch, picture.ball, (int)(x - RADIUS), (int)(y - RADIUS), 48, 48);
+        batch.begin();
+        batch.draw(background, 0, 0, WORLD_W, WORLD_H);
+        batch.draw(ball, (int)(x - RADIUS / 2), (int)(y - RADIUS / 2), RADIUS, RADIUS);
+        batch.end();
     }
 
     @Override
