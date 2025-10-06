@@ -21,42 +21,44 @@ public class Bar {
     // Kích thước
 
     // Khởi tạo bóng
+    private static final float WORLD_W = Screen.WORLD_W;
+    private static final float WORLD_H = Screen.WORLD_H;
+
     private Texture texture;
     private Rectangle bounds;
-    private float speed = 300;
+    private float speed = 7;
 
-  
     public Bar(float x, float y, float width, float height) {
         texture = new Texture("bar.jpg"); // ảnh thanh đỡ
         bounds = new Rectangle(x, y, width, height);
     }
 
-
-    //public void create() {
-    //}
+    // public void create() {
+    // }
 
     // Thanh di chuyển
 
-    //public void Move() {
+    // public void Move() {
 
-    //}
+    // }
 
     // Xuất ra màn hình
-    public void update(float deltaTime, boolean moveLeft, boolean moveRight) {
-        if (moveLeft) {
-            bounds.x -= speed * deltaTime;
-        }
-        if (moveRight) {
-            bounds.x += speed * deltaTime;
-        }
+    public void update(float deltaTime) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
+            bounds.x -= speed;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
+            bounds.x += speed;
 
         // Giữ thanh đỡ trong màn hình
-        if (bounds.x < 0) bounds.x = 0;
-        if (bounds.x + bounds.width > 800) bounds.x = 800 - bounds.width; // giả sử màn hình rộng 800
+        if (bounds.x < 0)
+            bounds.x = 0;
+        if (bounds.x + bounds.width > WORLD_W)
+            bounds.x = WORLD_W - bounds.width;
     }
 
-
     public void render(SpriteBatch batch) {
+        float dt = Gdx.graphics.getDeltaTime();
+        update(dt);
         batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
