@@ -1,0 +1,58 @@
+package anhtuannguyen.oop;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class Level1 {
+    private static final float WORLD_H = Screen.WORLD_H;
+    private static final float WORLD_W = Screen.WORLD_W;
+    private Texture background;
+    Ball ball;
+    Bar bar;
+    Block block;
+
+    private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
+            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    };
+
+    public void create() {
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
+
+        ball = new Ball(bar, new Texture("ball.png"));
+
+        block = new Block(0, 0, ball, 12, 10, map, 100, 64);
+        block.initializeBlocks(1);
+
+        background = new Texture("background_level1.jpg");
+    }
+
+    public void render(SpriteBatch batch) {
+        if (ball.Move() == false) {
+            Gdx.app.exit();
+        }
+
+        block.checkAndHandleCollisions((float) ball.getx(), (float) ball.gety(), ball.getRADIUS());
+        batch.draw(background, 0, 0, WORLD_W, WORLD_H);
+        ball.render(batch);
+        bar.render(batch);
+        block.renderBlocks(batch);
+    }
+
+    public void dispose() {
+        bar.dispose();
+        block.dispose();
+        ball.dispose();
+    }
+}

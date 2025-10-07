@@ -5,40 +5,41 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Block {
-    private static final int BLOCK_WIDTH = 128; // Chiều rộng của một khối
-    private static final int BLOCK_HEIGHT = 64; // Chiều cao của một khối
-    private static final int GRID_ROWS = 4; // Số hàng trong lưới khối
-    private static final int GRID_COLS = 8; // Số cột trong lưới khối
+    private static int BLOCK_WIDTH; // Chiều rộng của một khối
+    private static int BLOCK_HEIGHT; // Chiều cao của một khối
+    private static int GRID_ROWS; // Số hàng trong lưới khối
+    private static int GRID_COLS; // Số cột trong lưới khối
     private static final int MAP_SIZE = 64; // Kích thước bản đồ (số ô tối đa mỗi chiều)
     private static final float WORLD_W = Screen.WORLD_W; // Chiều rộng thế giới game
     private static final float WORLD_H = Screen.WORLD_H; // Chiều cao thế giới game
-    private static final String COLOR = "Yellow"; // Màu sắc khối (chưa sử dụng)
-    private static final int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 1, 1, 1, 0, 0, 1, 1, 1 },
-            { 1, 1, 1, 0, 0, 1, 1, 1 },
-    };
+    private static int[][] map;
     private Rectangle rect; // Hình chữ nhật cho vị trí và kích thước khối
     private boolean alive; // Trạng thái khối (còn tồn tại hay không)
     private Texture texture; // Texture để vẽ khối
     private static Block[][] blocks; // Mảng 2D lưu trữ các khối
     private Ball ball;
 
-    public Block(int x, int y, Ball _ball) { // Constructor: Khởi tạo khối
+    public Block(int x, int y, Ball _ball, int ROW, int COL, int[][] _map, int width, int height) { // Constructor: Khởi
+                                                                                                    // tạo khối
         rect = new Rectangle(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         alive = true;
-        texture = new Texture("Block.jpg"); // Chọn texture
         ball = _ball;
+        GRID_COLS = COL;
+        GRID_ROWS = ROW;
+        map = _map;
+        BLOCK_HEIGHT = height;
+        BLOCK_WIDTH = width;
     }
 
-    Block(int x, int y) {
+    Block(int x, int y, int level) {
         rect = new Rectangle(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         alive = true;
-        texture = new Texture("Block.jpg"); // Chọn texture
+        if (level == 1)
+            texture = new Texture("block_level1.jpg"); // Chọn texture
+        System.out.println(level);
     }
 
-    public static void initializeBlocks() { // Khởi tạo lưới khối dựa trên bản đồ
+    public static void initializeBlocks(int level) { // Khởi tạo lưới khối dựa trên bản đồ
         blocks = new Block[MAP_SIZE][MAP_SIZE]; // Khởi tạo mảng 2D
         float startX = (WORLD_W - GRID_COLS * BLOCK_WIDTH) / 2; // Tính vị trí X căn giữa
         float startY = WORLD_H - GRID_ROWS * BLOCK_HEIGHT - 200; // Tính vị trí Y
@@ -47,7 +48,7 @@ public class Block {
                 if (map[row][col] == 1) { // Tạo khối nếu map có giá trị 1
                     float x = startX + col * BLOCK_WIDTH;
                     float y = startY + row * BLOCK_HEIGHT;
-                    blocks[row][col] = new Block((int) x, (int) y);
+                    blocks[row][col] = new Block((int) x, (int) y, level);
                 }
             }
         }
@@ -138,7 +139,7 @@ public class Block {
         }
     }
 
-    private void dispose() { // Giải phóng texture của một khối
+    public void dispose() { // Giải phóng texture của một khối
         if (texture != null) {
             texture.dispose();
         }

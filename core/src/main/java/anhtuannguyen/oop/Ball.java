@@ -30,6 +30,8 @@ public class Ball {
     private double angle = Math.PI / 2;
     private Bar bar;
 
+    boolean started = false;
+
     private static final float RADIUS = 48f; // Bán kính quả bóng
     private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
 
@@ -45,25 +47,32 @@ public class Ball {
         return RADIUS;
     }
 
-    Ball(Bar _bar) {
+    public Ball(Bar _bar, Texture _tex) {
         bar = _bar;
-    }
-
-    // Tạo bóng
-    public void create() {
-        texture = new Texture("ball.png");
+        texture = _tex;
+        x = WORLD_W / 2;
+        y = bar.getBounds().y + bar.getBounds().height + RADIUS / 2;
     }
 
     // Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính
     private static final float MAX_BOUNCE_DEG = 75f;
 
     public boolean Move() {
+
+        if (started == false) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+                started = true;
+            else
+                return true;
+        }
+
         float dt = Gdx.graphics.getDeltaTime();
 
-        // Lưu vị trí trước bước cập nhật (để kiểm tra cắt biên trên thanh)
+        // Lưu vị trí trước bước cập nhật
+        double prevX = x;
         double prevY = y;
 
-        // Vận tốc từ góc hiện tại, giữ nguyên cơ chế dấu bằng dx, dy
+        // Vận tốc từ góc hiện tại
         double vx = Math.cos(angle) * SPEED * dx;
         double vy = Math.sin(angle) * SPEED * dy;
 
@@ -86,29 +95,27 @@ public class Ball {
             dy = -dy;
         }
 
+        // Rơi khỏi đáy
         if (y <= RADIUS) {
             return false;
         }
 
-        // Bật theo thanh (nếu có)
+        // Va chạm với thanh
         if (bar != null) {
-            com.badlogic.gdx.math.Rectangle p = bar.getBounds(); // cần hàm này trong Bar
+            com.badlogic.gdx.math.Rectangle p = bar.getBounds();
             float paddleTop = p.y + p.height;
 
-            // Đang đi xuống và cắt qua mép trên thanh giữa 2 khung hình
             boolean goingDown = (vy < 0);
             boolean crossTop = (prevY - RADIUS >= paddleTop) && (y - RADIUS <= paddleTop);
             boolean overlapX = (x >= p.x - RADIUS) && (x <= p.x + p.width + RADIUS);
 
+            // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
             if (goingDown && crossTop && overlapX) {
-                // Đặt bóng ngay trên thanh để tránh dính
-                y = paddleTop + RADIUS;
+                y = paddleTop + RADIUS / 2;
 
-                // Vị trí chạm tương đối trên thanh [-1, 1]
                 float paddleCenter = p.x + p.width / 2f;
                 float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
 
-                // Góc bật ra: 90° ± MAX_BOUNCE_DEG (90° là thẳng lên)
                 float outDeg = (float) Math.toDegrees(angle) - hitRel * MAX_BOUNCE_DEG;
                 if (outDeg >= 160)
                     outDeg = 165f;
@@ -116,12 +123,32 @@ public class Ball {
                     outDeg = 15f;
                 angle = Math.toRadians(outDeg);
 
-                // Hướng đi lên sau va chạm
                 dy = +1;
+            } else {
+                // 2) Bật cạnh trái/phải của thanh
+                boolean overlapY = (y + RADIUS >= p.y) && (y - RADIUS <= paddleTop);
+
+                double leftSideX = p.x - RADIUS;
+                double rightSideX = p.x + p.width + RADIUS;
+
+                boolean goingRight = (vx > 0);
+                boolean goingLeft = (vx < 0);
+
+                boolean crossLeftSide = (prevX <= leftSideX) && (x >= leftSideX);
+                boolean crossRightSide = (prevX >= rightSideX) && (x <= rightSideX);
+
+                if (overlapY && goingRight && crossLeftSide) {
+                    x = (float) leftSideX; // kẹp sát biên để tránh dính
+                    dx = -dx; // bật theo trục dọc (đổi hướng ngang)
+                    // giữ nguyên dy và angle (mô hình hiện tại dùng dx/dy để tạo góc)
+                } else if (overlapY && goingLeft && crossRightSide) {
+                    x = (float) rightSideX;
+                    dx = -dx;
+                }
             }
         }
 
-        // Chuẩn hóa góc về [0, 2π)
+        // Chuẩn hóa góc về [0, π) vì dùng dx/dy cho hướng
         angle = angle % (Math.PI);
         if (angle < 0)
             angle += Math.PI;
@@ -148,6 +175,10 @@ public class Ball {
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
         batch.draw(texture, (int) (x - RADIUS / 2), (int) (y - RADIUS / 2), RADIUS, RADIUS);
+    }
+
+    public void dispose() {
+        texture.dispose();
     }
 
 }

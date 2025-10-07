@@ -28,8 +28,8 @@ public class Bar {
     private Rectangle bounds;
     private float speed = 7;
 
-    public Bar(float x, float y, float width, float height) {
-        texture = new Texture("bar.jpg"); // ảnh thanh đỡ
+    public Bar(float x, float y, float width, float height, Texture _tex) {
+        texture = _tex; // ảnh thanh đỡ
         bounds = new Rectangle(x, y, width, height);
     }
 

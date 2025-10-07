@@ -25,15 +25,10 @@ public class main extends ApplicationAdapter {
 
     private OrthographicCamera cam; // Camera nhìn vào thế giới
     private Viewport viewport; // Viewport giữ tỉ lệ khi resize
-    private ShapeRenderer shapes; // Dùng để vẽ quả bóng
 
     private SpriteBatch batch;
 
-    private Texture background;
-
-    Ball ball;
-    public Bar bar;
-    Block block;
+    private Level1 level1;
 
     @Override
     public void create() {
@@ -47,17 +42,11 @@ public class main extends ApplicationAdapter {
         cam.position.set(WORLD_W / 2f, WORLD_H / 2f, 0f);
         cam.update();
 
-        bar = new Bar(WORLD_W / 2 - 100, 200, 200, 10);
-
-        ball = new Ball(bar);
-        ball.create();
-
-        block = new Block(10, 10, ball);
-        block.initializeBlocks();
-
         batch = new SpriteBatch();
+        level1 = new Level1();
 
-        background = new Texture("background.jpg");
+        level1.create();
+
     }
 
     @Override
@@ -102,29 +91,20 @@ public class main extends ApplicationAdapter {
     public void render() {
         // handleInput(dt); // xử lý input và di chuyển
 
-        if (ball.Move() == false) {
-            Gdx.app.exit();
-        }
-
-        block.checkAndHandleCollisions((float) ball.getx(), (float) ball.gety(), ball.getRADIUS());
-
         // Xóa màn hình với màu nền xám đen
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(background, 0, 0, WORLD_W, WORLD_H);
-        ball.render(batch);
-        bar.render(batch);
-        block.renderBlocks(batch);
+        level1.render(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
-        // Giải phóng bộ nhớ ShapeRenderer
-        shapes.dispose();
+        // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
+        level1.dispose();
     }
 }
