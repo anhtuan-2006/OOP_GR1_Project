@@ -41,8 +41,8 @@ public class Level1 {
 
         ball = new Ball(bar, new Texture("ball.png"));
 
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64);
-        block.initializeBlocks(1);
+        block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.jpg"));
+        block.initializeBlocks(1,new Texture("block_level1.jpg"));
 
         background = new Texture("background_level1.jpg");
     }

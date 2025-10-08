@@ -19,43 +19,47 @@ public class Block {
     private static Block[][] blocks; // Mảng 2D lưu trữ các khối
     private Ball ball;
 
-    public Block(int x, int y, Ball _ball, int ROW, int COL, int[][] _map, int width, int height) { // Constructor: Khởi
-                                                                                                    // tạo khối
+    public Block(int x, int y, Ball _ball, int ROW, int COL, int[][] _map, int width, int height,Texture _tex) { // Constructor: Khởi
+             
+        // tạo khối
+        BLOCK_HEIGHT = height;
+        BLOCK_WIDTH = width;
         rect = new Rectangle(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         alive = true;
+        texture = _tex;
         ball = _ball;
         GRID_COLS = COL;
         GRID_ROWS = ROW;
         map = _map;
-        BLOCK_HEIGHT = height;
-        BLOCK_WIDTH = width;
+        
     }
 
-    Block(int x, int y, int level) {
+    Block(int x, int y, int level,Texture _tex) {
         rect = new Rectangle(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
         alive = true;
-        if (level == 1)
-            texture = new Texture("block_level1.jpg"); // Chọn texture
+        texture = _tex;
+        //if (level == 1)
+            //texture = new Texture("block_level1.jpg"); // Chọn texture
     }
 
-    public static void initializeBlocks(int level) { // Khởi tạo lưới khối dựa trên bản đồ
+    public static void initializeBlocks(int level,Texture _tex) { // Khởi tạo lưới khối dựa trên bản đồ
         blocks = new Block[MAP_SIZE][MAP_SIZE]; // Khởi tạo mảng 2D
         float startX = (WORLD_W - GRID_COLS * BLOCK_WIDTH) / 2; // Tính vị trí X căn giữa
         float startY = WORLD_H - GRID_ROWS * BLOCK_HEIGHT - 200; // Tính vị trí Y
-        for (int row = 0; row < GRID_ROWS; row++) {
-            for (int col = 0; col < GRID_COLS; col++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[row].length; col++) {
                 if (map[row][col] == 1) { // Tạo khối nếu map có giá trị 1
                     float x = startX + col * BLOCK_WIDTH;
                     float y = startY + row * BLOCK_HEIGHT;
-                    blocks[row][col] = new Block((int) x, (int) y, level);
+                    blocks[row][col] = new Block((int) x, (int) y, level,_tex);
                 }
             }
         }
     }
 
     public static void renderBlocks(SpriteBatch batch) { // Vẽ tất cả khối còn tồn tại
-        for (int row = 0; row < MAP_SIZE; row++) {
-            for (int col = 0; col < MAP_SIZE; col++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[row].length; col++) {
                 if (blocks[row][col] != null && blocks[row][col].alive) { // Vẽ khối nếu còn sống
                     blocks[row][col].render(batch);
                 }
@@ -109,8 +113,8 @@ public class Block {
 
     public void checkAndHandleCollisions(float ballX, float ballY, float ballRadius) { // Kiểm tra va chạm
         Rectangle ballRect = new Rectangle(ballX - ballRadius / 2, ballY - ballRadius / 2, ballRadius, ballRadius);
-        for (int row = 0; row < GRID_ROWS; row++) {
-            for (int col = 0; col < GRID_COLS; col++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[row].length; col++) {
                 Block block = blocks[row][col];
                 if (block != null && block.alive && block.rect.overlaps(ballRect)) { // Nếu khối va chạm với bóng
                     pullBall(ballRect, block.rect);
@@ -128,8 +132,8 @@ public class Block {
     }
 
     public static void disposeBlocks() { // Giải phóng tài nguyên tất cả khối
-        for (int row = 0; row < MAP_SIZE; row++) {
-            for (int col = 0; col < MAP_SIZE; col++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[row].length; col++) {
                 if (blocks[row][col] != null) { // Giải phóng nếu khối tồn tại
                     blocks[row][col].dispose();
                     blocks[row][col] = null;
