@@ -36,7 +36,6 @@ public class Block {
         alive = true;
         if (level == 1)
             texture = new Texture("block_level1.jpg"); // Chọn texture
-        System.out.println(level);
     }
 
     public static void initializeBlocks(int level) { // Khởi tạo lưới khối dựa trên bản đồ

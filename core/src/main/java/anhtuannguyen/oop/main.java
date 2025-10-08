@@ -30,6 +30,8 @@ public class main extends ApplicationAdapter {
 
     private Level1 level1;
 
+    private Play_Pause play_pause;
+
     @Override
     public void create() {
         // Tạo camera trực giao
@@ -43,10 +45,11 @@ public class main extends ApplicationAdapter {
         cam.update();
 
         batch = new SpriteBatch();
-        level1 = new Level1();
 
+        play_pause = new Play_Pause(viewport);
+
+        level1 = new Level1(play_pause);
         level1.create();
-
     }
 
     @Override
@@ -55,38 +58,6 @@ public class main extends ApplicationAdapter {
         viewport.update(width, height, true);
     }
 
-    // // Hàm xử lý input, dt = delta time
-    // private void handleInput(float dt) {
-    // float dx = 0, dy = 0; // vector di chuyển
-
-    // // Kiểm tra phím bấm
-    // if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ||
-    // Gdx.input.isKeyPressed(Input.Keys.A))
-    // dx -= 1;
-    // if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) ||
-    // Gdx.input.isKeyPressed(Input.Keys.D))
-    // dx += 1;
-    // if (Gdx.input.isKeyPressed(Input.Keys.DOWN) ||
-    // Gdx.input.isKeyPressed(Input.Keys.S))
-    // dy -= 1;
-    // if (Gdx.input.isKeyPressed(Input.Keys.UP) ||
-    // Gdx.input.isKeyPressed(Input.Keys.W))
-    // dy += 1;
-
-    // // Chuẩn hóa vector để không nhanh hơn khi di chuyển chéo
-    // if (dx != 0 || dy != 0) {
-    // float len = (float) Math.sqrt(dx * dx + dy * dy); // độ dài vector
-    // dx /= len;
-    // dy /= len; // chuẩn hóa
-    // x += dx * SPEED * dt; // cập nhật x
-    // y += dy * SPEED * dt; // cập nhật y
-    // }
-
-    // // Giữ bóng trong giới hạn màn hình
-    // x = MathUtils.clamp(x, RADIUS, WORLD_W - RADIUS);
-    // y = MathUtils.clamp(y, RADIUS, WORLD_H - RADIUS);
-    // }
-
     @Override
     public void render() {
         // handleInput(dt); // xử lý input và di chuyển
@@ -94,10 +65,14 @@ public class main extends ApplicationAdapter {
         // Xóa màn hình với màu nền xám đen
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        cam.update();
+
+        play_pause.update();
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         level1.render(batch);
+        play_pause.render(batch);
         batch.end();
     }
 
@@ -105,6 +80,7 @@ public class main extends ApplicationAdapter {
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
+        play_pause.dispose();
         level1.dispose();
     }
 }

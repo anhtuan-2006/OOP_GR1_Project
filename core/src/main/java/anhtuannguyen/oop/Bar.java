@@ -28,6 +28,8 @@ public class Bar {
     private Rectangle bounds;
     private float speed = 7;
 
+    boolean playing = true;
+
     public Bar(float x, float y, float width, float height, Texture _tex) {
         texture = _tex; // ảnh thanh đỡ
         bounds = new Rectangle(x, y, width, height);
@@ -43,7 +45,14 @@ public class Bar {
     // }
 
     // Xuất ra màn hình
+
+    public void isPlaying()
+    {
+        playing = !playing;
+    }
+
     public void update(float deltaTime) {
+        if(playing == false) return;
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             bounds.x -= speed;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))

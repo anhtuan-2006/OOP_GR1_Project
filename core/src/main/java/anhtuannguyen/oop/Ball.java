@@ -32,6 +32,8 @@ public class Ball {
 
     boolean started = false;
 
+    boolean playing = true;
+
     private static final float RADIUS = 48f; // Bán kính quả bóng
     private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
 
@@ -54,10 +56,17 @@ public class Ball {
         y = bar.getBounds().y + bar.getBounds().height + RADIUS / 2;
     }
 
+    public void isPlaying()
+    {
+        playing = !playing;
+    }
+
     // Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính
     private static final float MAX_BOUNCE_DEG = 75f;
 
     public boolean Move() {
+
+        if(playing == false) return true;
 
         if (started == false) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))

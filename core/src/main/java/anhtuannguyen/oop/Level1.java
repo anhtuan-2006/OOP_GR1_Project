@@ -12,6 +12,10 @@ public class Level1 {
     Bar bar;
     Block block;
 
+    boolean playing = true;
+
+    Play_Pause play_pause;
+
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -27,6 +31,11 @@ public class Level1 {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
+    Level1(Play_Pause _play_pause)
+    {
+        play_pause = _play_pause;
+    }
+
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
 
@@ -39,6 +48,15 @@ public class Level1 {
     }
 
     public void render(SpriteBatch batch) {
+
+        if(playing != play_pause.isPlaying())
+        {
+            playing = !playing;
+            bar.isPlaying();
+            ball.isPlaying();
+        }
+
+
         if (ball.Move() == false) {
             Gdx.app.exit();
         }
