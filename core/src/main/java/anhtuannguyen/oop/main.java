@@ -28,7 +28,7 @@ public class main extends ApplicationAdapter {
 
     private SpriteBatch batch;
 
-    private Level1 level1;
+    private Level2 level2;
 
     private Play_Pause play_pause;
 
@@ -48,8 +48,8 @@ public class main extends ApplicationAdapter {
 
         play_pause = new Play_Pause(viewport);
 
-        level1 = new Level1(play_pause);
-        level1.create();
+        level2 = new Level2(play_pause);
+        level2.create();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class main extends ApplicationAdapter {
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        level1.render(batch);
+        level2.render(batch);
         play_pause.render(batch);
         batch.end();
     }
@@ -81,6 +81,6 @@ public class main extends ApplicationAdapter {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
         play_pause.dispose();
-        level1.dispose();
+        level2.dispose();
     }
 }

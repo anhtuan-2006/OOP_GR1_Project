@@ -78,6 +78,7 @@ public class Bar {
     public void dispose() {
         texture.dispose();
     }
+    
 
 }
 //

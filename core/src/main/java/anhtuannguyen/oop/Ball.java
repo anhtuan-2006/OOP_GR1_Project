@@ -180,6 +180,11 @@ public class Ball {
                 break;
         }
     }
+    private float currentSpeed = SPEED;
+
+public void increaseSpeed(float multiplier) {
+    currentSpeed *= multiplier;
+}
 
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
@@ -189,5 +194,18 @@ public class Ball {
     public void dispose() {
         texture.dispose();
     }
+
+    public void setPosition(float x, float y) {
+    this.x = x;
+    this.y = y;
+}
+
+public void setAngle(float angleRad) {
+    this.angle = angleRad;
+}
+
+public Bar getBar() {
+    return bar;
+}
 
 }
