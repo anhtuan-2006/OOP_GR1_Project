@@ -29,6 +29,7 @@ public class main extends ApplicationAdapter {
     private SpriteBatch batch;
 
     Menu menu;
+    InGame ingame;
 
     @Override
     public void create() {
@@ -44,9 +45,8 @@ public class main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        menu = new Menu(viewport);
-
-        menu.create();
+        ingame = new InGame(viewport);
+        ingame.create();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class main extends ApplicationAdapter {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
 
-        menu.render(batch);
+        ingame.render(batch);
 
         batch.end();
     }
@@ -76,6 +76,6 @@ public class main extends ApplicationAdapter {
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
-
+        ingame.dispose();
     }
 }
