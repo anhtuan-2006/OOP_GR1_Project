@@ -1,20 +1,11 @@
 package anhtuannguyen.oop;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import java.lang.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.*;
-import java.lang.*;
 
 public class Ball {
 
@@ -29,6 +20,8 @@ public class Ball {
     private double dy = 1;
     private double angle = Math.PI / 2;
     private Bar bar;
+    private float angle_role = 45f;
+    private float ROLE_SPEED = 200f;
 
     boolean started = false;
 
@@ -188,8 +181,10 @@ public void increaseSpeed(float multiplier) {
 
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
-        batch.draw(texture, (int) (x - RADIUS / 2), (int) (y - RADIUS / 2), RADIUS, RADIUS);
-    }
+
+        angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
+        batch.draw(texture, (float)(x - RADIUS/2f), (float)(y - RADIUS/2f), (float)(RADIUS/2f), (float)(RADIUS/2f), (float)RADIUS, (float)RADIUS, 1f, 1f, angle_role, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+    }    
 
     public void dispose() {
         texture.dispose();
