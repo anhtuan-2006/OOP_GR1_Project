@@ -8,7 +8,7 @@ public class InGame {
     private static final float WORLD_H = Screen.WORLD_H;
     private Viewport viewport;
 
-    private Level10 level10;  
+    private Level5 level;  
 
     private Play_Pause play_pause;
 
@@ -18,18 +18,18 @@ public class InGame {
 
     public void create() {
         play_pause = new Play_Pause(viewport);
-        level10 = new Level10(play_pause);
-        level10.create();
+        level = new Level5(play_pause);
+        level.create();
     }
 
     public void render(SpriteBatch batch) {
         play_pause.update();
-        level10.render(batch);
+        level.render(batch);
         play_pause.render(batch);
     }
 
     public void dispose() {
         play_pause.dispose();
-        level10.dispose();
+        level.dispose();
     }
 }
