@@ -27,7 +27,11 @@ public class Function {
     private Texture Mulball3 = new Texture("Mulball3.png");
     private int Mulball_tex = 1;
 
-    private int type = 1;
+    private Texture FireBall = new Texture("FireBall.png");
+
+    // Random rand = new Random();
+    // private int type = rand.nextInt(2) + 1;
+    int type = 2;
 
     Function(float _x, float _y, Ball _ball) {
         x = _x;
@@ -63,6 +67,10 @@ public class Function {
             Mulball_tex++;
             if (Mulball_tex > 3)
                 Mulball_tex -= 3;
+        }
+
+        if (type == 2) {
+            batch.draw(FireBall, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
         }
     }
 }

@@ -62,37 +62,40 @@ public class Block {
         }
     }
 
-    public void update(int x, Function f)
-    {
-        if(x == 0) return;
-        if(x == 1)
-        {
-            if(f.ball.alive == false) return;
+    public void update(int x, Function f) {
+        if (x == 0)
+            return;
+        if (x == 1) {
+            if (f.ball.alive == false)
+                return;
             Ball b1 = new Ball(basic);
             Ball b2 = new Ball(basic);
 
             b1.setPosition((float) f.ball.getx() + 40f, (float) f.ball.gety());
             b2.setPosition((float) f.ball.getx() - 40f, (float) f.ball.gety());
 
-            b1.setAngle((float) (Math.PI / 3));    
+            b1.setAngle((float) (Math.PI / 3));
             b2.setAngle((float) (2 * Math.PI / 3));
 
             ball.add(b1);
             ball.add(b2);
+        }
+
+        if (x == 2) {
+            if (f.ball.alive == false)
+                return;
+            f.ball.fire = true;
+            f.ball.Time_fire = 500;
         }
     }
 
     public void renderBlocks(SpriteBatch batch) { // Vẽ tất cả khối còn tồn tại
 
         int i = 0;
-        while(i < function.size())
-        {
-            if(function.get(i).alive == false)
-            {
+        while (i < function.size()) {
+            if (function.get(i).alive == false) {
                 function.remove(i);
-            }
-            else 
-            {
+            } else {
                 update(function.get(i).Move(), function.get(i));
                 i++;
             }
@@ -114,6 +117,8 @@ public class Block {
 
     private void pullBall(Rectangle bal, Rectangle block, Ball ball) {
         // Tính biên
+        if (ball.fire == true)
+            return;
         float balLeft = bal.x;
         float balRight = bal.x + bal.width;
         float balBottom = bal.y;
@@ -158,8 +163,9 @@ public class Block {
 
     void fn(Rectangle r, Ball b) {
         Random rand = new Random();
-        int x = rand.nextInt(10);
-        if(x != 0) return;
+        int x = rand.nextInt(5);
+        if (x != 0)
+            return;
         Function f = new Function((float) r.x + r.width / 2, (float) r.y + r.height / 2, b);
         function.add(f);
     }

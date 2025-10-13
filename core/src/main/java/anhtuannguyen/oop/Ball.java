@@ -14,6 +14,7 @@ public class Ball {
 
     // Các thuộc tính của quả bóng
     private Texture texture;
+    private Texture FIRE = new Texture("Ball_fire.png");
     private double x; // Cần chuyển hàng số kích thước cửa sổ thành biến static
     private double y;
     private double dx = 1;
@@ -27,6 +28,9 @@ public class Ball {
     boolean playing = true;
 
     public boolean alive = true;
+    
+    public boolean fire = false;
+    public int Time_fire = 0;
 
     private static final float RADIUS = 48f; // Bán kính quả bóng
     private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
@@ -199,8 +203,16 @@ public class Ball {
 
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
-
+        if(Time_fire > 0) Time_fire--;
+        if(Time_fire == 0) fire = false;
         angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
+
+        if(fire == true)
+        {
+            batch.draw(FIRE, (float) (x - RADIUS / 2f - 10), (float) (y - RADIUS / 2f - 10), (float) (RADIUS + 20),
+                (float) (RADIUS + 20));
+        }
+
         batch.draw(texture, (float) (x - RADIUS / 2f), (float) (y - RADIUS / 2f), (float) (RADIUS / 2f),
                 (float) (RADIUS / 2f), (float) RADIUS, (float) RADIUS, 1f, 1f, angle_role, 0, 0, texture.getWidth(),
                 texture.getHeight(), false, false);
