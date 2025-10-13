@@ -1,5 +1,6 @@
 package anhtuannguyen.oop;
 
+import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,11 +9,11 @@ public class Level4 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
     private Texture background;
-    Ball ball;
+    List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block;
+    Block block; //
 
-    boolean playing = true; //
+    boolean playing = true;
 
     Play_Pause play_pause;
 
@@ -39,7 +40,9 @@ public class Level4 {
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("Bar_Level4.png"));
 
-        ball = new Ball(bar, new Texture("Ball_Level4.png"));
+        Ball b = new Ball(bar, new Texture("Ball_Level4.png"));
+        b.started = false;
+        ball.add(b);
 
         block = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("block_Level4.png"));
         block.initializeBlocks(4, new Texture("block_Level4.png"));
@@ -52,21 +55,39 @@ public class Level4 {
 
     public void render(SpriteBatch batch) {
 
-        if(playing != play_pause.isPlaying())
-        {
+        if (playing != play_pause.isPlaying()) {
             playing = !playing;
             bar.isPlaying();
-            ball.isPlaying();
+            for (Ball b : ball)
+                b.isPlaying();
         }
 
+        int i = 0;
+        while (i < ball.size()) {
+            if (ball.get(i).alive == false) {
+                ball.remove(i);
+            } else {
+                ball.get(i).Move();
+                i++;
+            }
+        }
 
-        if (ball.Move() == false) {
+        if (ball.size() == 0) {
             Gdx.app.exit();
         }
 
-        block.checkAndHandleCollisions((float) ball.getx(), (float) ball.gety(), ball.getRADIUS());
+        for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
+            if (b.alive) {
+                block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+            }
+        }
+
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
-        ball.render(batch);
+
+        for (Ball b : ball)
+            if (b.alive == true)
+                b.render(batch);
+
         bar.render(batch);
         block.renderBlocks(batch);
     }
@@ -74,6 +95,5 @@ public class Level4 {
     public void dispose() {
         bar.dispose();
         block.dispose();
-        ball.dispose();
     }
 }

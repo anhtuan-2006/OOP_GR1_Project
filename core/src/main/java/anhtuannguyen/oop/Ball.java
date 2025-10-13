@@ -14,18 +14,19 @@ public class Ball {
 
     // Các thuộc tính của quả bóng
     private Texture texture;
-    private double x = WORLD_W / 2; // Cần chuyển hàng số kích thước cửa sổ thành biến static
-    private double y = WORLD_H / 2;
+    private double x; // Cần chuyển hàng số kích thước cửa sổ thành biến static
+    private double y;
     private double dx = 1;
     private double dy = 1;
     private double angle = Math.PI / 2;
-    private Bar bar;
+    public Bar bar;
     private float angle_role = 45f;
     private float ROLE_SPEED = 400f;
 
-    boolean started = false;
-
+    public boolean started = true;
     boolean playing = true;
+
+    public boolean alive = true;
 
     private static final float RADIUS = 48f; // Bán kính quả bóng
     private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
@@ -42,6 +43,21 @@ public class Ball {
         return RADIUS;
     }
 
+    public Ball(Ball src) {
+        this.bar = src.bar;
+        this.texture = src.texture; // dùng chung texture OK
+        this.x = src.getx();
+        this.y = src.gety();
+        // nếu Ball có getter cho dx, dy, angle thì dùng; không thì copy trực tiếp nếu
+        // cùng file
+        this.dx = 1; // hoặc src.dx nếu để cùng package/đặt accessor
+        this.dy = 1; // đảm bảo không bằng 0
+        this.angle = src.angle; // giữ hướng
+        this.started = true; // bóng mới tự chạy
+        this.playing = true;
+        this.alive = true;
+    }
+
     public Ball(Bar _bar, Texture _tex) {
         bar = _bar;
         texture = _tex;
@@ -49,23 +65,23 @@ public class Ball {
         y = bar.getBounds().y + bar.getBounds().height + RADIUS / 2;
     }
 
-    public void isPlaying()
-    {
+    public void isPlaying() {
         playing = !playing;
     }
 
     // Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính
     private static final float MAX_BOUNCE_DEG = 75f;
 
-    public boolean Move() {
+    public void Move() {
 
-        if(playing == false) return true;
+        if (playing == false)
+            return;
 
         if (started == false) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
                 started = true;
             else
-                return true;
+                return;
         }
 
         float dt = Gdx.graphics.getDeltaTime();
@@ -99,7 +115,8 @@ public class Ball {
 
         // Rơi khỏi đáy
         if (y <= RADIUS) {
-            return false;
+            alive = false;
+            return;
         }
 
         // Va chạm với thanh
@@ -155,7 +172,7 @@ public class Ball {
         if (angle < 0)
             angle += Math.PI;
 
-        return true;
+        return;
     }
 
     // Đổi hướng: 1=left, 2=right → lật trục X; 3=up, 4=down → lật trục Y
@@ -173,34 +190,37 @@ public class Ball {
                 break;
         }
     }
+
     private float currentSpeed = SPEED;
 
-public void increaseSpeed(float multiplier) {
-    currentSpeed *= multiplier;
-}
+    public void increaseSpeed(float multiplier) {
+        currentSpeed *= multiplier;
+    }
 
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
 
         angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
-        batch.draw(texture, (float)(x - RADIUS/2f), (float)(y - RADIUS/2f), (float)(RADIUS/2f), (float)(RADIUS/2f), (float)RADIUS, (float)RADIUS, 1f, 1f, angle_role, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
-    }    
+        batch.draw(texture, (float) (x - RADIUS / 2f), (float) (y - RADIUS / 2f), (float) (RADIUS / 2f),
+                (float) (RADIUS / 2f), (float) RADIUS, (float) RADIUS, 1f, 1f, angle_role, 0, 0, texture.getWidth(),
+                texture.getHeight(), false, false);
+    }
 
     public void dispose() {
         texture.dispose();
     }
 
     public void setPosition(float x, float y) {
-    this.x = x;
-    this.y = y;
-}
+        this.x = x;
+        this.y = y;
+    }
 
-public void setAngle(float angleRad) {
-    this.angle = angleRad;
-}
+    public void setAngle(float angleRad) {
+        this.angle = angleRad;
+    }
 
-public Bar getBar() {
-    return bar;
-}
+    public Bar getBar() {
+        return bar;
+    }
 
 }

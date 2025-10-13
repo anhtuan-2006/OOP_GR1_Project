@@ -41,7 +41,6 @@ public class main extends ApplicationAdapter {
         batch = new SpriteBatch();
 
         ingame = new InGame(viewport);
-
         ingame.create();
     }
 
@@ -72,6 +71,6 @@ public class main extends ApplicationAdapter {
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
-
+        ingame.dispose();
     }
 }
