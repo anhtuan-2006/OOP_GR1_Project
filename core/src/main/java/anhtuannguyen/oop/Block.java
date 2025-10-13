@@ -21,6 +21,7 @@ public class Block {
     private List<Ball> ball;
     private List<Function> function = new ArrayList<>();
 
+    
     private Ball basic;
 
     public Block(int x, int y, List<Ball> _ball, int ROW, int COL, int[][] _map, int width, int height, Texture _tex) { // Constructor:
@@ -79,6 +80,19 @@ public class Block {
 
             ball.add(b1);
             ball.add(b2);
+        }
+        else if(x == 2)
+        {
+        
+        Rectangle barBounds = f.ball.bar.getBounds();
+        
+        barBounds.width *= 1.5f; // Tăng 50% chiều rộng
+        f.ball.bar.effectTimer = 0; // Bắt đầu đếm
+        // Giữ thanh đỡ không vượt màn hình
+        if (barBounds.x + barBounds.width > WORLD_W) {
+            barBounds.x = WORLD_W - barBounds.width;
+        }
+
         }
     }
 

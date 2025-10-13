@@ -26,8 +26,9 @@ public class Function {
     private Texture Mulball2 = new Texture("Mulball2.png");
     private Texture Mulball3 = new Texture("Mulball3.png");
     private int Mulball_tex = 1;
-
-    private int type = 1;
+    
+    Random rand = new Random();
+    private int type = rand.nextInt(2) + 1;
 
     Function(float _x, float _y, Ball _ball) {
         x = _x;
@@ -53,7 +54,7 @@ public class Function {
     }
 
     public void render(SpriteBatch batch) {
-        if (type == 1) {
+        if (type == 1 || type == 2) {
             if (Mulball_tex == 1)
                 batch.draw(Mulball1, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
             if (Mulball_tex == 2)
