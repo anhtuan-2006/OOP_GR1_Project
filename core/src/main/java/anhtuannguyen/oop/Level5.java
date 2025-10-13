@@ -1,5 +1,6 @@
 package anhtuannguyen.oop;
 
+import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,13 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Level5 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
-    private static float Screen_Width;
-    private static float Screen_Height;
     private Texture background;
-    Ball ball;
+    List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block;
+    Block block; //
+
     boolean playing = true;
+
     Play_Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
@@ -47,7 +48,9 @@ public class Level5 {
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level5.png"));
 
-        ball = new Ball(bar, new Texture("Ball_Level5.png"));
+        Ball b = new Ball(bar, new Texture("Ball_Level5.png"));
+        b.started = false;
+        ball.add(b);
         
         block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level5.png"));
         block.initializeBlocks(5, new Texture("Block_Level5.png"));
@@ -59,21 +62,39 @@ public class Level5 {
 
     public void render(SpriteBatch batch) {
 
-        if(playing != play_pause.isPlaying())
-        {
+        if (playing != play_pause.isPlaying()) {
             playing = !playing;
             bar.isPlaying();
-            ball.isPlaying();
+            for (Ball b : ball)
+                b.isPlaying();
         }
 
+        int i = 0;
+        while (i < ball.size()) {
+            if (ball.get(i).alive == false) {
+                ball.remove(i);
+            } else {
+                ball.get(i).Move();
+                i++;
+            }
+        }
 
-        if (ball.Move() == false) {
+        if (ball.size() == 0) {
             Gdx.app.exit();
         }
 
-        block.checkAndHandleCollisions((float) ball.getx(), (float) ball.gety(), ball.getRADIUS());
+        for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
+            if (b.alive) {
+                block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+            }
+        }
+
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
-        ball.render(batch);
+
+        for (Ball b : ball)
+            if (b.alive == true)
+                b.render(batch);
+
         bar.render(batch);
         block.renderBlocks(batch);
     }
@@ -81,6 +102,5 @@ public class Level5 {
     public void dispose() {
         bar.dispose();
         block.dispose();
-        ball.dispose();
     }
 }
