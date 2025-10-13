@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Level6 {
+public class Level8 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
     private static float Screen_Width;
@@ -32,19 +32,19 @@ public class Level6 {
     };
     static int ROW = map.length;
     static int COL = map[0].length;
-    Level6(Play_Pause _play_pause)
+    Level8(Play_Pause _play_pause)
     {
         play_pause = _play_pause;
     }
 
     public void create() {
-        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level6.png"));
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level8.png"));
 
-        ball = new Ball(bar, new Texture("ball_level6.png"));
+        ball = new Ball(bar, new Texture("Ball_level8.png"));
         
         block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level5.png"));
-        block.initializeBlocks(5, new Texture("Block_Level6.png"));
-        background = new Texture("Background_Level6.jpg");
+        block.initializeBlocks(5, new Texture("Block_Level8.jpg"));
+        background = new Texture("Background_Level8.jpg");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");
         }
