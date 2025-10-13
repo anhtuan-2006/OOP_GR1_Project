@@ -33,9 +33,7 @@ public class Level3 {
     static int ROW = map.length;
     static int COL = map[0].length;
 
-    Level3(Play_Pause _play_pause, float Screen_Width, float Screen_Height) {
-        this.Screen_Width = Screen_Width;
-        this.Screen_Height = Screen_Height;
+    Level3(Play_Pause _play_pause) {
         play_pause = _play_pause;
     }
 
@@ -44,8 +42,8 @@ public class Level3 {
 
         ball = new Ball(bar, new Texture("ball_Level3.png"));
         
-        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, 64);
-        block.initializeBlocks(3);
+        block = new Block(0, 0, ball, 10, 12, map, (int) WORLD_W/12, 64, new Texture("block_Level3.png"));
+        block.initializeBlocks(3, new Texture("block_Level3.png"));
         background = new Texture("background_Level3.png");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");
