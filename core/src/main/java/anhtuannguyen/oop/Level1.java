@@ -11,7 +11,7 @@ public class Level1 {
     private Texture background;
     List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block;
+    Block block; //
 
     boolean playing = true;
 
