@@ -12,7 +12,7 @@ public class Level5 {
     private Texture background;
     Ball ball;
     Bar bar;
-    Block block;
+    Block block; //
     boolean playing = true;
     Play_Pause play_pause;
 

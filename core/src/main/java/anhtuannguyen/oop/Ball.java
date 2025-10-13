@@ -21,7 +21,7 @@ public class Ball {
     private double angle = Math.PI / 2;
     private Bar bar;
     private float angle_role = 45f;
-    private float ROLE_SPEED = 200f;
+    private float ROLE_SPEED = 400f;
 
     boolean started = false;
 

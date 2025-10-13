@@ -12,7 +12,7 @@ public class Level4 {
     Bar bar;
     Block block;
 
-    boolean playing = true;
+    boolean playing = true; //
 
     Play_Pause play_pause;
 

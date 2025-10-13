@@ -1,10 +1,6 @@
 package anhtuannguyen.oop;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class InGame {
@@ -12,7 +8,7 @@ public class InGame {
     private static final float WORLD_H = Screen.WORLD_H;
     private Viewport viewport;
 
-    private Level4 level;
+    private Level10 level10;  
 
     private Play_Pause play_pause;
 
@@ -22,18 +18,18 @@ public class InGame {
 
     public void create() {
         play_pause = new Play_Pause(viewport);
-        level = new Level4(play_pause);
-        level.create();
+        level10 = new Level10(play_pause);
+        level10.create();
     }
 
     public void render(SpriteBatch batch) {
         play_pause.update();
-        level.render(batch);
+        level10.render(batch);
         play_pause.render(batch);
     }
 
     public void dispose() {
         play_pause.dispose();
-        level.dispose();
+        level10.dispose();
     }
 }

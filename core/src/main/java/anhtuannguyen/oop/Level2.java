@@ -1,12 +1,12 @@
 package anhtuannguyen.oop;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Level2 {
     private static final float WORLD_H = Screen.WORLD_H;
@@ -14,7 +14,7 @@ public class Level2 {
     private Texture background;
     Ball ball;
     Bar bar;
-    Block block;
+    Block block; //
 
     boolean playing = true;
 

@@ -13,7 +13,7 @@ public class Level7 {
     Ball ball;
     Bar bar;
     Block block;
-    boolean playing = true;
+    boolean playing = true; //
     Play_Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
