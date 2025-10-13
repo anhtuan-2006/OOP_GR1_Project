@@ -41,8 +41,8 @@ public class Level4 {
 
         ball = new Ball(bar, new Texture("Ball_Level4.png"));
 
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64);
-        block.initializeBlocks(4);
+        block = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("block_Level4.png"));
+        block.initializeBlocks(4, new Texture("block_Level4.png"));
 
         background = new Texture("Background_Level4.png");
         if (background == null || bar == null || ball == null || block == null) {
