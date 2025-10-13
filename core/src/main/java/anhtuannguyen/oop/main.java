@@ -28,9 +28,7 @@ public class main extends ApplicationAdapter {
 
     private SpriteBatch batch;
 
-    private Level2 level2;
-
-    private Play_Pause play_pause;
+    Menu menu;
 
     @Override
     public void create() {
@@ -46,10 +44,9 @@ public class main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        play_pause = new Play_Pause(viewport);
+        menu = new Menu(viewport);
 
-        level2 = new Level2(play_pause);
-        level2.create();
+        menu.create();
     }
 
     @Override
@@ -67,12 +64,11 @@ public class main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         cam.update();
 
-        play_pause.update();
-
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        level2.render(batch);
-        play_pause.render(batch);
+
+        menu.render(batch);
+
         batch.end();
     }
 
@@ -80,7 +76,6 @@ public class main extends ApplicationAdapter {
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
-        play_pause.dispose();
-        level2.dispose();
+
     }
 }
