@@ -2,14 +2,9 @@ package anhtuannguyen.oop;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -27,9 +22,12 @@ public class main extends ApplicationAdapter {
     private Viewport viewport; // Viewport giữ tỉ lệ khi resize
 
     private SpriteBatch batch;
+    
+    GameState state = GameState.MENU; // Trạng thái hiện tại của
 
     Menu menu;
-
+    SelectMap selectmap;
+    InGame ingame;
     @Override
     public void create() {
         // Tạo camera trực giao
@@ -45,8 +43,11 @@ public class main extends ApplicationAdapter {
         batch = new SpriteBatch();
 
         menu = new Menu(viewport);
-
         menu.create();
+        selectmap = new SelectMap(viewport);
+        selectmap.create();
+        ingame = new InGame(viewport);
+        ingame.create();
     }
 
     @Override
@@ -66,9 +67,20 @@ public class main extends ApplicationAdapter {
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-
+        state = menu.nextscreen(state);
+        if (state == GameState.MENU) {
+        menu.update();
         menu.render(batch);
-
+        }
+        if (state == GameState.SELECT_MAP) {
+        selectmap.update();
+        state = selectmap.getSelectedMap();
+        selectmap.render(batch);
+        }
+        if (state == GameState.IN_GAME) {
+;
+        ingame.render(batch,selectmap);
+        }
         batch.end();
     }
 

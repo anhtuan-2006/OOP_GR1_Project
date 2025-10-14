@@ -1,6 +1,5 @@
 package anhtuannguyen.oop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,8 +14,10 @@ public class Menu {
     private Texture play;
     private Texture exit;
     private Texture setting;
-    private Texture logo;
+    private Texture logo;   
+    public static boolean press = false;
 
+   
     Viewport viewport;
 
     Rectangle play_size;
@@ -29,7 +30,7 @@ public class Menu {
     boolean touch_setting = false;
 
     Rectangle logo_size;
-
+    
     Menu(Viewport _viewport) {
         viewport = _viewport;
     }
@@ -66,6 +67,18 @@ public class Menu {
             touch_exit = false;
     }
 
+    public GameState nextscreen(GameState state) {
+        if (touch_play == true && com.badlogic.gdx.Gdx.input.justTouched()) {
+            Vector3 v = new Vector3(com.badlogic.gdx.Gdx.input.getX(), com.badlogic.gdx.Gdx.input.getY(), 0);
+            viewport.unproject(v);
+            if (play_size.contains(v.x, v.y)) {
+            state = GameState.SELECT_MAP;
+            press = true;
+            }
+        }
+        return state;
+        
+        }
     public void render(SpriteBatch batch) {
         update();
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
