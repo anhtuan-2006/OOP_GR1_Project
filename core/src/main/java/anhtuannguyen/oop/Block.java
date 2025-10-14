@@ -81,11 +81,26 @@ public class Block {
             ball.add(b2);
         }
 
-        if (x == 2) {
+        else if (x == 2) {
             if (f.ball.alive == false)
                 return;
             f.ball.fire = true;
             f.ball.Time_fire = 500;
+        }
+
+        else if (x == 3) {
+
+            Rectangle barBounds = f.ball.bar.getBounds();
+
+            barBounds.x = barBounds.x - barBounds.width / 4;
+            barBounds.width *= 1.5f; // Tăng 50% chiều rộng
+            
+            f.ball.bar.effectTimer = 0; // Bắt đầu đếm
+            // Giữ thanh đỡ không vượt màn hình
+            if (barBounds.x + barBounds.width > WORLD_W) {
+                barBounds.x = WORLD_W - barBounds.width;
+            }
+
         }
     }
 

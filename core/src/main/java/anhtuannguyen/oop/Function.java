@@ -25,13 +25,17 @@ public class Function {
     private Texture Mulball1 = new Texture("Mulball1.png");
     private Texture Mulball2 = new Texture("Mulball2.png");
     private Texture Mulball3 = new Texture("Mulball3.png");
-    private int Mulball_tex = 1;
+
+    private Texture LongBar1 = new Texture("LongBar1.png");
+    private Texture LongBar2 = new Texture("LongBar2.png");
+    private Texture LongBar3 = new Texture("LongBar3.png");
+    private int tex = 1;
 
     private Texture FireBall = new Texture("FireBall.png");
 
     // Random rand = new Random();
     // private int type = rand.nextInt(2) + 1;
-    int type = 2;
+    int type = 3;
 
     Function(float _x, float _y, Ball _ball) {
         x = _x;
@@ -44,7 +48,7 @@ public class Function {
         y = y - SPEED;
 
         Rectangle p = bar.getBounds();
-        if (y - RADIUS <= p.y + p.height) {
+        if (y - RADIUS <= p.y + p.height && x + RADIUS >= p.x && x - RADIUS <= p.x + p.width) {
             alive = false;
             return type;
         }
@@ -58,19 +62,31 @@ public class Function {
 
     public void render(SpriteBatch batch) {
         if (type == 1) {
-            if (Mulball_tex == 1)
+            if (tex == 1)
                 batch.draw(Mulball1, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
-            if (Mulball_tex == 2)
+            if (tex == 2)
                 batch.draw(Mulball2, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
-            if (Mulball_tex == 3)
+            if (tex == 3)
                 batch.draw(Mulball3, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
-            Mulball_tex++;
-            if (Mulball_tex > 3)
-                Mulball_tex -= 3;
+            tex++;
+            if (tex > 3)
+                tex -= 3;
         }
 
-        if (type == 2) {
+        else if (type == 2) {
             batch.draw(FireBall, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+        }
+
+        else if (type == 3) {
+            if (tex == 1)
+                batch.draw(LongBar1, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            if (tex == 2)
+                batch.draw(LongBar2, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            if (tex == 3)
+                batch.draw(LongBar3, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            tex++;
+            if (tex > 3)
+                tex -= 3;
         }
     }
 }

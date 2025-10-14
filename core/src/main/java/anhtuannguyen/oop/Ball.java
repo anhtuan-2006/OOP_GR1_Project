@@ -28,7 +28,7 @@ public class Ball {
     boolean playing = true;
 
     public boolean alive = true;
-    
+
     public boolean fire = false;
     public int Time_fire = 0;
 
@@ -203,14 +203,15 @@ public class Ball {
 
     // Xuất ra màn hình
     public void render(SpriteBatch batch) {
-        if(Time_fire > 0) Time_fire--;
-        if(Time_fire == 0) fire = false;
+        if (Time_fire > 0)
+            Time_fire--;
+        if (Time_fire == 0)
+            fire = false;
         angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
 
-        if(fire == true)
-        {
+        if (fire == true) {
             batch.draw(FIRE, (float) (x - RADIUS / 2f - 10), (float) (y - RADIUS / 2f - 10), (float) (RADIUS + 20),
-                (float) (RADIUS + 20));
+                    (float) (RADIUS + 20));
         }
 
         batch.draw(texture, (float) (x - RADIUS / 2f), (float) (y - RADIUS / 2f), (float) (RADIUS / 2f),

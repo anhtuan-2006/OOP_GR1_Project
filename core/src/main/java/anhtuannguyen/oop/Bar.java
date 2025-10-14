@@ -19,12 +19,15 @@ public class Bar {
     private Texture texture;
     private Rectangle bounds;
     private float speed = 14;
-
     boolean playing = true;
+
+    private float originalWidth; // Lưu chiều rộng ban đầu
+    public float effectTimer = -1; // Bộ đếm thời gian (-1 nghĩa là không chạy)
 
     public Bar(float x, float y, float width, float height, Texture _tex) {
         texture = _tex; // ảnh thanh đỡ
         bounds = new Rectangle(x, y, width, height);
+        originalWidth = width; // Lưu chiều rộng ban đầu
     }
 
     // public void create() {
@@ -38,13 +41,24 @@ public class Bar {
 
     // Xuất ra màn hình
 
-    public void isPlaying()
-    {
+    public void isPlaying() {
         playing = !playing;
     }
 
     public void update(float deltaTime) {
-        if(playing == false) return;
+        if (playing == false)
+            return;
+
+        // Đếm thời gian hiệu ứng
+        if (effectTimer >= 0) {
+            effectTimer += deltaTime;
+            if (effectTimer >= 5f) {
+                bounds.x = bounds.x + bounds.width / 2 - originalWidth / 2;
+                bounds.width = originalWidth; // Gán lại chiều rộng ban đầu
+                effectTimer = -1; // Tắt bộ đếm
+            }
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             bounds.x -= speed;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
@@ -70,7 +84,6 @@ public class Bar {
     public void dispose() {
         texture.dispose();
     }
-    
 
 }
 //
