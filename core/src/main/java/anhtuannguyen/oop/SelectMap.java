@@ -15,7 +15,7 @@ public class SelectMap {
     private Texture background;
     private Texture[] maps;
     private boolean[] touch_maps;
-    private Rectangle[] map_size;
+    private Rectangle[] map_size = new Rectangle[10];
 
     private int selectedMap = -1; // map được click chọn
 
@@ -25,14 +25,18 @@ public class SelectMap {
 
     public void create() {
         background = new Texture("Menu_background.jpg");
-        maps = new Texture[7];
+        maps = new Texture[10];
         maps[0] = new Texture("background_level1.jpg");
-        maps[1] = new Texture("background_level2.jpg");
+        maps[1] = new Texture("background_level2.png");
         maps[2] = new Texture("background_level3.png");
         maps[3] = new Texture("Background_Level4.png");
         maps[4] = new Texture("Background_Level5.png");
-        maps[5] = new Texture("Background_Level6.png");
+        maps[5] = new Texture("Background_Level6.jpg");
         maps[6] = new Texture("Background_Level7.jpg");
+        maps[7] = new Texture("Background_Level8.jpg");
+        maps[8] = new Texture("Background_Level9.jpg");
+        maps[9] = new Texture("Background_Level10.jpg");
+        
 
         map_size = new Rectangle[maps.length];
         touch_maps = new boolean[maps.length]; //  khởi tạo mảng hover
@@ -68,13 +72,7 @@ public class SelectMap {
     public GameState getSelectedMap() {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
-        if (selectedMap == 0) return GameState.IN_GAME; // Level1
-        if (selectedMap == 1) return GameState.IN_GAME; // Level2
-        if (selectedMap == 2) return GameState.IN_GAME; // Level3
-        if (selectedMap == 3) return GameState.IN_GAME; // Level4
-        if (selectedMap == 4) return GameState.IN_GAME; // Level5
-        if (selectedMap == 5) return GameState.IN_GAME; // Level6
-        if (selectedMap == 6) return GameState.IN_GAME; // Level7
+        if (!(selectedMap == -1)) return GameState.IN_GAME; // Level
         return GameState.SELECT_MAP;
     }
     public void update() {
@@ -92,7 +90,6 @@ public class SelectMap {
             for (int i = 0; i < map_size.length; i++) {
                 if (map_size[i].contains(v.x, v.y)) {
                     selectedMap = i;
-                    
                     getSelectedMap();
                     break;
                 }

@@ -1,6 +1,8 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,7 +47,7 @@ public class Level8 {
         b.started = false;
         ball.add(b);
         
-        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level5.png"));
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level8.jpg"));
         block.initializeBlocks(5, new Texture("Block_Level8.jpg"));
         background = new Texture("Background_Level8.jpg");
         if (background == null || bar == null || ball == null || block == null) {

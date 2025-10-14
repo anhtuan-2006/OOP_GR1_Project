@@ -28,7 +28,7 @@ public class main extends ApplicationAdapter {
     InGame ingame;
     Menu menu;
     SelectMap selectmap;
-    InGame ingame;
+
     @Override
     public void create() {
         // Tạo camera trực giao
@@ -49,6 +49,7 @@ public class main extends ApplicationAdapter {
         selectmap.create();
         ingame = new InGame(viewport);
         ingame.create();
+        
     }
 
     @Override
@@ -79,7 +80,7 @@ public class main extends ApplicationAdapter {
         selectmap.render(batch);
         }
         if (state == GameState.IN_GAME) {
-;
+        
         ingame.render(batch,selectmap);
         }
         batch.end();

@@ -14,6 +14,9 @@ public class InGame {
     private Level5 level5;
     private Level6 level6;
     private Level7 level7;
+    private Level8 level8;
+    private Level9 level9;
+    private Level10 level10;
 
     private Play_Pause play_pause;
 
@@ -23,20 +26,28 @@ public class InGame {
 
     public void create() {
         play_pause = new Play_Pause(viewport);
+
         level1 = new Level1(play_pause);
-        level2 = new Level2(play_pause);
-        level3 = new Level3(play_pause);
-        level4 = new Level4(play_pause);
-        level5 = new Level5(play_pause);
-        level6 = new Level6(play_pause);
-        level7 = new Level7(play_pause);
         level1.create();
+        level2 = new Level2(play_pause);
         level2.create();
+        level3 = new Level3(play_pause);
         level3.create();
-        level4.create();
+        level4 = new Level4(play_pause);
+        level4.create();        
+        level5 = new Level5(play_pause);
         level5.create();
+        level6 = new Level6(play_pause);
         level6.create();
+        level7 = new Level7(play_pause);
         level7.create();
+        level8 = new Level8(play_pause);
+        level8.create();
+        level9 = new Level9(play_pause);
+        level9.create();
+        level10 = new Level10(play_pause);
+        level10.create();
+        
     }
 
     public void render(SpriteBatch batch, SelectMap selectmap) {
@@ -44,18 +55,33 @@ public class InGame {
         play_pause.update();
         if (map_number == 0) {
             level1.render(batch);
-        } else if (map_number == 1) {
+        } 
+        if (map_number == 1) {
             level2.render(batch);
-        } else if (map_number == 2) {
+        } 
+        if (map_number == 2) {
             level3.render(batch);
-        } else if (map_number == 3) {
+        } 
+        if (map_number == 3) {
             level4.render(batch);
-        } else if (map_number == 4) {
+        }  
+        if (map_number == 4) {
             level5.render(batch);
-        } else if (map_number == 5) {
+        }  
+        if (map_number == 5) {
             level6.render(batch);
-        } else if (map_number == 6) {
+        }  
+        if (map_number == 6) {
             level7.render(batch);
+        }  
+        if (map_number == 7) {
+            level8.render(batch);
+        } 
+        if (map_number == 8) {
+            level9.render(batch);
+        } 
+         if (map_number == 9) {
+            level10.render(batch);
         }
         
         
@@ -71,5 +97,8 @@ public class InGame {
         level5.dispose();
         level6.dispose();
         level7.dispose();
+        level8.dispose();
+        level9.dispose();
+        level10.dispose();
     }
 }
