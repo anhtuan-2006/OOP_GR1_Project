@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Level1 {
+public class Level10 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
     private Texture background;
@@ -18,35 +18,39 @@ public class Level1 {
     Play_Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     };
-
-    Level1(Play_Pause _play_pause) {
+    static int ROW = map.length;
+    static int COL = map[0].length;
+    Level10(Play_Pause _play_pause)
+    {
         play_pause = _play_pause;
     }
 
     public void create() {
-        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level10.png"));
 
-        Ball b = new Ball(bar, new Texture("ball.png"));
+        Ball b = new Ball(bar, new Texture("Ball_level10.png"));
         b.started = false;
         ball.add(b);
-
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.jpg"));
-        block.initializeBlocks(1, new Texture("block_level1.jpg"));
-
-        background = new Texture("background_level1.jpg");
+        
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level10.png"));
+        block.initializeBlocks(5, new Texture("Block_Level10.png"));
+        background = new Texture("Background_Level10.jpg");
+        if (background == null || bar == null || ball == null || block == null) {
+            System.out.println("Failed to load texture!");
+        }
     }
 
     public void render(SpriteBatch batch) {

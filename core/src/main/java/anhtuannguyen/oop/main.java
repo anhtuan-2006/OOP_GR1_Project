@@ -25,6 +25,7 @@ public class main extends ApplicationAdapter {
     
     GameState state = GameState.MENU; // Trạng thái hiện tại của
 
+    InGame ingame;
     Menu menu;
     SelectMap selectmap;
     InGame ingame;
@@ -88,6 +89,6 @@ public class main extends ApplicationAdapter {
     public void dispose() {
         // Giải phóng bộ nhớ ShapeRenderer]
         batch.dispose();
-
+        ingame.dispose();
     }
 }
