@@ -8,7 +8,7 @@ public class InGame {
     private static final float WORLD_H = Screen.WORLD_H;
     private Viewport viewport;
 
-    private Level5 level;
+    private Level2 level;
 
     private Play_Pause play_pause;
 
@@ -18,7 +18,7 @@ public class InGame {
 
     public void create() {
         play_pause = new Play_Pause(viewport);
-        level = new Level5(play_pause);
+        level = new Level2(play_pause);
         level.create();
     }
 
