@@ -95,8 +95,12 @@ public class Menu {
 
         if (touch_exit == false)
             batch.draw(exit, exit_size.x, exit_size.y, exit_size.width, exit_size.height);
+            
         else
             batch.draw(exit, exit_size.x - 20, exit_size.y - 20, exit_size.width + 40, exit_size.height + 40);
+            if (com.badlogic.gdx.Gdx.input.justTouched()) {
+                com.badlogic.gdx.Gdx.app.exit();
+            }
 
         batch.draw(logo, logo_size.x, logo_size.y, logo_size.width, logo_size.height);
     }

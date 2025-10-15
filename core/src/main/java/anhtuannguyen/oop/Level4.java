@@ -1,6 +1,8 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,7 +40,7 @@ public class Level4 {
     }
 
     public void create() {
-        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("Bar_Level4.png"));
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 100, new Texture("Bar_Level4.png"));
 
         Ball b = new Ball(bar, new Texture("Ball_Level4.png"));
         b.started = false;

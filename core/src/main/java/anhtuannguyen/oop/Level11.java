@@ -48,7 +48,7 @@ public class Level11 {
         ball.add(b);
         
         block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level11.png"));
-        block.initializeBlocks(5, new Texture("Block_Level10.png"));
+        block.initializeBlocks(5, new Texture("Block_Level11.png"));
         background = new Texture("Background_Level11.png");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");

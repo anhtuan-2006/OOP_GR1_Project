@@ -17,6 +17,8 @@ public class InGame {
     private Level8 level8;
     private Level9 level9;
     private Level10 level10;
+    private Level11 level11;
+    private Level12 level12;
 
     private Play_Pause play_pause;
 
@@ -47,7 +49,10 @@ public class InGame {
         level9.create();
         level10 = new Level10(play_pause);
         level10.create();
-        
+        level11 = new Level11(play_pause);
+        level11.create();
+        level12 = new Level12(play_pause);
+        level12.create();
     }
 
     public void render(SpriteBatch batch, SelectMap selectmap) {
@@ -83,6 +88,14 @@ public class InGame {
          if (map_number == 9) {
             level10.render(batch);
         }
+        if (map_number == 10) {
+            level11.render(batch);
+        }
+        if (map_number == 11) {
+            level12.render(batch);
+        }
+
+
         
         
         play_pause.render(batch);

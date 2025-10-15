@@ -1,6 +1,8 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +20,7 @@ public class Level9 {
     Play_Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 0, 1, 1, 0, 0, 0, 0, 1, 1, 0 },
+    { 0, 1, 1, 0, 0, 0, 0, 1, 1, 0 },
     { 1, 0, 0, 1, 0, 0, 1, 0, 0, 1 },
     { 1, 0, 0, 1, 1, 1, 1, 0, 0, 1 },
     { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1 },
