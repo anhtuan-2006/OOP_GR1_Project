@@ -1,10 +1,7 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.Random;
 
-import org.w3c.dom.Text;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -33,9 +30,9 @@ public class Function {
 
     private Texture FireBall = new Texture("FireBall.png");
 
-    // Random rand = new Random();
-    // private int type = rand.nextInt(2) + 1;
-    int type = 3;
+    Random rand = new Random();
+    private int type = rand.nextInt(3) + 1;
+    // int type = 3;
 
     Function(float _x, float _y, Ball _ball) {
         x = _x;

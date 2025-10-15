@@ -13,13 +13,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * platforms.
  */
 public class main extends ApplicationAdapter {
-    // Kích thước logic của thế giới (giữ cố định để không phụ thuộc độ phân giải
-    // màn hình)
+    
+    
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    private OrthographicCamera cam; // Camera nhìn vào thế giới
-    private Viewport viewport; // Viewport giữ tỉ lệ khi resize
+    private OrthographicCamera cam; 
+    private Viewport viewport; 
 
     private SpriteBatch batch;
     
