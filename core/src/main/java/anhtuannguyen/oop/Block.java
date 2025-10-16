@@ -88,6 +88,13 @@ public class Block {
                 barBounds.x = WORLD_W - barBounds.width;
             }
         }
+             else if (x == 4) {
+            if (f.ball.alive == false)
+                return;
+            if(f.ball.radius < f.ball.originalRadius * 1.5f)f.  ball.radius = f.ball.radius * 1.5f;
+            f.ball.effectTimer = 0; // Bắt đầu đếm
+        }
+
     }
 
     public void renderBlocks(SpriteBatch batch) {

@@ -52,7 +52,7 @@ public class Bar {
         // Đếm thời gian hiệu ứng
         if (effectTimer >= 0) {
             effectTimer += deltaTime;
-            if (effectTimer >= 5f) {
+            if (effectTimer >= 10f) {
                 bounds.x = bounds.x + bounds.width / 2 - originalWidth / 2;
                 bounds.width = originalWidth; // Gán lại chiều rộng ban đầu
                 effectTimer = -1; // Tắt bộ đếm
