@@ -12,7 +12,8 @@ public class Level4 {
     List<Ball> ball = new ArrayList<>();
     Bar bar;
     Block block; //
-
+    Block ironblock; // block sat 
+    
     boolean playing = true;
 
     Play_Pause play_pause;
@@ -45,7 +46,10 @@ public class Level4 {
         ball.add(b);
 
         block = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("block_Level4.png"));
-        block.initializeBlocks(4, new Texture("block_Level4.png"));
+        ironblock = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("iron_block.png"));
+
+        block.initializeBlocks(1, new Texture("block_Level4.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
 
         background = new Texture("Background_Level4.png");
         if (background == null || bar == null || ball == null || block == null) {
@@ -79,6 +83,7 @@ public class Level4 {
         for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -90,10 +95,12 @@ public class Level4 {
 
         bar.render(batch);
         block.renderBlocks(batch);
+        ironblock.renderBlocks(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
+        ironblock.dispose();
     }
 }

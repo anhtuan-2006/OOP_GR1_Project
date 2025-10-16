@@ -12,6 +12,7 @@ public class Level3 {
     List<Ball> ball = new ArrayList<>();
     Bar bar;
     Block block; //
+    Block ironblock; // block sat
 
     boolean playing = true;
 
@@ -46,7 +47,11 @@ public class Level3 {
         ball.add(b);
         
         block = new Block(0, 0, ball, 10, 12, map, (int) WORLD_W/12, 64, new Texture("block_Level3.png"));
-        block.initializeBlocks(3, new Texture("block_Level3.png"));
+        ironblock = new Block(0, 0, ball, 10, 12, map, (int) WORLD_W/12, 64, new Texture("iron_block.png"));
+
+        block.initializeBlocks(1, new Texture("block_Level3.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
+
         background = new Texture("background_Level3.png");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");
@@ -79,6 +84,7 @@ public class Level3 {
         for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -90,10 +96,12 @@ public class Level3 {
 
         bar.render(batch);
         block.renderBlocks(batch);
+        ironblock.renderBlocks(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
+        ironblock.dispose();
     }
 }

@@ -54,7 +54,7 @@ public class Block {
         float startY = WORLD_H - gridRows * blockHeight - 200;
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
-                if (map[row][col] == 1) {
+                if (map[row][col] == level) {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
                     blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
@@ -171,11 +171,15 @@ public class Block {
             for (int col = 0; col < map[row].length; col++) {
                 Block block = blocks[row][col];
                 if (block != null && block.alive && block.rect.overlaps(ballRect)) {
-                  
+                    if(map[row][col] !=2)
+                    {
                     fn(block.rect, b);
                     pullBall(ballRect, block.rect, b);
                     block.alive = false;
                     blocks[row][col] = null;
+                    } else {
+                        pullBall(ballRect, block.rect, b);
+                    }
                 }
             }
         }
