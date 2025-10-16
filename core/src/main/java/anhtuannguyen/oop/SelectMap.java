@@ -12,6 +12,9 @@ public class SelectMap {
     private static final float WORLD_H = Screen.WORLD_H;
 
     private Viewport viewport;
+    private Texture back_button;
+    private Rectangle back_button_size = new Rectangle((float) (WORLD_W)/4, 100, (float) WORLD_W/2, 150);
+    private boolean touch_back_button = false;
     private Texture background;
     private Texture[] maps;
     private boolean[] touch_maps;
@@ -30,7 +33,7 @@ public class SelectMap {
             maps[i] = new Texture("Avata_Level" + (i + 1) + ".png");
             if (maps[i] == null) Gdx.app.log("Error", "Load map " + (i + 1) + " failed");
         }
-        
+        back_button = new Texture("back_button.png");
 
         map_size = new Rectangle[maps.length];
         touch_maps = new boolean[maps.length]; 
@@ -64,6 +67,7 @@ public class SelectMap {
                 count_row += WORLD_H / 6 + spacing;
             }
         }
+
     }
     public int getMap() {
         return selectedMap;
@@ -72,6 +76,11 @@ public class SelectMap {
     public GameState getSelectedMap() {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
+        if (touch_back_button && Gdx.input.justTouched() && Menu.press != true) {
+            Menu.press = true;
+
+            return GameState.MENU;
+        }
         if (!(selectedMap == -1)) return GameState.IN_GAME; // Level
         return GameState.SELECT_MAP;
     }
@@ -83,7 +92,8 @@ public class SelectMap {
         for (int i = 0; i < map_size.length; i++) {
             touch_maps[i] = map_size[i].contains(v.x, v.y);
         }
-
+        touch_back_button = back_button_size.contains(v.x, v.y);
+        
         // kiểm tra click chọn map
         
         if (Gdx.input.justTouched() && Menu.press != true) {
@@ -95,6 +105,7 @@ public class SelectMap {
                 }
             }
         }
+        
         if (!Gdx.input.isTouched()) {
             Menu.press = false;
         }
@@ -125,6 +136,11 @@ public class SelectMap {
                     );
                 }
             }
+            if (touch_back_button)
+                batch.draw(back_button, back_button_size.x - 20, back_button_size.y - 20, back_button_size.width + 40, back_button_size.height + 40);
+            else
+            batch.draw(back_button, back_button_size.x, back_button_size.y, back_button_size.width, back_button_size.height);
+            
         }
     }
 
