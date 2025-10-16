@@ -137,7 +137,7 @@ public class Block {
         float overlapY = Math.min(balTop, blkTop) - Math.max(balBottom, blkBottom);
 
         if (overlapX <= 0 || overlapY <= 0) return;
-
+        
         if (overlapX < overlapY) {
             if (bal.x + bal.width / 2f < block.x + block.width / 2f) {
                 bal.x = blkLeft - bal.width;
@@ -155,6 +155,7 @@ public class Block {
                 ball.Change_Direction(4);
             }
         }
+        ball.setPosition(bal.x + bal.width / 2f, bal.y + bal.height / 2f);
     }
 
     void fn(Rectangle r, Ball b) {
