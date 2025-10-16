@@ -35,6 +35,11 @@ public class Ball {
     private static final float RADIUS = 48f; // Bán kính quả bóng
     private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
 
+    public float radius = RADIUS;
+    public float originalRadius = RADIUS;
+    public float effectTimer = -1;
+
+
     public double getx() {
         return x;
     }
@@ -44,7 +49,7 @@ public class Ball {
     }
 
     public float getRADIUS() {
-        return RADIUS;
+        return radius;
     }
 
     public Ball(Ball src) {
@@ -66,7 +71,7 @@ public class Ball {
         bar = _bar;
         texture = _tex;
         x = WORLD_W / 2;
-        y = bar.getBounds().y + bar.getBounds().height + RADIUS / 2;
+        y = bar.getBounds().y + bar.getBounds().height + radius / 2;
     }
 
     public void isPlaying() {
@@ -78,8 +83,19 @@ public class Ball {
 
     public void Move() {
 
+
         if (playing == false)
             return;
+
+         float dtt = Gdx.graphics.getDeltaTime();
+
+     if (effectTimer >= 0) {
+    effectTimer += dtt;
+    if (effectTimer >= 5f) {
+        radius = originalRadius;
+        effectTimer = -1;
+    }
+}
 
         if (started == false) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
@@ -103,22 +119,22 @@ public class Ball {
         y += vy * dt;
 
         // Bật tường trái/phải theo bán kính
-        if (x <= RADIUS) {
-            x = RADIUS;
+        if (x <= radius) {
+            x = radius;
             dx = -dx;
-        } else if (x >= WORLD_W - RADIUS) {
-            x = WORLD_W - RADIUS;
+        } else if (x >= WORLD_W - radius) {
+            x = WORLD_W - radius;
             dx = -dx;
         }
 
         // Bật trần
-        if (y >= WORLD_H - RADIUS) {
-            y = WORLD_H - RADIUS;
+        if (y >= WORLD_H - radius) {
+            y = WORLD_H - radius;
             dy = -dy;
         }
 
         // Rơi khỏi đáy
-        if (y <= RADIUS) {
+        if (y <= radius) {
             alive = false;
             return;
         }
@@ -129,12 +145,12 @@ public class Ball {
             float paddleTop = p.y + p.height;
 
             boolean goingDown = (vy < 0);
-            boolean crossTop = (prevY - RADIUS >= paddleTop) && (y - RADIUS <= paddleTop);
-            boolean overlapX = (x >= p.x - RADIUS) && (x <= p.x + p.width + RADIUS);
+            boolean crossTop = (prevY - radius >= paddleTop) && (y - radius <= paddleTop);
+            boolean overlapX = (x >= p.x - radius) && (x <= p.x + p.width + radius);
 
             // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
             if (goingDown && crossTop && overlapX) {
-                y = paddleTop + RADIUS / 2;
+                y = paddleTop + radius / 2;
 
                 float paddleCenter = p.x + p.width / 2f;
                 float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
@@ -149,10 +165,10 @@ public class Ball {
                 dy = +1;
             } else {
                 // 2) Bật cạnh trái/phải của thanh
-                boolean overlapY = (y + RADIUS >= p.y) && (y - RADIUS <= paddleTop);
+                boolean overlapY = (y + radius >= p.y) && (y - radius <= paddleTop);
 
-                double leftSideX = p.x - RADIUS;
-                double rightSideX = p.x + p.width + RADIUS;
+                double leftSideX = p.x - radius;
+                double rightSideX = p.x + p.width + radius;
 
                 boolean goingRight = (vx > 0);
                 boolean goingLeft = (vx < 0);
@@ -210,12 +226,12 @@ public class Ball {
         angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
 
         if (fire == true) {
-            batch.draw(FIRE, (float) (x - RADIUS / 2f - 10), (float) (y - RADIUS / 2f - 10), (float) (RADIUS + 20),
+            batch.draw(FIRE, (float) (x - radius / 2f - 10), (float) (y - radius / 2f - 10), (float) (radius + 20),
                     (float) (RADIUS + 20));
         }
 
-        batch.draw(texture, (float) (x - RADIUS / 2f), (float) (y - RADIUS / 2f), (float) (RADIUS / 2f),
-                (float) (RADIUS / 2f), (float) RADIUS, (float) RADIUS, 1f, 1f, angle_role, 0, 0, texture.getWidth(),
+        batch.draw(texture, (float) (x - radius / 2f), (float) (y - radius / 2f), (float) (radius / 2f),
+                (float) (radius / 2f), (float) radius, (float) radius, 1f, 1f, angle_role, 0, 0, texture.getWidth(),
                 texture.getHeight(), false, false);
     }
 
