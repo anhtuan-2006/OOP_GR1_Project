@@ -15,7 +15,7 @@ public class Level2 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
-
+    Score score = new Score();
     boolean playing = true;
 
     Play_Pause play_pause;
@@ -58,7 +58,7 @@ public class Level2 {
     }
 
     public void render(SpriteBatch batch) {
-
+    score.setScore(block.getScore());
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
             bar.isPlaying();
@@ -96,6 +96,7 @@ public class Level2 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        score.render(batch);
     }
 
     public void dispose() {

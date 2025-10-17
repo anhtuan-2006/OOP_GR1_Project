@@ -15,11 +15,11 @@ public class Level1 {
     Bar bar;
     Block block; //block thuong
     Block ironblock; // block sat
+    Score score = new Score();
 
     boolean playing = true;
-
     Play_Pause play_pause;
-
+    
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 2, 0, 1, 1, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -56,6 +56,9 @@ public class Level1 {
     }
 
     public void render(SpriteBatch batch) {
+    
+    score.setScore(block.getScore());
+
 
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
@@ -94,6 +97,7 @@ public class Level1 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        score.render(batch);
     }
 
     public void dispose() {

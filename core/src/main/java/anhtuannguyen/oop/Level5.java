@@ -1,6 +1,8 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +16,7 @@ public class Level5 {
     Block block; //
     Block ironblock; // block sat
     boolean playing = true;
-
+    Score score = new Score();    
     Play_Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
@@ -106,7 +108,8 @@ public class Level5 {
         for (Ball b : ball)
             if (b.alive == true)
                 b.render(batch);
-
+        score.setScore(block.getScore());
+        score.render(batch);
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);

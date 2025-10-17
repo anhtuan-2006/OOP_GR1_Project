@@ -15,7 +15,7 @@ public class Level12 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
-
+    Score score = new Score();
     boolean playing = true;
 
     Play_Pause play_pause;
@@ -116,7 +116,8 @@ public class Level12 {
         for (Ball b : ball)
             if (b.alive == true)
                 b.render(batch);
-
+        score.setScore(block.getScore());
+        score.render(batch);
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);

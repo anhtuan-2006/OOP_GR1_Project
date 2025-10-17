@@ -1,6 +1,8 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +15,7 @@ public class Level6 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
-
+    Score score = new Score();
     boolean playing = true;
 
     Play_Pause play_pause;
@@ -93,7 +95,8 @@ public class Level6 {
         for (Ball b : ball)
             if (b.alive == true)
                 b.render(batch);
-
+        score.setScore(block.getScore());
+        score.render(batch);
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);

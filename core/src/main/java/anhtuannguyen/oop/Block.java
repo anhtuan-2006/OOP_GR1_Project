@@ -21,6 +21,7 @@ public class Block {
     private List<Ball> ball;
     private List<Function> function = new ArrayList<>();
     private Ball basic;
+    private int point = 0;
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
     private static final int MAP_SIZE = 64;
@@ -177,6 +178,7 @@ public class Block {
                     fn(block.rect, b);
                     pullBall(ballRect, block.rect, b);
                     block.alive = false;
+                    point += 10;
                     blocks[row][col] = null;
                     } else {
                         pullBall(ballRect, block.rect, b);
@@ -185,7 +187,9 @@ public class Block {
             }
         }
     }
-
+    public int getScore() {
+        return point;
+    }
     private void render(SpriteBatch batch) {
         if (alive && texture != null) {
             batch.draw(texture, rect.x, rect.y, rect.width, rect.height);
