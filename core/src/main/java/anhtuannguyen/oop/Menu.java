@@ -14,10 +14,9 @@ public class Menu {
     private Texture play;
     private Texture exit;
     private Texture setting;
-    private Texture logo;   
+    private Texture logo;
     public static boolean press = false;
 
-   
     Viewport viewport;
 
     Rectangle play_size;
@@ -30,7 +29,7 @@ public class Menu {
     boolean touch_setting = false;
 
     Rectangle logo_size;
-    
+
     Menu(Viewport _viewport) {
         viewport = _viewport;
     }
@@ -72,13 +71,28 @@ public class Menu {
             Vector3 v = new Vector3(com.badlogic.gdx.Gdx.input.getX(), com.badlogic.gdx.Gdx.input.getY(), 0);
             viewport.unproject(v);
             if (play_size.contains(v.x, v.y)) {
-            state = GameState.SELECT_MAP;
-            press = true;
+                state = GameState.SELECT_MAP;
+                press = true;
+            }
+        }
+        if (touch_setting == true && com.badlogic.gdx.Gdx.input.justTouched()) {
+            Vector3 v = new Vector3(com.badlogic.gdx.Gdx.input.getX(), com.badlogic.gdx.Gdx.input.getY(), 0);
+            viewport.unproject(v);
+            if (setting_size.contains(v.x, v.y)) {
+                state = GameState.SETTING;
+                press = true;
+            }
+        }
+        if (touch_exit == true && com.badlogic.gdx.Gdx.input.justTouched()) {
+            Vector3 v = new Vector3(com.badlogic.gdx.Gdx.input.getX(), com.badlogic.gdx.Gdx.input.getY(), 0);
+            viewport.unproject(v);
+            if (exit_size.contains(v.x, v.y)) {
+                com.badlogic.gdx.Gdx.app.exit();
             }
         }
         return state;
-        
-        }
+    }
+
     public void render(SpriteBatch batch) {
         update();
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
@@ -95,12 +109,9 @@ public class Menu {
 
         if (touch_exit == false)
             batch.draw(exit, exit_size.x, exit_size.y, exit_size.width, exit_size.height);
-            
+
         else
             batch.draw(exit, exit_size.x - 20, exit_size.y - 20, exit_size.width + 40, exit_size.height + 40);
-            if (com.badlogic.gdx.Gdx.input.justTouched()) {
-                com.badlogic.gdx.Gdx.app.exit();
-            }
 
         batch.draw(logo, logo_size.x, logo_size.y, logo_size.width, logo_size.height);
     }

@@ -13,21 +13,23 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * platforms.
  */
 public class main extends ApplicationAdapter {
-    
-    
+
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    private OrthographicCamera cam; 
-    private Viewport viewport; 
+    private OrthographicCamera cam;
+    private Viewport viewport;
 
     private SpriteBatch batch;
-    
+
     GameState state = GameState.MENU; // Trạng thái hiện tại của
 
     InGame ingame;
     Menu menu;
     SelectMap selectmap;
+    Setting setting;
+
+    Sound music;
 
     @Override
     public void create() {
@@ -43,13 +45,16 @@ public class main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
+        music = new Sound();
+
         menu = new Menu(viewport);
         menu.create();
         selectmap = new SelectMap(viewport);
         selectmap.create();
         ingame = new InGame(viewport);
         ingame.create();
-        
+        setting = new Setting(viewport, music);
+        setting.create();
     }
 
     @Override
@@ -71,17 +76,24 @@ public class main extends ApplicationAdapter {
         batch.begin();
         state = menu.nextscreen(state);
         if (state == GameState.MENU) {
-        menu.update();
-        menu.render(batch);
+            music.playMusic();
+            menu.update();
+            menu.render(batch);
         }
         if (state == GameState.SELECT_MAP) {
-        selectmap.update();
-        state = selectmap.getSelectedMap();
-        selectmap.render(batch);
+            selectmap.update();
+            state = selectmap.getSelectedMap();
+            selectmap.render(batch);
+        }
+        if(state == GameState.SETTING) {
+            setting.update();
+            state = setting.getSelectedMap();
+            setting.render(batch);
         }
         if (state == GameState.IN_GAME) {
-        
-        ingame.render(batch,selectmap);
+
+            music.stopMusic();
+            ingame.render(batch, selectmap);
         }
         batch.end();
     }
