@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Sound {
     Music music1 = Gdx.audio.newMusic(Gdx.files.internal("Music1.mp3"));
     Music music2 = Gdx.audio.newMusic(Gdx.files.internal("Music2.mp3"));
+    Music ball_block = Gdx.audio.newMusic(Gdx.files.internal("ball_block.mp3"));
+    Music ball_bar = Gdx.audio.newMusic(Gdx.files.internal("ball_bar.mp3"));
 
     public float volume = 1f;
 
@@ -20,6 +22,16 @@ public class Sound {
 
         music2.setLooping(true);
         music2.setVolume(volume);
+    }
+
+    public void play_ball_block() {
+        ball_block.stop();
+        ball_block.play();
+    }
+
+    public void play_ball_bar() {
+        ball_bar.stop();
+        ball_bar.play();
     }
 
     void setVol(int x)

@@ -85,7 +85,7 @@ public class main extends ApplicationAdapter {
             state = selectmap.getSelectedMap();
             selectmap.render(batch);
         }
-        if(state == GameState.SETTING) {
+        if (state == GameState.SETTING) {
             setting.update();
             state = setting.getSelectedMap();
             setting.render(batch);

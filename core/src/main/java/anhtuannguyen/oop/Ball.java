@@ -39,6 +39,7 @@ public class Ball {
     public float originalRadius = RADIUS;
     public float effectTimer = -1;
 
+    Sound sound = new Sound();
 
     public double getx() {
         return x;
@@ -83,19 +84,18 @@ public class Ball {
 
     public void Move() {
 
-
         if (playing == false)
             return;
 
-         float dtt = Gdx.graphics.getDeltaTime();
+        float dtt = Gdx.graphics.getDeltaTime();
 
-     if (effectTimer >= 0) {
-    effectTimer += dtt;
-    if (effectTimer >= 5f) {
-        radius = originalRadius;
-        effectTimer = -1;
-    }
-}
+        if (effectTimer >= 0) {
+            effectTimer += dtt;
+            if (effectTimer >= 5f) {
+                radius = originalRadius;
+                effectTimer = -1;
+            }
+        }
 
         if (started == false) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
@@ -120,15 +120,18 @@ public class Ball {
 
         // Bật tường trái/phải theo bán kính
         if (x <= radius) {
+            sound.play_ball_block();
             x = radius;
             dx = -dx;
         } else if (x >= WORLD_W - radius) {
+            sound.play_ball_block();
             x = WORLD_W - radius;
             dx = -dx;
         }
 
         // Bật trần
         if (y >= WORLD_H - radius) {
+            sound.play_ball_block();
             y = WORLD_H - radius;
             dy = -dy;
         }
@@ -150,6 +153,7 @@ public class Ball {
 
             // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
             if (goingDown && crossTop && overlapX) {
+                sound.play_ball_bar();
                 y = paddleTop + radius / 2;
 
                 float paddleCenter = p.x + p.width / 2f;
@@ -197,6 +201,7 @@ public class Ball {
 
     // Đổi hướng: 1=left, 2=right → lật trục X; 3=up, 4=down → lật trục Y
     public void Change_Direction(int c) {
+        sound.play_ball_block();
         switch (c) {
             case 1:
             case 2:
