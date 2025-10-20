@@ -34,9 +34,9 @@ public class Function {
 
     private Texture FireBall = new Texture("FireBall.png");
 
-    Random rand = new Random();
-    private int type = rand.nextInt(4) + 1;
-
+    //Random rand = new Random();
+    //private int type = rand.nextInt(4) + 1;
+int type = 2;
     Function(float _x, float _y, Ball _ball) {
         x = _x;
         y = _y;
@@ -46,7 +46,7 @@ public class Function {
 
     public int Move() {
         y = y - SPEED;
-
+       
         Rectangle p = bar.getBounds();
         if (y - RADIUS <= p.y + p.height && x + RADIUS >= p.x && x - RADIUS <= p.x + p.width) {
             alive = false;
