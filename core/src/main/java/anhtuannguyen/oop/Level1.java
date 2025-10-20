@@ -21,17 +21,17 @@ public class Level1 {
     Play_Pause play_pause;
     
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 2, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 2, 0, 1, 1, 0, 2, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 2, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 2, 1, 0, 1, 2, 0, 1, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 2, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 2, 0, 1, 1, 0, 1, 2, 0, 1, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
@@ -47,10 +47,10 @@ public class Level1 {
         ball.add(b);
 
         block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.jpg"));
-        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block.png"));
+        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block_lv1.jpg"));
 
         block.initializeBlocks(1, new Texture("block_level1.jpg"));
-        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv1.jpg"));
 
         background = new Texture("background_level1.jpg");
     }

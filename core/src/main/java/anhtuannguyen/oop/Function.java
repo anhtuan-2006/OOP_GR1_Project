@@ -34,9 +34,8 @@ public class Function {
 
     private Texture FireBall = new Texture("FireBall.png");
 
-    //Random rand = new Random();
-    //private int type = rand.nextInt(4) + 1;
-int type = 2;
+    Random rand = new Random();
+    private int type = rand.nextInt(4) + 1;
     Function(float _x, float _y, Ball _ball) {
         x = _x;
         y = _y;
