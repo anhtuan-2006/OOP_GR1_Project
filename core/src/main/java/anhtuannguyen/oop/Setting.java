@@ -189,17 +189,11 @@ public class Setting {
     }
 
     public int getlife() {
-        if(heart_type == 1)
-        {
-            System.out.println(1);
+        if (heart_type == 1) {
             return 1;
-        }
-        else if(heart_type == 2)
-        {
-            System.out.println(3);
+        } else if (heart_type == 2) {
             return 3;
         }
-        System.out.println(5);
         return 5;
     }
 

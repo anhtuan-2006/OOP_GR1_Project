@@ -23,14 +23,13 @@ public class InGame {
     private int life;
 
     private Play_Pause play_pause;
+
     InGame(Viewport _v) {
         viewport = _v;
     }
 
     public void setLife(int _life) {
-        if(_life == 2) _life = 3;
-        else if(_life == 3) _life = 5;
-        else life = _life;
+        level1.setLife(_life);
     }
 
     public void create() {
@@ -42,7 +41,7 @@ public class InGame {
         level3 = new Level3(play_pause);
         level3.create();
         level4 = new Level4(play_pause);
-        level4.create();        
+        level4.create();
         level5 = new Level5(play_pause);
         level5.create();
         level6 = new Level6(play_pause);
@@ -66,32 +65,32 @@ public class InGame {
         play_pause.update();
         if (map_number == 0) {
             level1.render(batch);
-        } 
+        }
         if (map_number == 1) {
             level2.render(batch);
-        } 
+        }
         if (map_number == 2) {
             level3.render(batch);
-        } 
+        }
         if (map_number == 3) {
             level4.render(batch);
-        }  
+        }
         if (map_number == 4) {
             level5.render(batch);
-        }  
+        }
         if (map_number == 5) {
             level6.render(batch);
-        }  
+        }
         if (map_number == 6) {
             level7.render(batch);
-        }  
+        }
         if (map_number == 7) {
             level8.render(batch);
-        } 
+        }
         if (map_number == 8) {
             level9.render(batch);
-        } 
-         if (map_number == 9) {
+        }
+        if (map_number == 9) {
             level10.render(batch);
         }
         if (map_number == 10) {
@@ -101,17 +100,16 @@ public class InGame {
             level12.render(batch);
         }
 
-        
-        
         play_pause.render(batch);
-        
+
     }
+
     public void dispose() {
         play_pause.dispose();
         level1.dispose();
         level2.dispose();
         level3.dispose();
-        level4.dispose();           
+        level4.dispose();
         level5.dispose();
         level6.dispose();
         level7.dispose();

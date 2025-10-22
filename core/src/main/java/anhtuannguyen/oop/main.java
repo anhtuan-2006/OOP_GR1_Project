@@ -30,6 +30,7 @@ public class main extends ApplicationAdapter {
     Setting setting;
 
     Sound music;
+    int lifes;
 
     @Override
     public void create() {
@@ -81,19 +82,20 @@ public class main extends ApplicationAdapter {
             menu.render(batch);
         }
         if (state == GameState.SELECT_MAP) {
+            ingame.setLife(setting.getlife());
             selectmap.update();
             state = selectmap.getSelectedMap();
             selectmap.render(batch);
         }
         if (state == GameState.SETTING) {
             setting.update();
+            lifes = setting.getlife();
             state = setting.getSelectedMap();
             setting.render(batch);
         }
         if (state == GameState.IN_GAME) {
 
             music.stopMusic();
-            ingame.setLife(setting.heart_type);
             ingame.render(batch, selectmap);
         }
         batch.end();

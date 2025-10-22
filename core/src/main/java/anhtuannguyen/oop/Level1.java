@@ -13,15 +13,15 @@ public class Level1 {
     private Texture background;
     List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block; //block thuong
+    Block block; // block thuong
     Block ironblock; // block sat
     Score score = new Score();
 
     boolean playing = true;
     Play_Pause play_pause;
 
-    Life life = new Life(3);
-    
+    Life life;
+
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -41,7 +41,9 @@ public class Level1 {
         play_pause = _play_pause;
     }
 
-    
+    public void setLife(int _life) {
+        life = new Life(_life);
+    }
 
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
@@ -60,9 +62,8 @@ public class Level1 {
     }
 
     public void render(SpriteBatch batch) {
-    
-        score.setScore(block.getScore());
 
+        score.setScore(block.getScore());
 
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
@@ -82,16 +83,15 @@ public class Level1 {
         }
 
         if (ball.size() == 0) {
-            if(life.die() == true) {
+            if (life.die() == true) {
                 Ball b = new Ball(bar, new Texture("ball.png"));
                 b.started = false;
                 ball.add(b);
-            }
-            else
-            Gdx.app.exit();
+            } else
+                Gdx.app.exit();
         }
 
-        for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
+        for (Ball b : new ArrayList<>(ball)) { // chụp snapshot
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
