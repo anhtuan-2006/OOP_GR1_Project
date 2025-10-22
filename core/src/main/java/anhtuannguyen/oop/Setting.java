@@ -1,19 +1,14 @@
 package anhtuannguyen.oop;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Setting {
     private static final float WORLD_W = Screen.WORLD_W;
@@ -191,6 +186,21 @@ public class Setting {
                 chose = 3;
         }
 
+    }
+
+    public int getlife() {
+        if(heart_type == 1)
+        {
+            System.out.println(1);
+            return 1;
+        }
+        else if(heart_type == 2)
+        {
+            System.out.println(3);
+            return 3;
+        }
+        System.out.println(5);
+        return 5;
     }
 
     public void render(SpriteBatch batch) {

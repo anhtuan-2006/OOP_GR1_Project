@@ -19,6 +19,8 @@ public class Level1 {
 
     boolean playing = true;
     Play_Pause play_pause;
+
+    Life life = new Life(3);
     
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
@@ -39,6 +41,8 @@ public class Level1 {
         play_pause = _play_pause;
     }
 
+    
+
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
 
@@ -57,7 +61,7 @@ public class Level1 {
 
     public void render(SpriteBatch batch) {
     
-    score.setScore(block.getScore());
+        score.setScore(block.getScore());
 
 
         if (playing != play_pause.isPlaying()) {
@@ -78,6 +82,12 @@ public class Level1 {
         }
 
         if (ball.size() == 0) {
+            if(life.die() == true) {
+                Ball b = new Ball(bar, new Texture("ball.png"));
+                b.started = false;
+                ball.add(b);
+            }
+            else
             Gdx.app.exit();
         }
 
@@ -98,11 +108,13 @@ public class Level1 {
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
         score.render(batch);
+        life.render(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        life.dispose();
     }
 }

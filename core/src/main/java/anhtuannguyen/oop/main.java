@@ -51,10 +51,10 @@ public class main extends ApplicationAdapter {
         menu.create();
         selectmap = new SelectMap(viewport);
         selectmap.create();
-        ingame = new InGame(viewport);
-        ingame.create();
         setting = new Setting(viewport, music);
         setting.create();
+        ingame = new InGame(viewport);
+        ingame.create();
     }
 
     @Override
@@ -93,6 +93,7 @@ public class main extends ApplicationAdapter {
         if (state == GameState.IN_GAME) {
 
             music.stopMusic();
+            ingame.setLife(setting.heart_type);
             ingame.render(batch, selectmap);
         }
         batch.end();

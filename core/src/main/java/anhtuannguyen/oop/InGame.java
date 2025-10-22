@@ -20,15 +20,21 @@ public class InGame {
     private Level11 level11;
     private Level12 level12;
 
-    private Play_Pause play_pause;
+    private int life;
 
+    private Play_Pause play_pause;
     InGame(Viewport _v) {
         viewport = _v;
     }
 
+    public void setLife(int _life) {
+        if(_life == 2) _life = 3;
+        else if(_life == 3) _life = 5;
+        else life = _life;
+    }
+
     public void create() {
         play_pause = new Play_Pause(viewport);
-
         level1 = new Level1(play_pause);
         level1.create();
         level2 = new Level2(play_pause);
@@ -95,12 +101,11 @@ public class InGame {
             level12.render(batch);
         }
 
-
         
         
         play_pause.render(batch);
+        
     }
-
     public void dispose() {
         play_pause.dispose();
         level1.dispose();
@@ -113,5 +118,7 @@ public class InGame {
         level8.dispose();
         level9.dispose();
         level10.dispose();
+        level11.dispose();
+        level12.dispose();
     }
 }
