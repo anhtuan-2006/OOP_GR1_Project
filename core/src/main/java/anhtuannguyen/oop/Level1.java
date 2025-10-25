@@ -13,29 +13,36 @@ public class Level1 {
     private Texture background;
     List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block; //block thuong
+    Block block; // block thuong
     Block ironblock; // block sat
     Score score = new Score();
     boolean playing = true;
     Pause play_pause;
     
+
+    Life life;
+
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 2, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 2, 0, 1, 1, 0, 2, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 2, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 2, 1, 0, 1, 2, 0, 1, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 2, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 2, 0, 1, 1, 0, 1, 2, 0, 1, 1 },
+            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
     Level1(Pause _play_pause) {
         play_pause = _play_pause;
+    }
+
+    public void setLife(int _life) {
+        life = new Life(_life);
     }
 
     public void create() {
@@ -45,10 +52,10 @@ public class Level1 {
         ball.add(b);
 
         block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.jpg"));
-        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block.png"));
+        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block_lv1.jpg"));
 
         block.initializeBlocks(1, new Texture("block_level1.jpg"));
-        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv1.jpg"));
 
         background = new Texture("background_level1.jpg");
     }
@@ -74,10 +81,15 @@ public class Level1 {
         }
 
         if (ball.size() == 0) {
-            Gdx.app.exit();
+            if (life.die() == true) {
+                Ball b = new Ball(bar, new Texture("ball.png"));
+                b.started = false;
+                ball.add(b);
+            } else
+                Gdx.app.exit();
         }
 
-        for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
+        for (Ball b : new ArrayList<>(ball)) { // chụp snapshot
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
@@ -94,6 +106,7 @@ public class Level1 {
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
         score.render(batch);
+        life.render(batch);
     }
 
     public void dispose() {
@@ -101,6 +114,6 @@ public class Level1 {
         block.dispose();
         ball.clear();
         ironblock.dispose();
-        
+        life.dispose();
     }
 }

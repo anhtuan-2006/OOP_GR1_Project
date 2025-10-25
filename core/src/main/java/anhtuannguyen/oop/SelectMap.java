@@ -13,7 +13,7 @@ public class SelectMap {
 
     private Viewport viewport;
     private Texture back_button;
-    private Rectangle back_button_size = new Rectangle((float) (WORLD_W) / 4, 100, (float) WORLD_W / 2, 150);
+    private Rectangle back_button_size = new Rectangle((float) (WORLD_W)/2 - 150, 100, 300, 150);
     private boolean touch_back_button = false;
     private Texture background;
     private Texture[] maps;

@@ -21,18 +21,18 @@ public class Level11 {
     Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 0, 0, 1, 0, 0, 1, 0, 0, 1, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 2, 0, 0, 1, 0, 2, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 2, 0, 1, 0, 0, 2, 0, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
     static int ROW = map.length;
     static int COL = map[0].length;
@@ -49,10 +49,10 @@ public class Level11 {
         ball.add(b);
         
         block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level11.png"));
-        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block.png"));
+        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block_lv11.jpg"));
 
         block.initializeBlocks(1, new Texture("Block_Level11.png"));
-        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv11.jpg"));
 
         background = new Texture("Background_Level11 (2).png");
         if (background == null || bar == null || ball == null || block == null) {

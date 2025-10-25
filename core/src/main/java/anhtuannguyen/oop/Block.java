@@ -122,8 +122,8 @@ public class Block {
         }
     }
 
-    private void pullBall(Rectangle bal, Rectangle block, Ball ball) {
-        if (ball.fire) return;
+    private void pullBall(Rectangle bal, Rectangle block, Ball ball , boolean check) {
+        if (ball.fire  && !check) return;
         float balLeft = bal.x;
         float balRight = bal.x + bal.width;
         float balBottom = bal.y;
@@ -176,17 +176,19 @@ public class Block {
                     if(map[row][col] !=2)
                     {
                     fn(block.rect, b);
-                    pullBall(ballRect, block.rect, b);
+                    pullBall(ballRect, block.rect, b, false);
                     block.alive = false;
                     point += 10;
                     blocks[row][col] = null;
                     } else {
-                        pullBall(ballRect, block.rect, b);
+                        pullBall(ballRect, block.rect, b,true);
                     }
                 }
             }
         }
     }
+
+    
     public int getScore() {
         return point;
     }

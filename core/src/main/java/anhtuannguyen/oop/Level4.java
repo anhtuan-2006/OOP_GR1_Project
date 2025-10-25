@@ -21,18 +21,18 @@ public class Level4 {
     Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
+            { 0, 2, 0, 1, 0, 2, 0, 1, 0, 2 },
+            { 0, 2, 0, 0, 0, 2, 0, 0, 0, 0 },
+            { 0, 2, 0, 1, 0, 0, 0, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
             { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 0, 2, 0, 0, 0, 0, 0, 1 },
+            { 0, 0, 0, 2, 0, 0, 0, 2, 0, 0 },
+            { 1, 0, 0, 2, 0, 1, 0, 2, 0, 1 },
+            { 0, 0, 0, 2, 0, 0, 0, 2, 0, 0 },
     };
 
     Level4(Pause _play_pause)
@@ -48,10 +48,10 @@ public class Level4 {
         ball.add(b);
 
         block = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("block_Level4.png"));
-        ironblock = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("iron_block.png"));
+        ironblock = new Block(0, 0, ball, 12, 10, map, (int) WORLD_W/10, 64, new Texture("iron_block_lv4.png"));
 
         block.initializeBlocks(1, new Texture("block_Level4.png"));
-        ironblock.initializeBlocks(2, new Texture("iron_block.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv4.png"));
 
         background = new Texture("Background_Level4.png");
         if (background == null || bar == null || ball == null || block == null) {

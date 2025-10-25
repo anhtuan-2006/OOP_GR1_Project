@@ -22,6 +22,8 @@ public class InGame {
     private Level11 level11;
     private Level12 level12;
 
+    private int life;
+
     private final Viewport viewport;
     private Pause pause;
     private SelectMap selectmap;
@@ -57,6 +59,11 @@ public class InGame {
     public void setSelectMap(SelectMap _selectmap) {
         this.selectmap = _selectmap;
     }
+
+    public void setLife(int _life) {
+        level1.setLife(_life);
+    }
+
 
     public void create() {
         pause = new Pause(viewport);
@@ -135,9 +142,8 @@ public class InGame {
         }
 
 
-            // Render màn hình pause nếu đang tạm dừng
-
-
+        
+        
 
     }
 
