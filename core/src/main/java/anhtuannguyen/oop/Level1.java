@@ -16,9 +16,8 @@ public class Level1 {
     Block block; //block thuong
     Block ironblock; // block sat
     Score score = new Score();
-
     boolean playing = true;
-    Play_Pause play_pause;
+    Pause play_pause;
     
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 2, 0, 1, 1, 0, 1, 1, 0, 1 },
@@ -35,13 +34,12 @@ public class Level1 {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
-    Level1(Play_Pause _play_pause) {
+    Level1(Pause _play_pause) {
         play_pause = _play_pause;
     }
 
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
-
         Ball b = new Ball(bar, new Texture("ball.png"));
         b.started = false;
         ball.add(b);
@@ -58,8 +56,6 @@ public class Level1 {
     public void render(SpriteBatch batch) {
     
     score.setScore(block.getScore());
-
-
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
             bar.isPlaying();
@@ -103,6 +99,8 @@ public class Level1 {
     public void dispose() {
         bar.dispose();
         block.dispose();
+        ball.clear();
         ironblock.dispose();
+        
     }
 }

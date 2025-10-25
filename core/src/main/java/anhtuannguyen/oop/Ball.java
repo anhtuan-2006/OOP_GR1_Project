@@ -33,7 +33,7 @@ public class Ball {
     public int Time_fire = 0;
 
     private static final float RADIUS = 48f; // Bán kính quả bóng
-    private static final float SPEED = 1000f; // Tốc độ di chuyển (pixel/giây)
+    private static final float SPEED = 700f; // Tốc độ di chuyển (pixel/giây)
 
     public float radius = RADIUS;
     public float originalRadius = RADIUS;
@@ -235,9 +235,7 @@ public class Ball {
                 texture.getHeight(), false, false);
     }
 
-    public void dispose() {
-        texture.dispose();
-    }
+    
 
     public void setPosition(float x, float y) {
         this.x = x;
@@ -251,5 +249,8 @@ public class Ball {
     public Bar getBar() {
         return bar;
     }
-
+    
+    public void dispose() {
+        texture.dispose();
+    }
 }

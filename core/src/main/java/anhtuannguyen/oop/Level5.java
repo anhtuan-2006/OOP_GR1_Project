@@ -17,7 +17,7 @@ public class Level5 {
     Block ironblock; // block sat
     boolean playing = true;
     Score score = new Score();    
-    Play_Pause play_pause;
+    Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1  },
@@ -49,7 +49,7 @@ public class Level5 {
     };
     static int ROW = map.length;
     static int COL = map[0].length;
-    Level5(Play_Pause _play_pause)
+    Level5(Pause _play_pause)
     {
         play_pause = _play_pause;
     }
@@ -119,5 +119,7 @@ public class Level5 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+                ball.clear();
+
     }
 }

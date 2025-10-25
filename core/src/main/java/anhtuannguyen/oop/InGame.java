@@ -1,12 +1,14 @@
 package anhtuannguyen.oop;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class InGame {
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
-    private Viewport viewport;
+
     private Level1 level1;
     private Level2 level2;
     private Level3 level3;
@@ -20,98 +22,196 @@ public class InGame {
     private Level11 level11;
     private Level12 level12;
 
-    private Play_Pause play_pause;
+    private final Viewport viewport;
+    private Pause pause;
+    private SelectMap selectmap;
+    private GameState state = GameState.IN_GAME;
 
-    InGame(Viewport _v) {
-        viewport = _v;
+    // Constructor
+    public InGame(Viewport _v) {
+        this.viewport = _v;
+    }
+
+    // Getters and Setters
+    public Pause getPause() {
+        return pause;
+    }
+
+    public SelectMap getSelectMap() {
+        return selectmap;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState _state) {
+        state = _state;
+        System.out.println("InGame state updated to: " + state); // Debug log
+    }
+
+    public void setPause(Pause _pause) {
+        this.pause = _pause;
+    }
+
+    public void setSelectMap(SelectMap _selectmap) {
+        this.selectmap = _selectmap;
     }
 
     public void create() {
-        play_pause = new Play_Pause(viewport);
-
-        level1 = new Level1(play_pause);
+        pause = new Pause(viewport);
+        pause.create();
+        level1 = new Level1(pause);
         level1.create();
-        level2 = new Level2(play_pause);
+        level2 = new Level2(pause);
         level2.create();
-        level3 = new Level3(play_pause);
+        level3 = new Level3(pause);
         level3.create();
-        level4 = new Level4(play_pause);
-        level4.create();        
-        level5 = new Level5(play_pause);
+        level4 = new Level4(pause);
+        level4.create();
+        level5 = new Level5(pause);
         level5.create();
-        level6 = new Level6(play_pause);
+        level6 = new Level6(pause);
         level6.create();
-        level7 = new Level7(play_pause);
+        level7 = new Level7(pause);
         level7.create();
-        level8 = new Level8(play_pause);
+        level8 = new Level8(pause);
         level8.create();
-        level9 = new Level9(play_pause);
+        level9 = new Level9(pause);
         level9.create();
-        level10 = new Level10(play_pause);
+        level10 = new Level10(pause);
         level10.create();
-        level11 = new Level11(play_pause);
+        level11 = new Level11(pause);
         level11.create();
-        level12 = new Level12(play_pause);
+        level12 = new Level12(pause);
         level12.create();
     }
 
-    public void render(SpriteBatch batch, SelectMap selectmap) {
+    public void update() {
+
+            handleInput(); // Xử lý input từ phím ESC
+       
+    }
+
+    // Hàm con để xử lý input
+    private void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if (state == GameState.PAUSE) {
+                state = GameState.IN_GAME;
+            }
+             if (state == GameState.IN_GAME) {
+                state = GameState.PAUSE;
+            }
+        }
+    }
+
+    public void render(SpriteBatch batch) {
+
         int map_number = selectmap.getMap();
-        play_pause.update();
         if (map_number == 0) {
             level1.render(batch);
-        } 
-        if (map_number == 1) {
+        } else if (map_number == 1) {
             level2.render(batch);
-        } 
-        if (map_number == 2) {
+        } else if (map_number == 2) {
             level3.render(batch);
-        } 
-        if (map_number == 3) {
+        } else if (map_number == 3) {
             level4.render(batch);
-        }  
-        if (map_number == 4) {
+        } else if (map_number == 4) {
             level5.render(batch);
-        }  
-        if (map_number == 5) {
+        } else if (map_number == 5) {
             level6.render(batch);
-        }  
-        if (map_number == 6) {
+        } else if (map_number == 6) {
             level7.render(batch);
-        }  
-        if (map_number == 7) {
+        } else if (map_number == 7) {
             level8.render(batch);
-        } 
-        if (map_number == 8) {
+        } else if (map_number == 8) {
             level9.render(batch);
-        } 
-         if (map_number == 9) {
+        } else if (map_number == 9) {
             level10.render(batch);
-        }
-        if (map_number == 10) {
+        } else if (map_number == 10) {
             level11.render(batch);
-        }
-        if (map_number == 11) {
+        } else if (map_number == 11) {
             level12.render(batch);
         }
 
 
+            // Render màn hình pause nếu đang tạm dừng
+
+
+
+    }
+
+    public void reset() {
         
+        if (selectmap.getMap() == 0){
+            level1.dispose();
+            level1.create();
+        }
+        if (selectmap.getMap() == 1) {
+            level2.dispose();
+            level2.create();
+        }
+        if (selectmap.getMap() == 2) {
+            level3.dispose();
+            level3.create();
+        }
+       
+        if (selectmap.getMap() == 3) {
+            level4.dispose();
+            level4.create();
+        }
+        if (selectmap.getMap() == 4) {
+            level5.dispose();
+            level5.create();
+        }
+        if (selectmap.getMap() == 5) {
+            level6.dispose();
+            level6.create();
+        }
+        if (selectmap.getMap() == 6) {
+            level7.dispose();
+            level7.create();
+        }
+        if (selectmap.getMap() == 7) {
+            level8.dispose();
+            level8.create();
+        }
+        if (selectmap.getMap() == 8) {
+            level9.dispose();
+            level9.create();
+        }
+        if (selectmap.getMap() == 9) {
+            level10.dispose();
+            level10.create();
+        }
+        if (selectmap.getMap() == 10) {
+            level11.dispose();
+            level11.create();
+        }
+         if (selectmap.getMap() == 11) {
+            level12.dispose();
+            level12.create();
+        }
         
-        play_pause.render(batch);
+
+        if (pause != null) {
+            pause.setState(GameState.IN_GAME); // Đặt lại trạng thái Pause
+        }
     }
 
     public void dispose() {
-        play_pause.dispose();
-        level1.dispose();
-        level2.dispose();
-        level3.dispose();
-        level4.dispose();           
-        level5.dispose();
-        level6.dispose();
-        level7.dispose();
-        level8.dispose();
-        level9.dispose();
-        level10.dispose();
+        if (pause != null) pause.dispose();
+        if (level1 != null) level1.dispose();
+        if (level2 != null) level2.dispose();
+        if (level3 != null) level3.dispose();
+        if (level4 != null) level4.dispose();
+        if (level5 != null) level5.dispose();
+        if (level6 != null) level6.dispose();
+        if (level7 != null) level7.dispose();
+        if (level8 != null) level8.dispose();
+        if (level9 != null) level9.dispose();
+        if (level10 != null) level10.dispose();
+        if (level11 != null) level11.dispose();
+        if (level12 != null) level12.dispose();
     }
 }

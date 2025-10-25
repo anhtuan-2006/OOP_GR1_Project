@@ -18,7 +18,7 @@ public class Level10 {
     Score score = new Score();
     boolean playing = true;
 
-    Play_Pause play_pause;
+    Pause play_pause;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -36,7 +36,7 @@ public class Level10 {
     };
     static int ROW = map.length;
     static int COL = map[0].length;
-    Level10(Play_Pause _play_pause)
+    Level10(Pause _play_pause)
     {
         play_pause = _play_pause;
     }
@@ -105,5 +105,7 @@ public class Level10 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+                ball.clear();
+
     }
 }

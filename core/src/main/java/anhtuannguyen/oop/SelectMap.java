@@ -13,34 +13,58 @@ public class SelectMap {
 
     private Viewport viewport;
     private Texture back_button;
-    private Rectangle back_button_size = new Rectangle((float) (WORLD_W)/4, 100, (float) WORLD_W/2, 150);
+    private Rectangle back_button_size = new Rectangle((float) (WORLD_W) / 4, 100, (float) WORLD_W / 2, 150);
     private boolean touch_back_button = false;
     private Texture background;
     private Texture[] maps;
     private boolean[] touch_maps;
     private Rectangle[] map_size = new Rectangle[12];
-
     private int selectedMap = -1; // map được click chọn
+    private InGame ingame; // Tham chiếu đến InGame
+    private Pause pause; // Tham chiếu đến Pause
+    private GameState gamestate; 
 
+    // Constructor
     public SelectMap(Viewport _viewport) {
         viewport = _viewport;
     }
 
+    // Getters and Setters
+    public InGame getIngame() {
+        return ingame;
+    }
+
+    public Pause getPause() {
+        return pause;
+    }
+
+    public void setIngame(InGame _ingame) {
+        this.ingame = _ingame;
+    }
+
+    public void setPause(Pause _pause) {
+        this.pause = _pause;
+    }
+
+    public void setState(GameState _gamestate) {
+        gamestate = _gamestate;
+    }
+    public GameState getState() {
+        return gamestate;
+    }
     public void create() {
         background = new Texture("Menu_background.jpg");
         maps = new Texture[12];
         for (int i = 0; i < maps.length; i++) {
             maps[i] = new Texture("Avata_Level" + (i + 1) + ".png");
-            if (maps[i] == null) Gdx.app.log("Error", "Load map " + (i + 1) + " failed");
         }
         back_button = new Texture("back_button.png");
 
         map_size = new Rectangle[maps.length];
-        touch_maps = new boolean[maps.length]; 
+        touch_maps = new boolean[maps.length];
 
         float count_row = 300f;
         float spacing = 20f;
-
         for (int i = 0; i < maps.length; i++) {
             if (i % 3 == 0) {
                 map_size[i] = new Rectangle(
@@ -67,8 +91,8 @@ public class SelectMap {
                 count_row += WORLD_H / 6 + spacing;
             }
         }
-
     }
+
     public int getMap() {
         return selectedMap;
     }
@@ -76,40 +100,45 @@ public class SelectMap {
     public GameState getSelectedMap() {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
-        if (touch_back_button && Gdx.input.justTouched() && Menu.press != true) {
+        if (touch_back_button && Gdx.input.justTouched() && !Menu.press) {
             Menu.press = true;
-
+            if (ingame != null) {
+                ingame.reset(); // Reset InGame khi quay lại Menu
+            }
             return GameState.MENU;
         }
-        if (!(selectedMap == -1)) return GameState.IN_GAME; // Level
+        if (selectedMap != -1) {
+            return GameState.IN_GAME; // Chuyển sang trạng thái IN_GAME nếu đã chọn map
+        }
         return GameState.SELECT_MAP;
     }
+
     public void update() {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
 
-        // kiểm tra hover
+        // Kiểm tra hover
         for (int i = 0; i < map_size.length; i++) {
             touch_maps[i] = map_size[i].contains(v.x, v.y);
         }
         touch_back_button = back_button_size.contains(v.x, v.y);
-        
-        // kiểm tra click chọn map
-        
-        if (Gdx.input.justTouched() && Menu.press != true) {
+
+        // Kiểm tra click chọn map
+        if (Gdx.input.justTouched() && !Menu.press) {
             for (int i = 0; i < map_size.length; i++) {
                 if (map_size[i].contains(v.x, v.y)) {
                     selectedMap = i;
-                    getSelectedMap();
+                    if (pause != null) {
+                        pause.setState(GameState.IN_GAME); // Cập nhật trạng thái Pause
+                    }
                     break;
                 }
             }
         }
-        
+
         if (!Gdx.input.isTouched()) {
             Menu.press = false;
         }
-        
     }
 
     public void render(SpriteBatch batch) {
@@ -118,7 +147,7 @@ public class SelectMap {
             // System.out.println("load map_number " + (i + 1));
             if (maps[i] != null && map_size[i] != null) {
                 if (touch_maps[i]) {
-                    // hiệu ứng hover
+                    // Hiệu ứng hover
                     batch.draw(
                         maps[i],
                         map_size[i].x - 20,
@@ -136,18 +165,28 @@ public class SelectMap {
                     );
                 }
             }
-            if (touch_back_button)
+        }
+        if (back_button != null) {
+            if (touch_back_button) {
                 batch.draw(back_button, back_button_size.x - 20, back_button_size.y - 20, back_button_size.width + 40, back_button_size.height + 40);
-            else
-            batch.draw(back_button, back_button_size.x, back_button_size.y, back_button_size.width, back_button_size.height);
-            
+            } else {
+                batch.draw(back_button, back_button_size.x, back_button_size.y, back_button_size.width, back_button_size.height);
+            }
         }
     }
 
-    
+    public void reset() {
+        selectedMap = -1; // Đặt lại map được chọn
+        for (int i = 0; i < touch_maps.length; i++) {
+            touch_maps[i] = false; // Đặt lại trạng thái hover
+        }
+        touch_back_button = false;
+        
+    }
 
     public void dispose() {
-        background.dispose();
+        if (background != null) background.dispose();
+        if (back_button != null) back_button.dispose();
         for (Texture texture : maps) {
             if (texture != null) texture.dispose();
         }

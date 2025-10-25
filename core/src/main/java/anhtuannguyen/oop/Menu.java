@@ -74,6 +74,7 @@ public class Menu {
             if (play_size.contains(v.x, v.y)) {
             state = GameState.SELECT_MAP;
             press = true;
+                
             }
         }
         return state;
@@ -90,18 +91,17 @@ public class Menu {
         if (touch_setting == false)
             batch.draw(setting, setting_size.x, setting_size.y, setting_size.width, setting_size.height);
         else
-            batch.draw(setting, setting_size.x - 20, setting_size.y - 20, setting_size.width + 40,
-                    setting_size.height + 40);
+            batch.draw(setting, setting_size.x - 20, setting_size.y - 20, setting_size.width + 40,setting_size.height + 40);
 
         if (touch_exit == false)
             batch.draw(exit, exit_size.x, exit_size.y, exit_size.width, exit_size.height);
             
-        else
+        else if (touch_exit == true) {
             batch.draw(exit, exit_size.x - 20, exit_size.y - 20, exit_size.width + 40, exit_size.height + 40);
             if (com.badlogic.gdx.Gdx.input.justTouched()) {
                 com.badlogic.gdx.Gdx.app.exit();
             }
-
+        }
         batch.draw(logo, logo_size.x, logo_size.y, logo_size.width, logo_size.height);
     }
 
