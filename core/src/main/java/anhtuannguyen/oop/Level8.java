@@ -19,7 +19,7 @@ public class Level8 {
     boolean playing = true;
 
     Pause play_pause;
-
+    Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 1, 2, 0, 1, 2, 0, 1, 2, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -40,7 +40,9 @@ public class Level8 {
     {
         play_pause = _play_pause;
     }
-
+    public void setLife(int _life) {
+        life = new Life(_life);
+    }
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level8.png"));
 
@@ -80,7 +82,13 @@ public class Level8 {
         }
 
         if (ball.size() == 0) {
-            Gdx.app.exit();
+            if(life.die() == true) {
+                Ball b = new Ball(bar, new Texture("Ball_level8.png"));
+                b.started = false;
+                ball.add(b);
+            } else {
+                Gdx.app.exit();
+            }
         }
 
         for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
@@ -100,13 +108,13 @@ public class Level8 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        life.render(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
-                ball.clear();
-
+        life.dispose();
     }
 }

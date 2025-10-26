@@ -64,6 +64,8 @@ public class main extends ApplicationAdapter {
         ingame.setPause(pause);
         pause.setIngame(ingame);
         pause.setSelectMap(selectmap);
+        lifes = setting.getlife(); // Lấy số mạng mặc định từ setting
+        ingame.setLife(lifes);     // Đặt số mạng cho ingame
     }
 
     @Override
@@ -112,6 +114,7 @@ public class main extends ApplicationAdapter {
             lifes = setting.getlife();
             state = setting.getSelectedMap();
             setting.render(batch);
+        ingame.setLife(lifes);     // Đặt số mạng cho ingame
             break;
         }
 

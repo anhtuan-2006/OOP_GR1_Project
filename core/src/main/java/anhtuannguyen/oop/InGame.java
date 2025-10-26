@@ -62,6 +62,17 @@ public class InGame {
 
     public void setLife(int _life) {
         level1.setLife(_life);
+        level2.setLife(_life);
+        level3.setLife(_life);
+        level4.setLife(_life);
+        level5.setLife(_life);
+        level6.setLife(_life);
+        level7.setLife(_life);
+        level8.setLife(_life);
+        level9.setLife(_life);
+        level10.setLife(_life);
+        level11.setLife(_life);
+        level12.setLife(_life);
     }
 
 

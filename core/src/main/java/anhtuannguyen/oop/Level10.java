@@ -20,6 +20,7 @@ public class Level10 {
 
     Pause play_pause;
 
+    Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
             { 0, 0, 2, 2, 2, 2, 2, 2, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -39,6 +40,10 @@ public class Level10 {
     Level10(Pause _play_pause)
     {
         play_pause = _play_pause;
+    }
+
+    public void setLife(int _life) {
+        life = new Life(_life);
     }
 
     public void create() {
@@ -79,7 +84,14 @@ public class Level10 {
         }
 
         if (ball.size() == 0) {
-            Gdx.app.exit();
+            if(life.die() == true) {
+                Ball b = new Ball(bar, new Texture("Ball_level10.png"));
+                b.started = false;
+                ball.add(b);
+            }
+            else {
+                Gdx.app.exit();
+            }
         }
 
         for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
@@ -99,13 +111,13 @@ public class Level10 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        life.render(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
-                ball.clear();
-
+        life.dispose();
     }
 }

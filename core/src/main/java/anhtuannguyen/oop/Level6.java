@@ -20,6 +20,7 @@ public class Level6 {
 
     Pause play_pause;
 
+    Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
              { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -41,6 +42,10 @@ public class Level6 {
         play_pause = _play_pause;
     }
 
+    public void setLife(int _life) {
+        life = new Life(_life);
+    }
+
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level6.png"));
 
@@ -48,7 +53,7 @@ public class Level6 {
         b.started = false;
         ball.add(b);
         
-        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level5.png"));
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level6.png"));
         ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block_lv6.jpg"));
 
         block.initializeBlocks(1, new Texture("Block_Level6.png"));
@@ -80,7 +85,13 @@ public class Level6 {
         }
 
         if (ball.size() == 0) {
-            Gdx.app.exit();
+            if(life.die() == true) {
+                Ball b = new Ball(bar, new Texture("ball_level6.png"));
+                b.started = false;
+                ball.add(b);
+            } else{
+                Gdx.app.exit();
+            }
         }
 
         for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
@@ -100,13 +111,13 @@ public class Level6 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        life.render(batch);
     }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
-                ball.clear();
-
+        life.dispose();
     }
 }
