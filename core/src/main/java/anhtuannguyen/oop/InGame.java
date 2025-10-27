@@ -61,6 +61,7 @@ public class InGame {
     }
 
     public void setLife(int _life) {
+        life = _life;
         level1.setLife(_life);
         level2.setLife(_life);
         level3.setLife(_life);
@@ -159,7 +160,7 @@ public class InGame {
     }
 
     public void reset() {
-        
+        setLife(life);
         if (selectmap.getMap() == 0){
             level1.dispose();
             level1.create();
