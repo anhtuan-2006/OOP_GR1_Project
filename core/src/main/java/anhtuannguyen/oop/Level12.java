@@ -140,5 +140,6 @@ public class Level12 {
         block.dispose();
         ironblock.dispose();
         life.dispose();
+        ball.clear();
     }
 }

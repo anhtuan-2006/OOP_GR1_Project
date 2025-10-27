@@ -119,6 +119,6 @@ public class Level11 {
         block.dispose();
         ironblock.dispose();
         life.dispose();
-
+        ball.clear();
     }
 }

@@ -115,6 +115,7 @@ public class Level4 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        ball.clear();
         life.dispose();
     }
 }

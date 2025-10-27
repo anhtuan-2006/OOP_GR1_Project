@@ -103,7 +103,7 @@ public class Pause {
                 }
                 if (back_touch) {
                     reset();
-                    
+                    selectmap.reset();
                     state = GameState.MENU;
                 }
             }
