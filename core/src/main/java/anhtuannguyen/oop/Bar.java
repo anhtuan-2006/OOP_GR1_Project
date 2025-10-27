@@ -45,6 +45,18 @@ public class Bar {
         playing = !playing;
     }
 
+    public float getx() {
+        return bounds.x;
+    }
+
+    public float gety() {
+        return bounds.y;
+    }
+
+    public float getWidth() {
+        return bounds.width;
+    }
+
     public void update(float deltaTime) {
         if (playing == false)
             return;

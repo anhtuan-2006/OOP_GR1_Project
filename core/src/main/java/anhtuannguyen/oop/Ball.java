@@ -84,8 +84,9 @@ public class Ball {
 
     public void Move() {
 
-        if (playing == false)
+        if (playing == false) {
             return;
+        }
 
         float dtt = Gdx.graphics.getDeltaTime();
 
@@ -98,6 +99,8 @@ public class Ball {
         }
 
         if (started == false) {
+            x = bar.getx() + bar.getWidth() / 2;
+            y = bar.gety() + RADIUS;
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
                 started = true;
             else
@@ -240,8 +243,6 @@ public class Ball {
                 texture.getHeight(), false, false);
     }
 
-    
-
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
@@ -254,7 +255,7 @@ public class Ball {
     public Bar getBar() {
         return bar;
     }
-    
+
     public void dispose() {
         texture.dispose();
     }
