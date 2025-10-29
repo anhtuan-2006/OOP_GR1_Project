@@ -30,12 +30,18 @@ public class Function {
     private Texture Bigball1 = new Texture("Bigball1.png");
     private Texture Bigball2 = new Texture("Bigball2.png");
     private Texture Bigball3 = new Texture("Bigball3.png");
+
+    private Texture SkipBall1 = new Texture("SkipBall1.png");
+    private Texture SkipBall2 = new Texture("SkipBall2.png");
+    private Texture SkipBall3 = new Texture("SkipBall3.png");
+
     private int tex = 1;
 
     private Texture FireBall = new Texture("FireBall.png");
 
     Random rand = new Random();
-    private int type = rand.nextInt(4) + 1;
+    private int type = rand.nextInt(5) + 1;
+    
     Function(float _x, float _y, Ball _ball) {
         x = _x;
         y = _y;
@@ -94,6 +100,17 @@ public class Function {
                 batch.draw(Bigball2, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
             if (tex == 3)
                 batch.draw(Bigball3, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            tex++;
+            if (tex > 3)
+                tex -= 3;
+        }
+        else if (type == 5) {
+            if (tex == 1)
+                batch.draw(SkipBall1, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            if (tex == 2)
+                batch.draw(SkipBall2, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
+            if (tex == 3)
+                batch.draw(SkipBall3, x - RADIUS, y - RADIUS, RADIUS * 2, RADIUS * 2);
             tex++;
             if (tex > 3)
                 tex -= 3;

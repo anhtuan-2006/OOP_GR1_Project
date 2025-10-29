@@ -95,6 +95,12 @@ public class Block {
             if(f.ball.radius < f.ball.originalRadius * 1.5f)f.  ball.radius = f.ball.radius * 1.5f;
             f.ball.effectTimer = 0; // Bắt đầu đếm
         }
+        else if(x==5)
+        {
+            if (!f.ball.alive) return ;
+            f.ball.stickyToBar = true; // bật hiệu ứng chờ dính
+
+        }
 
     }
 

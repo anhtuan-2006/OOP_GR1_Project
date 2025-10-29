@@ -39,6 +39,8 @@ public class Ball {
     public float originalRadius = RADIUS;
     public float effectTimer = -1;
 
+    public boolean stickyToBar = false; // hiệu ứng dính vào thanh
+
     Sound sound = new Sound();
 
     public double getx() {
@@ -103,7 +105,8 @@ public class Ball {
             y = bar.gety() + RADIUS;
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
                 started = true;
-            else
+                angle = Math.PI / 2; // bay thẳng lên
+                dy = 1;              // đảm bảo hướng đi lên
                 return;
         }
 
@@ -155,6 +158,13 @@ public class Ball {
             boolean overlapX = (x >= p.x - radius) && (x <= p.x + p.width + radius);
 
             // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
+            if (stickyToBar && overlapX && goingDown && crossTop) {
+            started = false; // dừng bóng
+            stickyToBar = false; // tắt hiệu ứng
+            setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
+            return;
+            }
+
             if (goingDown && crossTop && overlapX) {
                 sound.play_ball_bar();
                 y = paddleTop + radius / 2;
