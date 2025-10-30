@@ -15,6 +15,7 @@ public class Level12 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
+        Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
     boolean playing = true;
 
@@ -23,23 +24,23 @@ public class Level12 {
     Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
     { 0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0 },
-    { 0,0,0,0,0,0,0,0,2,1,2,0,0,0,0,0,0,0,0,0 },
-    { 0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,3,0,3,0,3,0,0,0,0,0,0,0,0 },
     { 0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0 },
     { 0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0 },
     { 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0 },
     { 0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0 },
     { 0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0 },
     { 0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0 },
-    { 2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0 },
+    { 2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,0 },
     { 0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0 },
     { 0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0 },
     { 0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0 },
     { 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0 },
     { 0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0 },
     { 0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0 },
-    { 0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0 },
-    { 0,0,0,0,0,0,0,0,2,1,2,0,0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,3,0,3,0,3,0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0 },
     { 0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0 },
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
     //  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -77,6 +78,9 @@ public class Level12 {
 
         block.initializeBlocks(1, new Texture("Block_level12.png"));
         ironblock.initializeBlocks(2, new Texture("iron_block_lv12.png"));
+
+        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_level12.png"));
+        movingBlock.initializeBlocks(3, new Texture("Block_level12.png"));
 
         background = new Texture("Background_level12.png");
         if (background == null || bar == null || ball == null || block == null) {
@@ -119,6 +123,7 @@ public class Level12 {
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -132,6 +137,7 @@ public class Level12 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        movingBlock.renderBlocks(batch);
         life.render(batch);
     }
 
@@ -139,6 +145,7 @@ public class Level12 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        movingBlock.dispose();
         life.dispose();
         ball.clear();
     }

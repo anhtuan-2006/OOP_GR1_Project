@@ -15,6 +15,8 @@ public class Level4 {
     Bar bar;
     Block block; // block thuong
     Block ironblock; // block sat
+    Block movingBlock; // khối di chuyển ngang 
+
     Score score = new Score();
 
     boolean playing = true;
@@ -27,11 +29,11 @@ public class Level4 {
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 3, 0, 0, 0, 3, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 3, 0, 0, 0, 3, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -57,6 +59,9 @@ public class Level4 {
 
         block.initializeBlocks(1, new Texture("Block_Level4.png"));
         ironblock.initializeBlocks(2, new Texture("Iron_block_lv4.png"));
+
+        movingBlock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("Block_Level4.png"));
+        movingBlock.initializeBlocks(3, new Texture("Block_Level4.png"));
 
         background = new Texture("Background_Level4.png");
     }
@@ -95,6 +100,7 @@ public class Level4 {
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -107,6 +113,7 @@ public class Level4 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        movingBlock.renderBlocks(batch);
         score.render(batch);
         life.render(batch);
     }
@@ -115,6 +122,7 @@ public class Level4 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        movingBlock.dispose(); 
         ball.clear();
         life.dispose();
     }
