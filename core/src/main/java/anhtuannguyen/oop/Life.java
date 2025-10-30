@@ -15,7 +15,7 @@ public class Life {
     private float x;
     private float y;
     private float spacing = 10f;
-    private float heartsize = 70f;
+    private float heartsize = 50f;
     List<Rectangle> lifeList = new ArrayList<>();
 
     public Life(int _lifes) {
@@ -29,8 +29,8 @@ public class Life {
 
             lifeRect.x = WORLD_W - heartsize - (i * (heartsize + spacing));
             lifeRect.y = 10;
-            lifeRect.width = 100;
-            lifeRect.height = 100;
+            // lifeRect.width = 100;
+            // lifeRect.height = 100;
             lifeList.add(lifeRect);
         }
     }
