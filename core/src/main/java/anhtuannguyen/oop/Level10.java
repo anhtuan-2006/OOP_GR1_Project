@@ -15,6 +15,7 @@ public class Level10 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
+    Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
     boolean playing = true;
 
@@ -58,6 +59,9 @@ public class Level10 {
         block.initializeBlocks(1, new Texture("Block_Level10.png"));
         ironblock.initializeBlocks(2, new Texture("iron_block_lv10.jpg"));
 
+         movingBlock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level10.png"));
+        movingBlock.initializeBlocks(3, new Texture("block_level10.png"));
+
         background = new Texture("Background_Level10.jpg");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");
@@ -98,6 +102,7 @@ public class Level10 {
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -111,6 +116,7 @@ public class Level10 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        movingBlock.renderBlocks(batch);
         life.render(batch);
     }
 
@@ -118,6 +124,7 @@ public class Level10 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        movingBlock.dispose();
         life.dispose();
         ball.clear();
     }

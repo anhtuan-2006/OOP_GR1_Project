@@ -17,7 +17,7 @@ public class Life {
     private float spacing = 10f;
     private float heartsize = 70f;
     List<Rectangle> lifeList = new ArrayList<>();
-    
+
     public Life(int _lifes) {
         lifes = _lifes;
         System.out.println("Life created with: " + lifes);
@@ -29,27 +29,31 @@ public class Life {
 
             lifeRect.x = WORLD_W - heartsize - (i * (heartsize + spacing));
             lifeRect.y = 10;
-            // lifeRect.width = 100;
-            // lifeRect.height = 100;
+            lifeRect.width = 100;
+            lifeRect.height = 100;
             lifeList.add(lifeRect);
         }
     }
+
     public boolean die() {
-        if(lifes > 0) {
+        if (lifes > 0) {
             lifes--;
             return true;
         }
         return false;
     }
+
     public int getLives() {
         return lifes;
     }
+
     public void render(SpriteBatch batch) {
         for (int i = 0; i < lifes; i++) {
             batch.draw(texture, lifeList.get(i).x, lifeList.get(i).y, lifeList.get(i).width, lifeList.get(i).height);
         }
     }
+
     public void dispose() {
-        //texture.dispose();
+        texture.dispose();
     }
- }
+}

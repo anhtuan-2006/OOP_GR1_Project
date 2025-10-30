@@ -9,20 +9,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class main extends ApplicationAdapter {
-    
-    
+
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    private OrthographicCamera cam; 
-    private Viewport viewport; 
+    private OrthographicCamera cam;
+    private Viewport viewport;
 
     private SpriteBatch batch;
-
-
-
-
-
 
     Setting setting;
 
@@ -65,7 +59,7 @@ public class main extends ApplicationAdapter {
         pause.setIngame(ingame);
         pause.setSelectMap(selectmap);
         lifes = setting.getlife(); // Lấy số mạng mặc định từ setting
-        ingame.setLife(lifes);     // Đặt số mạng cho ingame
+        ingame.setLife(lifes); // Đặt số mạng cho ingame
     }
 
     @Override
@@ -83,7 +77,7 @@ public class main extends ApplicationAdapter {
 
         switch (state) {
             case MENU:
-             music.playMusic();
+                music.playMusic();
                 menu.render(batch);
                 state = menu.nextscreen(state);
                 break;
@@ -103,19 +97,19 @@ public class main extends ApplicationAdapter {
                 state = ingame.getState();
                 break;
             case PAUSE:
-                    pause.setState(state);
-                    pause.update();
-                    pause.render(batch);
-                    state = pause.getState();
+                pause.setState(state);
+                pause.update();
+                pause.render(batch);
+                state = pause.getState();
 
                 break;
             case SETTING:
                 setting.update();
-            lifes = setting.getlife();
-            state = setting.getSelectedMap();
-            setting.render(batch);
-        ingame.setLife(lifes);     // Đặt số mạng cho ingame
-            break;
+                lifes = setting.getlife();
+                state = setting.getSelectedMap();
+                setting.render(batch);
+                ingame.setLife(lifes); // Đặt số mạng cho ingame
+                break;
         }
 
         batch.end();
