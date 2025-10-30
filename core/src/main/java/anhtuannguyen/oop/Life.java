@@ -15,18 +15,22 @@ public class Life {
     private float x;
     private float y;
     private float spacing = 10f;
+    private float heartsize = 70f;
     List<Rectangle> lifeList = new ArrayList<>();
     
     public Life(int _lifes) {
         lifes = _lifes;
         System.out.println("Life created with: " + lifes);
         texture = new Texture("heart.png");
-        for (int i = 1; i <= lifes; i++) {
+        for (int i = 0; i <= lifes; i++) {
             Rectangle lifeRect = new Rectangle();
-            lifeRect.x = WORLD_W - spacing - i * (100 + spacing);
+            lifeRect.width = heartsize;
+            lifeRect.height = heartsize;
+
+            lifeRect.x = WORLD_W - heartsize - (i * (heartsize + spacing));
             lifeRect.y = 10;
-            lifeRect.width = 100;
-            lifeRect.height = 100;
+            // lifeRect.width = 100;
+            // lifeRect.height = 100;
             lifeList.add(lifeRect);
         }
     }
@@ -46,6 +50,6 @@ public class Life {
         }
     }
     public void dispose() {
-        texture.dispose();
+        //texture.dispose();
     }
  }
