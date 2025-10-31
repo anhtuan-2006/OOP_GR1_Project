@@ -135,7 +135,20 @@ public class InGame {
 
     private void toResault() {
         
-        if (level1.getend()) {
+        if (level1.getend()
+        || level2.getend()
+        || level3.getend()
+        || level4.getend()
+        || level5.getend()
+        || level6.getend()
+        || level7.getend()
+        || level8.getend()
+        || level9.getend()
+        || level10.getend()
+        || level11.getend()
+        || level12.getend()
+        ) 
+        {
             state = GameState.RESAULT;
         }
         
@@ -181,57 +194,69 @@ public class InGame {
 
     public void reset() {
         setLife(life);
+
         if (selectmap.getMap() == 0){
             level1.setend(false);
             level1.dispose();
             level1.create();
         }
         if (selectmap.getMap() == 1) {
+            level2.setend(false);
+
             level2.dispose();
             level2.create();
         }
         if (selectmap.getMap() == 2) {
+            level3.setend(false);
             level3.dispose();
             level3.create();
         }
        
         if (selectmap.getMap() == 3) {
+            level4.setend(false);
             level4.dispose();
             level4.create();
         }
         if (selectmap.getMap() == 4) {
+            level5.setend(false);
             level5.dispose();
             level5.create();
         }
         if (selectmap.getMap() == 5) {
+            level6.setend(false);
             level6.dispose();
             level6.create();
         }
         if (selectmap.getMap() == 6) {
+            level7.setend(false);
             level7.dispose();
             level7.create();
         }
         if (selectmap.getMap() == 7) {
+            level8.setend(false);
             level8.dispose();
             level8.create();
         }
         if (selectmap.getMap() == 8) {
+            level9.setend(false);
             level9.dispose();
             level9.create();
         }
         if (selectmap.getMap() == 9) {
+            level10.setend(false);
             level10.dispose();
             level10.create();
         }
         if (selectmap.getMap() == 10) {
+            level11.setend(false);
             level11.dispose();
             level11.create();
         }
          if (selectmap.getMap() == 11) {
+            level12.setend(false);
             level12.dispose();
             level12.create();
         }
-        
         
         if (pause != null) {
             pause.setState(GameState.IN_GAME); // Đặt lại trạng thái Pause

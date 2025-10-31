@@ -3,7 +3,6 @@ package anhtuannguyen.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -18,7 +17,8 @@ public class Level7 {
     Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
     boolean playing = true;
-
+     private  boolean win;
+    private boolean end = false;
     Pause play_pause;
 
     Life life;
@@ -46,6 +46,17 @@ public class Level7 {
     public void  setLife(int _life) {
         life = new Life(_life);
     } 
+        public Boolean getend() {
+        return end || !block.checkBlockAlive();
+    }
+
+    public void setend(Boolean end) {
+        this.end = end;
+    }
+
+    public Boolean getwin() {
+        return win;
+    }
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level7.png"));
 
@@ -95,7 +106,9 @@ public class Level7 {
                 ball.add(b);
             }
             else{ 
-                Gdx.app.exit();
+                // Gdx.app.exit();
+                 end = true;
+                win = false;
             }
         }
 
@@ -121,13 +134,20 @@ public class Level7 {
         life.render(batch);
         
     }
+    public boolean getresault() {
+        if (block.getwin()) {
+            return true;
+        }        
+        return win;
+    }
+
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
         movingBlock.dispose();
-        life.dispose();
+        // life.dispose();
         ball.clear();
     }
 }

@@ -3,7 +3,6 @@ package anhtuannguyen.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -20,7 +19,8 @@ public class Level9 {
     boolean playing = true;
 
     Pause play_pause;
-
+      private  boolean win;
+    private boolean end = false;
     Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
     { 0, 2, 2, 0, 0, 0, 0, 2, 2, 0 },
@@ -45,6 +45,17 @@ public class Level9 {
 
     public void setLife(int _life){
         life = new Life(_life);
+    }
+     public Boolean getend() {
+        return end || !block.checkBlockAlive();
+    }
+
+    public void setend(Boolean end) {
+        this.end = end;
+    }
+
+    public Boolean getwin() {
+        return win;
     }
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level9.png"));
@@ -93,7 +104,9 @@ public class Level9 {
                 b.started = false;
                 ball.add(b);
             } else {
-                Gdx.app.exit();
+                // Gdx.app.exit();
+                 end = true;
+                win = false;
             }
         }
 
@@ -118,13 +131,19 @@ public class Level9 {
         movingBlock.renderBlocks(batch);
         life.render(batch);
     }
+     public boolean getresault() {
+        if (block.getwin()) {
+            return true;
+        }        
+        return win;
+    }
 
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
         movingBlock.dispose();
-        life.dispose();
+        // life.dispose();
         ball.clear();
     }
 }

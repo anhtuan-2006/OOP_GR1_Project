@@ -162,7 +162,7 @@ public class Level1 {
         ball.clear();
         ironblock.dispose();
         movingBlock.dispose();
-        life.dispose();
+        // life.dispose();
         ball.clear();
     }
 }
