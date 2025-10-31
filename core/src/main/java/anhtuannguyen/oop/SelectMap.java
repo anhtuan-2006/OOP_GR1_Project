@@ -183,7 +183,9 @@ public class SelectMap {
         touch_back_button = false;
         
     }
-
+    public void nextlevel() {
+        selectedMap++;
+    }
     public void dispose() {
         if (background != null) background.dispose();
         if (back_button != null) back_button.dispose();

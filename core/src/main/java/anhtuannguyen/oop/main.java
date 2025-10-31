@@ -27,6 +27,7 @@ public class main extends ApplicationAdapter {
     private SelectMap selectmap;
     private InGame ingame;
     private Pause pause;
+    private Resault resault;
 
     @Override
     public void create() {
@@ -50,6 +51,8 @@ public class main extends ApplicationAdapter {
         ingame.create();
         pause = new Pause(viewport);
         pause.create();
+        resault = new Resault(viewport);
+        resault.create();
 
         // Gán các tham chiếu cần thiết
         selectmap.setIngame(ingame);
@@ -60,6 +63,8 @@ public class main extends ApplicationAdapter {
         pause.setSelectMap(selectmap);
         lifes = setting.getlife(); // Lấy số mạng mặc định từ setting
         ingame.setLife(lifes); // Đặt số mạng cho ingame
+        resault.setIngame(ingame);
+        resault.setSelectMap(selectmap);
     }
 
     @Override
@@ -110,6 +115,12 @@ public class main extends ApplicationAdapter {
                 setting.render(batch);
                 ingame.setLife(lifes); // Đặt số mạng cho ingame
                 break;
+            case RESAULT:
+                resault.setState(state);
+                resault.setresault(ingame.getresault());
+                resault.update();
+                resault.render(batch);
+                state = resault.getState();
         }
 
         batch.end();

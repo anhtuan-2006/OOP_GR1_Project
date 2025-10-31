@@ -3,7 +3,6 @@ package anhtuannguyen.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -18,23 +17,37 @@ public class Level1 {
     Score score = new Score();
     boolean playing = true;
     Pause play_pause;
-    
+    private  boolean win;
+    private boolean end = false;
 
     Life life;
 
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            // { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            // { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            // { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            // { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            // { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            // { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
+            // { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 2, 2, 0, 1, 1 },
+            { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            
     };
 
     Level1(Pause _play_pause) {
@@ -44,6 +57,20 @@ public class Level1 {
     public void setLife(int _life) {
         life = new Life(_life);
     }
+    
+    public Boolean getend() {
+        return end || !block.checkBlockAlive();
+    }
+
+    public void setend(Boolean end) {
+        this.end = end;
+    }
+
+    public Boolean getwin() {
+        return win;
+    }
+
+
 
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("bar_level1.png"));
@@ -86,7 +113,10 @@ public class Level1 {
                 b.started = false;
                 ball.add(b);
             } else
-                Gdx.app.exit();
+                // Gdx.app.exit();
+                end = true;
+                win = false;
+                
         }
 
         for (Ball b : new ArrayList<>(ball)) { // chụp snapshot
@@ -108,6 +138,16 @@ public class Level1 {
         score.render(batch);
         life.render(batch);
     }
+
+    public boolean getresault() {
+        if (block.getwin()) {
+            return true;
+        }        
+        return win;
+    }
+
+    
+    
 
     public void dispose() {
         bar.dispose();

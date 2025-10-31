@@ -28,7 +28,7 @@ public class InGame {
     private Pause pause;
     private SelectMap selectmap;
     private GameState state = GameState.IN_GAME;
-
+    private boolean win;
     // Constructor
     public InGame(Viewport _v) {
         this.viewport = _v;
@@ -58,6 +58,14 @@ public class InGame {
 
     public void setSelectMap(SelectMap _selectmap) {
         this.selectmap = _selectmap;
+    }
+
+    public boolean getresault() {
+        return level1.getresault();
+    }
+    
+    public void setresault(boolean win) {
+        this.win = win;
     }
 
     public void setLife(int _life) {
@@ -109,6 +117,7 @@ public class InGame {
     public void update() {
 
             handleInput(); // Xử lý input từ phím ESC
+            toResault();
        
     }
 
@@ -123,6 +132,17 @@ public class InGame {
             }
         }
     }
+
+    private void toResault() {
+        
+        if (level1.getend()) {
+            state = GameState.RESAULT;
+        }
+        
+
+    }
+    
+
 
     public void render(SpriteBatch batch) {
 
@@ -162,6 +182,7 @@ public class InGame {
     public void reset() {
         setLife(life);
         if (selectmap.getMap() == 0){
+            level1.setend(false);
             level1.dispose();
             level1.create();
         }
@@ -211,7 +232,7 @@ public class InGame {
             level12.create();
         }
         
-
+        
         if (pause != null) {
             pause.setState(GameState.IN_GAME); // Đặt lại trạng thái Pause
         }

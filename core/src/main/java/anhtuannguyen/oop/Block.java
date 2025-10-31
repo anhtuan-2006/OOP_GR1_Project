@@ -25,6 +25,8 @@ public class Block {
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
     private static final int MAP_SIZE = 64;
+    private boolean win = false;
+
 
     // Constructor chính cho instance Block của level
     public Block(int x, int y, List<Ball> _ball, int ROW, int COL, int[][] _map, int width, int height, Texture _tex) {
@@ -40,6 +42,7 @@ public class Block {
         basic = new Ball(ball.get(0));
     }
 
+
     // Constructor cho các khối riêng lẻ trong lưới
     public Block(int x, int y, int width, int height, Texture _tex) {
         blockWidth = width;
@@ -47,6 +50,14 @@ public class Block {
         rect = new Rectangle(x, y, blockWidth, blockHeight);
         alive = true;
         texture = _tex;
+    }
+
+    public boolean getwin() {
+        return win;
+    }
+
+    public void setwin(Boolean win) {
+        this.win = win;
     }
 
     public void initializeBlocks(int level, Texture _tex) {
@@ -59,6 +70,7 @@ public class Block {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
                     blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
+
                 }
             }
         }
@@ -123,10 +135,25 @@ public class Block {
             for (int col = 0; col < map[row].length; col++) {
                 if (blocks[row][col] != null && blocks[row][col].alive) {
                     blocks[row][col].render(batch);
+
                 }
             }
         }
     }
+    public boolean checkBlockAlive() {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[row].length; col++) {
+                if (blocks[row][col] != null && blocks[row][col].alive) {
+
+                    return true;
+                }
+
+            }
+        }
+        win = true; 
+        return false;
+    }
+
 
     private void pullBall(Rectangle bal, Rectangle block, Ball ball , boolean check) {
         if (ball.fire  && !check) return;
