@@ -166,6 +166,7 @@ public class Block {
     }
 
 
+
     private void pullBall(Rectangle bal, Rectangle block, Ball ball , boolean check) {
         if (ball.fire  && !check) return;
         float balLeft = bal.x;

@@ -61,7 +61,34 @@ public class InGame {
     }
 
     public boolean getresault() {
+        if (selectmap.getMap() == 0)
         return level1.getresault();
+        if (selectmap.getMap() == 1)
+        return level2.getresault();
+        if (selectmap.getMap() == 2)
+        return level3.getresault();
+        if (selectmap.getMap() == 3)
+        return level4.getresault();
+        if (selectmap.getMap() == 4)
+        return level5.getresault();
+        if (selectmap.getMap() == 5)
+        return level6.getresault();
+        if (selectmap.getMap() == 6)
+        return level7.getresault();
+        if (selectmap.getMap() == 7)
+        return level8.getresault();
+        if (selectmap.getMap() == 8)
+        return level9.getresault();
+        if (selectmap.getMap() == 9)
+        return level10.getresault();
+        if (selectmap.getMap() == 10)
+        return level11.getresault();
+        if (selectmap.getMap() == 11)
+        return level12.getresault();
+        return false;
+
+
+
     }
     
     public void setresault(boolean win) {

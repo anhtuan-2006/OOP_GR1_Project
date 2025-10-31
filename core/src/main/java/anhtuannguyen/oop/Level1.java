@@ -68,7 +68,7 @@ public class Level1 {
     }
 
     public Boolean getwin() {
-        return win;
+        return block.getwin();
     }
 
 
