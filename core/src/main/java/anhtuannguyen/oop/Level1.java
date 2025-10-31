@@ -14,6 +14,7 @@ public class Level1 {
     Bar bar;
     Block block; // block thuong
     Block ironblock; // block sat
+    Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
     boolean playing = true;
     Pause play_pause;
@@ -54,7 +55,7 @@ public class Level1 {
         play_pause = _play_pause;
     }
 
-    public void setLife(int _life) {
+    public void setLife(int _life) {      
         life = new Life(_life);
     }
     
@@ -78,11 +79,15 @@ public class Level1 {
         b.started = false;
         ball.add(b);
 
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.jpg"));
-        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block_lv1.jpg"));
+        block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.png"));
+        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("iron_block_lv1.png"));
 
-        block.initializeBlocks(1, new Texture("block_level1.jpg"));
-        ironblock.initializeBlocks(2, new Texture("iron_block_lv1.jpg"));
+        block.initializeBlocks(1, new Texture("block_level1.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv1.png"));
+
+        movingBlock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("block_level1.png"));
+        movingBlock.initializeBlocks(3, new Texture("block_level1.png"));
+
 
         background = new Texture("background_level1.jpg");
     }
@@ -123,6 +128,7 @@ public class Level1 {
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -135,6 +141,7 @@ public class Level1 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        movingBlock.renderBlocks(batch);
         score.render(batch);
         life.render(batch);
     }
@@ -154,6 +161,7 @@ public class Level1 {
         block.dispose();
         ball.clear();
         ironblock.dispose();
+        movingBlock.dispose();
         life.dispose();
         ball.clear();
     }

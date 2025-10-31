@@ -15,6 +15,7 @@ public class Level6 {
     Bar bar;
     Block block; //
     Block ironblock; // block sat
+    Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
     boolean playing = true;
 
@@ -22,11 +23,11 @@ public class Level6 {
 
     Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-             { 1, 1, 0, 2, 2, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 2, 2, 0, 0, 3, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 2, 2, 0, 1, 1, 0, 1, 1 },
+            { 1, 0, 2, 2, 0, 0, 3, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 1, 0, 0, 3, 0, 1, 1, 0, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -58,6 +59,9 @@ public class Level6 {
 
         block.initializeBlocks(1, new Texture("Block_Level6.png"));
         ironblock.initializeBlocks(2, new Texture("iron_block_lv6.jpg"));
+
+        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level6.png"));
+        movingBlock.initializeBlocks(3, new Texture("Block_Level6.png"));
 
         background = new Texture("Background_Level6.jpg");
         if (background == null || bar == null || ball == null || block == null) {
@@ -98,6 +102,7 @@ public class Level6 {
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
+                movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
             }
         }
 
@@ -111,6 +116,7 @@ public class Level6 {
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
+        movingBlock.renderBlocks(batch);
         life.render(batch);
     }
 
@@ -118,6 +124,7 @@ public class Level6 {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
+        movingBlock.dispose();
         life.dispose();
         ball.clear();
     }

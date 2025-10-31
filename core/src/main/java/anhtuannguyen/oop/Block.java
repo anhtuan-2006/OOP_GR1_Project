@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -69,7 +70,13 @@ public class Block {
                 if (map[row][col] == level) {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
-                    blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
+                   if (level == 3) {
+        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+    } else {
+        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
+    }
+
+                    // blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
 
                 }
             }
@@ -130,10 +137,14 @@ public class Block {
         for (Function f : function) {
             if (f.alive) f.render(batch);
         }
+        float dt = Gdx.graphics.getDeltaTime();
 
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
                 if (blocks[row][col] != null && blocks[row][col].alive) {
+                    if (blocks[row][col] instanceof MovingBlock) {
+                        ((MovingBlock) blocks[row][col]).updateMovement(dt);
+                    }
                     blocks[row][col].render(batch);
 
                 }
@@ -241,6 +252,9 @@ public class Block {
             }
         }
     }
+    public Rectangle getRect() {
+    return rect;
+}
 
     public void dispose() {
 
