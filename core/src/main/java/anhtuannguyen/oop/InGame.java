@@ -60,38 +60,38 @@ public class InGame {
         this.selectmap = _selectmap;
     }
 
-    public boolean getresault() {
+    public boolean getresult() {
         if (selectmap.getMap() == 0)
-        return level1.getresault();
+        return level1.getresult();
         if (selectmap.getMap() == 1)
-        return level2.getresault();
+        return level2.getresult();
         if (selectmap.getMap() == 2)
-        return level3.getresault();
+        return level3.getresult();
         if (selectmap.getMap() == 3)
-        return level4.getresault();
+        return level4.getresult();
         if (selectmap.getMap() == 4)
-        return level5.getresault();
+        return level5.getresult();
         if (selectmap.getMap() == 5)
-        return level6.getresault();
+        return level6.getresult();
         if (selectmap.getMap() == 6)
-        return level7.getresault();
+        return level7.getresult();
         if (selectmap.getMap() == 7)
-        return level8.getresault();
+        return level8.getresult();
         if (selectmap.getMap() == 8)
-        return level9.getresault();
+        return level9.getresult();
         if (selectmap.getMap() == 9)
-        return level10.getresault();
+        return level10.getresult();
         if (selectmap.getMap() == 10)
-        return level11.getresault();
+        return level11.getresult();
         if (selectmap.getMap() == 11)
-        return level12.getresault();
+        return level12.getresult();
         return false;
 
 
 
     }
     
-    public void setresault(boolean win) {
+    public void setresult(boolean win) {
         this.win = win;
     }
 
@@ -144,7 +144,7 @@ public class InGame {
     public void update() {
 
             handleInput(); // Xử lý input từ phím ESC
-            toResault();
+            toResult();
        
     }
 
@@ -160,7 +160,7 @@ public class InGame {
         }
     }
 
-    private void toResault() {
+    private void toResult() {
         
         if (level1.getend()
         || level2.getend()
@@ -176,7 +176,7 @@ public class InGame {
         || level12.getend()
         ) 
         {
-            state = GameState.RESAULT;
+            state = GameState.RESULT;
         }
         
 

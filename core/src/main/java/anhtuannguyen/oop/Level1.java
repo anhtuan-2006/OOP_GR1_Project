@@ -146,7 +146,7 @@ public class Level1 {
         life.render(batch);
     }
 
-    public boolean getresault() {
+    public boolean getresult() {
         if (block.getwin()) {
             return true;
         }        

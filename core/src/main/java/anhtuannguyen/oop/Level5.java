@@ -131,7 +131,7 @@ public class Level5 {
         movingBlock.renderBlocks(batch);
         life.render(batch);
     }
-    public boolean getresault() {
+    public boolean getresult() {
         if (block.getwin()) {
             return true;
         }        

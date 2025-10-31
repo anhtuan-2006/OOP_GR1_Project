@@ -130,7 +130,7 @@ public class Level3 {
         score.render(batch);
         life.render(batch);
     }
-     public boolean getresault() {
+     public boolean getresult() {
         if (block.getwin()) {
             return true;
         }        
