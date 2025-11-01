@@ -44,6 +44,11 @@ public class Level11 {
         play_pause = _play_pause;
     }
 
+
+    public int getScore() {
+    return block.getScore();
+    }
+    
     public void setLife(int _life) {
         life = new Life(_life);
     }

@@ -2,6 +2,7 @@ package anhtuannguyen.oop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -39,6 +40,14 @@ public class Result {
     private InGame ingame;
     private SelectMap selectmap;
     private GameState state;
+
+    private Score currentScoreDisplay = new Score();
+    private Score highestScoreDisplay = new Score();
+    private int currentScore = 0;
+    private int highestScore = 0;
+    private BitmapFont font = new BitmapFont();
+
+  
     
 
     public Result(Viewport _viewport) {
@@ -78,10 +87,27 @@ public class Result {
         result = new Rectangle((Screen.WORLD_W-1200)/2, (Screen.WORLD_H)/5 + 750, 1200,800);
     }
 
+
+    public void setCurrentScore(int score) {
+    this.currentScore = score;
+    highestScore = readHighestScore();
+    }
+
     public void update() {
+        
+        if (currentScore > highestScore) {
+    highestScore = currentScore;
+    saveHighestScore(highestScore);
+    }
+
+    currentScoreDisplay.setScore(currentScore);
+    highestScoreDisplay.setScore(highestScore);
+
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
 
+
+        
         if (restartRect.contains(v.x,v.y)) {
             restart_touch = true;
             if (Gdx.input.justTouched()) {
@@ -114,6 +140,8 @@ public class Result {
     }
 
     public void render(SpriteBatch batch) {
+        //batch.begin();
+        
         batch.draw(background, backgroundRect.x, backgroundRect.y, backgroundRect.width, backgroundRect.height);
         if (!wingame)
         batch.draw(lose, result.x, result.y, result.width, result.height);
@@ -132,5 +160,35 @@ public class Result {
         }
         else 
         batch.draw(nextlevel_button, nextlevelRect.x-20, nextlevelRect.y-20, nextlevelRect.width+40, nextlevelRect.height+40);
+        font.getData().setScale(3f);
+        font.setColor(0, 0, 0, 1);
+
+        font.draw(batch, "YOUR SCORE:", 10, 400);
+font.draw(batch, "HIGH SCORE:", 10, 500);
+
+currentScoreDisplay.setPosition(350, 340);
+currentScoreDisplay.render(batch);
+
+highestScoreDisplay.setPosition(350, 440);
+highestScoreDisplay.render(batch);
+        //batch.end();
+
     }
+    private int readHighestScore() {
+    try {
+        com.badlogic.gdx.files.FileHandle file = Gdx.files.local("highest_score.txt");
+        if (!file.exists()) {
+            file.writeString("0", false);
+            return 0;
+        }
+        return Integer.parseInt(file.readString().trim());
+    } catch (Exception e) {
+        return 0;
+    }
+}
+
+private void saveHighestScore(int score) {
+    com.badlogic.gdx.files.FileHandle file = Gdx.files.local("highest_score.txt");
+    file.writeString(String.valueOf(score), false);
+}
 }

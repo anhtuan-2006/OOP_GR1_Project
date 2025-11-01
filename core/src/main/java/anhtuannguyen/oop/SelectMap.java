@@ -22,8 +22,9 @@ public class SelectMap {
     private int selectedMap = -1; // map được click chọn
     private InGame ingame; // Tham chiếu đến InGame
     private Pause pause; // Tham chiếu đến Pause
-    private GameState gamestate; 
-
+    private GameState gamestate;
+    private Result result;
+    
     // Constructor
     public SelectMap(Viewport _viewport) {
         viewport = _viewport;
@@ -51,6 +52,13 @@ public class SelectMap {
     }
     public GameState getState() {
         return gamestate;
+    }
+    public Result getResult() {
+    return result;
+    }
+
+    public void setResult(Result result) {
+    this.result = result;
     }
     public void create() {
         background = new Texture("Menu_background.jpg");

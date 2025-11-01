@@ -53,6 +53,22 @@ public class main extends ApplicationAdapter {
         pause.create();
         result = new Result(viewport);
         result.create();
+        selectmap.setResult(result);   
+        selectmap.setIngame(ingame);
+        selectmap.setPause(pause);
+
+        ingame.setSelectMap(selectmap);
+        ingame.setPause(pause);
+
+        pause.setIngame(ingame);
+        pause.setSelectMap(selectmap);
+
+        lifes = setting.getlife(); 
+        ingame.setLife(lifes);
+
+        result.setIngame(ingame);
+        result.setSelectMap(selectmap);
+        
 
         // Gán các tham chiếu cần thiết
         selectmap.setIngame(ingame);

@@ -29,6 +29,7 @@ public class InGame {
     private SelectMap selectmap;
     private GameState state = GameState.IN_GAME;
     private boolean win;
+
     // Constructor
     public InGame(Viewport _v) {
         this.viewport = _v;
@@ -61,91 +62,87 @@ public class InGame {
     }
 
     public boolean getresult() {
-        if (selectmap.getMap() == 0)
-        return level1.getresult();
-        if (selectmap.getMap() == 1)
-        return level2.getresult();
-        if (selectmap.getMap() == 2)
-        return level3.getresult();
-        if (selectmap.getMap() == 3)
-        return level4.getresult();
-        if (selectmap.getMap() == 4)
-        return level5.getresult();
-        if (selectmap.getMap() == 5)
-        return level6.getresult();
-        if (selectmap.getMap() == 6)
-        return level7.getresult();
-        if (selectmap.getMap() == 7)
-        return level8.getresult();
-        if (selectmap.getMap() == 8)
-        return level9.getresult();
-        if (selectmap.getMap() == 9)
-        return level10.getresult();
-        if (selectmap.getMap() == 10)
-        return level11.getresult();
-        if (selectmap.getMap() == 11)
-        return level12.getresult();
+        if (selectmap == null) return false;
+        int map = selectmap.getMap();
+        if (map == 0 && level1 != null) return level1.getresult();
+        if (map == 1 && level2 != null) return level2.getresult();
+        if (map == 2 && level3 != null) return level3.getresult();
+        if (map == 3 && level4 != null) return level4.getresult();
+        if (map == 4 && level5 != null) return level5.getresult();
+        if (map == 5 && level6 != null) return level6.getresult();
+        if (map == 6 && level7 != null) return level7.getresult();
+        if (map == 7 && level8 != null) return level8.getresult();
+        if (map == 8 && level9 != null) return level9.getresult();
+        if (map == 9 && level10 != null) return level10.getresult();
+        if (map == 10 && level11 != null) return level11.getresult();
+        if (map == 11 && level12 != null) return level12.getresult();
         return false;
-
-
-
     }
-    
+
     public void setresult(boolean win) {
         this.win = win;
     }
 
     public void setLife(int _life) {
         life = _life;
-        level1.setLife(_life);
-        level2.setLife(_life);
-        level3.setLife(_life);
-        level4.setLife(_life);
-        level5.setLife(_life);
-        level6.setLife(_life);
-        level7.setLife(_life);
-        level8.setLife(_life);
-        level9.setLife(_life);
-        level10.setLife(_life);
-        level11.setLife(_life);
-        level12.setLife(_life);
+        if (level1 != null) level1.setLife(_life);
+        if (level2 != null) level2.setLife(_life);
+        if (level3 != null) level3.setLife(_life);
+        if (level4 != null) level4.setLife(_life);
+        if (level5 != null) level5.setLife(_life);
+        if (level6 != null) level6.setLife(_life);
+        if (level7 != null) level7.setLife(_life);
+        if (level8 != null) level8.setLife(_life);
+        if (level9 != null) level9.setLife(_life);
+        if (level10 != null) level10.setLife(_life);
+        if (level11 != null) level11.setLife(_life);
+        if (level12 != null) level12.setLife(_life);
     }
-
 
     public void create() {
         pause = new Pause(viewport);
         pause.create();
+
         level1 = new Level1(pause);
         level1.create();
+
         level2 = new Level2(pause);
         level2.create();
+
         level3 = new Level3(pause);
         level3.create();
+
         level4 = new Level4(pause);
         level4.create();
+
         level5 = new Level5(pause);
         level5.create();
+
         level6 = new Level6(pause);
         level6.create();
+
         level7 = new Level7(pause);
         level7.create();
+
         level8 = new Level8(pause);
         level8.create();
+
         level9 = new Level9(pause);
         level9.create();
+
         level10 = new Level10(pause);
         level10.create();
+
         level11 = new Level11(pause);
         level11.create();
+
         level12 = new Level12(pause);
         level12.create();
     }
 
     public void update() {
-
-            handleInput(); // Xử lý input từ phím ESC
-            toResult();
-       
+        handleInput(); // Xử lý input từ phím ESC
+        toResult();
     }
 
     // Hàm con để xử lý input
@@ -153,138 +150,151 @@ public class InGame {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if (state == GameState.PAUSE) {
                 state = GameState.IN_GAME;
-            }
-             if (state == GameState.IN_GAME) {
+            } else if (state == GameState.IN_GAME) {
                 state = GameState.PAUSE;
             }
         }
     }
 
     private void toResult() {
-        
-        if (level1.getend()
-        || level2.getend()
-        || level3.getend()
-        || level4.getend()
-        || level5.getend()
-        || level6.getend()
-        || level7.getend()
-        || level8.getend()
-        || level9.getend()
-        || level10.getend()
-        || level11.getend()
-        || level12.getend()
-        ) 
+
+        if ((level1 != null && level1.getend())
+        || (level2 != null && level2.getend())
+        || (level3 != null && level3.getend())
+        || (level4 != null && level4.getend())
+        || (level5 != null && level5.getend())
+        || (level6 != null && level6.getend())
+        || (level7 != null && level7.getend())
+        || (level8 != null && level8.getend())
+        || (level9 != null && level9.getend())
+        || (level10 != null && level10.getend())
+        || (level11 != null && level11.getend())
+        || (level12 != null && level12.getend())
+        )
         {
             state = GameState.RESULT;
+
+            // chống NPE khi selectmap hoặc result chưa được set
+            if (selectmap != null && selectmap.getResult() != null) {
+                selectmap.getResult().setCurrentScore(getScore());
+            }
         }
-        
-
     }
-    
-
 
     public void render(SpriteBatch batch) {
+        int map_number = (selectmap != null) ? selectmap.getMap() : 0;
 
-        int map_number = selectmap.getMap();
         if (map_number == 0) {
-            level1.render(batch);
+            if (level1 != null) level1.render(batch);
         } else if (map_number == 1) {
-            level2.render(batch);
+            if (level2 != null) level2.render(batch);
         } else if (map_number == 2) {
-            level3.render(batch);
+            if (level3 != null) level3.render(batch);
         } else if (map_number == 3) {
-            level4.render(batch);
+            if (level4 != null) level4.render(batch);
         } else if (map_number == 4) {
-            level5.render(batch);
+            if (level5 != null) level5.render(batch);
         } else if (map_number == 5) {
-            level6.render(batch);
+            if (level6 != null) level6.render(batch);
         } else if (map_number == 6) {
-            level7.render(batch);
+            if (level7 != null) level7.render(batch);
         } else if (map_number == 7) {
-            level8.render(batch);
+            if (level8 != null) level8.render(batch);
         } else if (map_number == 8) {
-            level9.render(batch);
+            if (level9 != null) level9.render(batch);
         } else if (map_number == 9) {
-            level10.render(batch);
+            if (level10 != null) level10.render(batch);
         } else if (map_number == 10) {
-            level11.render(batch);
+            if (level11 != null) level11.render(batch);
         } else if (map_number == 11) {
-            level12.render(batch);
+            if (level12 != null) level12.render(batch);
         }
+    }
 
-
-        
-        
-
+    public int getScore() {
+        if (selectmap == null) return 0;
+        int map = selectmap.getMap();
+        if (map == 0 && level1 != null) return level1.getScore();
+        if (map == 1 && level2 != null) return level2.getScore();
+        if (map == 2 && level3 != null) return level3.getScore();
+        if (map == 3 && level4 != null) return level4.getScore();
+        if (map == 4 && level5 != null) return level5.getScore();
+        if (map == 5 && level6 != null) return level6.getScore();
+        if (map == 6 && level7 != null) return level7.getScore();
+        if (map == 7 && level8 != null) return level8.getScore();
+        if (map == 8 && level9 != null) return level9.getScore();
+        if (map == 9 && level10 != null) return level10.getScore();
+        if (map == 10 && level11 != null) return level11.getScore();
+        if (map == 11 && level12 != null) return level12.getScore();
+        return 0;
     }
 
     public void reset() {
         setLife(life);
 
-        if (selectmap.getMap() == 0){
+        int map = (selectmap != null) ? selectmap.getMap() : 0;
+
+        if (map == 0 && level1 != null) {
             level1.setend(false);
             level1.dispose();
             level1.create();
         }
-        if (selectmap.getMap() == 1) {
+        if (map == 1 && level2 != null) {
             level2.setend(false);
-
             level2.dispose();
             level2.create();
         }
-        if (selectmap.getMap() == 2) {
+        if (map == 2 && level3 != null) {
             level3.setend(false);
             level3.dispose();
             level3.create();
         }
-       
-        if (selectmap.getMap() == 3) {
+        if (map == 3 && level4 != null) {
             level4.setend(false);
             level4.dispose();
             level4.create();
         }
-        if (selectmap.getMap() == 4) {
+        if (map == 4 && level5 != null) {
             level5.setend(false);
             level5.dispose();
             level5.create();
         }
-        if (selectmap.getMap() == 5) {
+        if (map == 5 && level6 != null) {
             level6.setend(false);
             level6.dispose();
             level6.create();
         }
-        if (selectmap.getMap() == 6) {
+        if (map == 6 && level7 != null) {
             level7.setend(false);
             level7.dispose();
             level7.create();
         }
-        if (selectmap.getMap() == 7) {
+        if (map == 7 && level8 != null) {
             level8.setend(false);
             level8.dispose();
             level8.create();
         }
-        if (selectmap.getMap() == 8) {
+        if (map == 8 && level9 != null) {
             level9.setend(false);
             level9.dispose();
             level9.create();
         }
-        if (selectmap.getMap() == 9) {
+        if (map == 9 && level10 != null) {
             level10.setend(false);
             level10.dispose();
             level10.create();
         }
-        if (selectmap.getMap() == 10) {
+        if (map == 10 && level11 != null) {
             level11.setend(false);
             level11.dispose();
             level11.create();
         }
-         if (selectmap.getMap() == 11) {
+        if (map == 11 && level12 != null) {
             level12.setend(false);
             level12.dispose();
             level12.create();
         }
-        
+
         if (pause != null) {
             pause.setState(GameState.IN_GAME); // Đặt lại trạng thái Pause
         }

@@ -27,21 +27,33 @@ public class Score {
         score = _score;
     }
 
-    public void render(SpriteBatch batch) {
-
-        int[] digits = new int[10];
-        int tempScore = score;
-        for (int i = 5; i >= 0; i--) {
-            digits[i] = tempScore % 10;
-            tempScore /= 10;
-        }
-
-        for (int i = 0; i < 6; i++) {
-            batch.draw(scoreTexture[digits[i]], scoreRect[i].x, scoreRect[i].y, scoreRect[i].width,
-                    scoreRect[i].height);
-
-        }
-
+    public void setPosition(float x, float y) {
+    for (int i = 0; i < scoreRect.length; i++) {
+        scoreRect[i].x = x + i * space;
+        scoreRect[i].y = y;
     }
+    }
+
+    public void render(SpriteBatch batch) {
+    if (score == 0) {
+        batch.draw(scoreTexture[0], scoreRect[0].x, scoreRect[0].y, 50, 80);
+        return;
+    }
+    int temp = score;
+    int digitCount = 0;
+    int[] digits = new int[10];
+    while (temp > 0) {
+        digits[digitCount] = temp % 10;
+        temp /= 10;
+        digitCount++;
+    }
+    float totalWidth = digitCount * 50 + (digitCount - 1) * (space - 50); // 50 = width của số
+    float startX = scoreRect[0].x - totalWidth / 2 + 25; // căn giữa
+    for (int i = 0; i < digitCount; i++) {
+        int digit = digits[digitCount - 1 - i]; // lấy từ trái sang
+        float x = startX + i * space;
+        batch.draw(scoreTexture[digit], x, scoreRect[0].y, 50, 80);
+    }
+}
 
 }
