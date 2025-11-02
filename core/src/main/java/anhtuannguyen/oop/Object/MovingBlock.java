@@ -14,11 +14,20 @@ public class MovingBlock extends Block {
         this.originX = x;
     }
 
-    public void updateMovement(float dt) {
-        Rectangle r = getRect();
-        r.x += direction * speed * dt;
-        if (r.x < originX - range || r.x > originX + range) {
-            direction *= -1;
-        }
+    private float positionX;
+
+public void updateMovement(float dt) {
+    positionX += direction * speed * dt;
+
+    // Nếu vượt biên, giới hạn lại và đảo hướng
+    if (positionX < originX - range) {
+        positionX = originX - range;
+        direction = 1;
+    } else if (positionX > originX + range) {
+        positionX = originX + range;
+        direction = -1;
     }
+
+    getRect().x = positionX;
+}
 }
