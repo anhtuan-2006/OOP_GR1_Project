@@ -93,10 +93,10 @@ public class Ball {
             return;
         }
 
-        float dtt = Gdx.graphics.getDeltaTime();
+        float dt = Gdx.graphics.getDeltaTime();
 
         if (effectTimer >= 0) {
-            effectTimer += dtt;
+            effectTimer += dt;
             if (effectTimer >= 5f) {
                 radius = originalRadius;
                 effectTimer = -1;
@@ -108,12 +108,10 @@ public class Ball {
             y = bar.gety() + RADIUS;
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
                 started = true;
-                angle = Math.PI / 2; // bay thẳng lên
-                dy = 1;              // đảm bảo hướng đi lên
-                return;
+            angle = Math.PI / 2; // bay thẳng lên
+            dy = 1; // đảm bảo hướng đi lên
+            return;
         }
-
-        float dt = Gdx.graphics.getDeltaTime();
 
         // Lưu vị trí trước bước cập nhật
         double prevX = x;
@@ -162,10 +160,10 @@ public class Ball {
 
             // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
             if (stickyToBar && overlapX && goingDown && crossTop) {
-            started = false; // dừng bóng
-            stickyToBar = false; // tắt hiệu ứng
-            setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
-            return;
+                started = false; // dừng bóng
+                stickyToBar = false; // tắt hiệu ứng
+                setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
+                return;
             }
 
             if (goingDown && crossTop && overlapX) {
