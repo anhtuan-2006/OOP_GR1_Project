@@ -19,9 +19,11 @@ public class Result {
     private final Texture nextlevel_button = new Texture("play_buttom.png");
     private final Texture win = new Texture("win.png");
     private final Texture lose = new Texture("lose.png");
-
+    
     private Viewport viewport;
     private Rectangle bounds;
+
+    public HighScore highScore = new HighScore(viewport);
 
     private boolean playing = true;
     private boolean back_touch = false;
@@ -136,6 +138,7 @@ public class Result {
             if (back_touch) {
                 ingame.reset();
                 selectmap.reset();
+                highScore.highestScore = highestScore;
                 state = GameState.MENU;
             }
             if (nextlevel_touch) {
