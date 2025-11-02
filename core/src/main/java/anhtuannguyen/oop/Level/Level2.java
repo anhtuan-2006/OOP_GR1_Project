@@ -69,13 +69,13 @@ public class Level2 extends LevelBase {
         b.started = false;
         ball.add(b);
 
-        int ROW = map[0].length;
-        int COL = map.length;
+        int ROW = map.length;
+        int COL = map[0].length;
         // Khởi tạo khối
         block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, blockTexture);
         ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, ironblockTexture);
         movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, blockTexture);
-        
+
         // Gán texture cho từng loại block
         block.initializeBlocks(1, blockTexture);
         ironblock.initializeBlocks(2, ironblockTexture);
