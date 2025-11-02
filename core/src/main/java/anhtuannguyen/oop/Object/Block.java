@@ -72,14 +72,11 @@ public class Block {
                 if (map[row][col] == level) {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
-                   if (level == 3) {
-        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
-    } else {
-        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
-    }
-
-                    // blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
-
+                    if (level == 3) {
+                        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+                    } else {
+                        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
+                    }
                 }
             }
         }
