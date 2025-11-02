@@ -107,6 +107,9 @@ public class InGame {
     public void reset() {
         if (selectmap == null) return;
         int map = selectmap.getMap();
+        if (map <= -1) {
+            map = 0;
+        }
         setLife(life);
         if (levels[map] != null) {
             levels[map].setend(false);
