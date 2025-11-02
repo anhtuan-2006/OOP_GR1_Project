@@ -19,7 +19,8 @@ public class Result {
     private final Texture nextlevel_button = new Texture("play_buttom.png");
     private final Texture win = new Texture("win.png");
     private final Texture lose = new Texture("lose.png");
-
+    private final Texture highscore = new Texture("highscore.png");
+    private final Texture yourscore = new Texture("yourscore.png");
     private Viewport viewport;
     private Rectangle bounds;
 
@@ -33,6 +34,8 @@ public class Result {
     private Rectangle restartRect;
     private Rectangle nextlevelRect;
     private Rectangle result;
+    private Rectangle highscoreRect;
+    private Rectangle yourscoreRect;
 
     private final float button_w = 400f;
     private final float button_h = 150f;
@@ -49,7 +52,7 @@ public class Result {
     private Score highestScoreDisplay = new Score();
     private int currentScore = 0;
     private int highestScore = 0;
-    private BitmapFont font = new BitmapFont();
+
 
     /**
      * Constructor khởi tạo giao diện kết quả với viewport.
@@ -94,10 +97,13 @@ public class Result {
      */
     public void create() {
         backgroundRect = new Rectangle(0, 0, Screen.WORLD_W, Screen.WORLD_H);
-        backRect = new Rectangle((Screen.WORLD_W - 400) / 2, Screen.WORLD_H / 5, 400, 150);
-        restartRect = new Rectangle((Screen.WORLD_W - 400) / 2, Screen.WORLD_H / 5 + 250, 400, 150);
-        nextlevelRect = new Rectangle((Screen.WORLD_W - 400) / 2, Screen.WORLD_H / 5 + 500, 400, 150);
-        result = new Rectangle((Screen.WORLD_W - 1200) / 2, Screen.WORLD_H / 5 + 750, 1200, 800);
+        backRect = new Rectangle((Screen.WORLD_W - 400) / 2, 150, 400, 150);
+        restartRect = new Rectangle((Screen.WORLD_W - 400) / 2, 350, 400, 150);
+        nextlevelRect = new Rectangle((Screen.WORLD_W - 400) / 2, 550, 400, 150);
+        result = new Rectangle((Screen.WORLD_W - 1200) / 2, 1150, 1200, 800);
+        yourscoreRect = new Rectangle((Screen.WORLD_W - 800) / 2, 800, 800, 150);
+        highscoreRect = new Rectangle((Screen.WORLD_W - 800) / 2, 1000, 800, 150);
+
     }
 
     /**
@@ -161,17 +167,17 @@ public class Result {
         drawButton(batch, back_button, backRect, back_touch);
         drawButton(batch, restart_button, restartRect, restart_touch);
         drawButton(batch, nextlevel_button, nextlevelRect, nextlevel_touch);
+        drawButton(batch, yourscore, yourscoreRect, false);
+        drawButton(batch, highscore, highscoreRect, false);
 
-        font.getData().setScale(3f);
-        font.setColor(0, 0, 0, 1);
-        font.draw(batch, "YOUR SCORE:", 10, 400);
-        font.draw(batch, "HIGH SCORE:", 10, 500);
 
-        currentScoreDisplay.setPosition(350, 340);
-        currentScoreDisplay.render(batch);
 
-        highestScoreDisplay.setPosition(350, 440);
-        highestScoreDisplay.render(batch);
+
+        currentScoreDisplay.setPosition((Screen.WORLD_W) / 2 + 230, 840);
+        currentScoreDisplay.renderResult(batch);
+
+        highestScoreDisplay.setPosition((Screen.WORLD_W) / 2 + 230, 1040);
+        highestScoreDisplay.renderResult(batch);
     }
 
     /**

@@ -46,8 +46,8 @@ public class Life {
             Rectangle lifeRect = new Rectangle();
             lifeRect.width = heartsize;
             lifeRect.height = heartsize;
-            lifeRect.x = WORLD_W - heartsize - (i * (heartsize + spacing));
-            lifeRect.y = 10;
+            lifeRect.x = WORLD_W - heartsize - (i * (heartsize + spacing)) - 20;
+            lifeRect.y = 20;
             lifeList.add(lifeRect);
         }
     }
