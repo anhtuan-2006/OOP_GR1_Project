@@ -7,6 +7,8 @@ public enum GameState {
     /** Trạng thái hiển thị menu chính */
     MENU,
 
+    HIGHSCORE,
+
     /** Trạng thái chọn bản đồ chơi */
     SELECT_MAP,
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import anhtuannguyen.oop.Menu.GameState;
+import anhtuannguyen.oop.Menu.HighScore;
 import anhtuannguyen.oop.Menu.InGame;
 import anhtuannguyen.oop.Menu.Menu;
 import anhtuannguyen.oop.Menu.Pause;
@@ -59,6 +60,8 @@ public class main extends ApplicationAdapter {
     private Pause pause;
     /** Màn hình kết quả. */
     private Result result;
+
+    private HighScore highscore;
 
     /**
      * Hàm khởi tạo game. Được gọi một lần khi game bắt đầu chạy.
@@ -121,6 +124,8 @@ public class main extends ApplicationAdapter {
         ingame.setLife(lifes); // Đặt số mạng cho ingame
         result.setIngame(ingame);
         result.setSelectMap(selectmap);
+
+        highscore = new HighScore(viewport);
     }
 
     /**
@@ -178,6 +183,11 @@ public class main extends ApplicationAdapter {
                 state = setting.getSelectedMap();
                 setting.render(batch);
                 ingame.setLife(lifes); // cập nhật lại số mạng khi thay đổi
+                break;
+            case HIGHSCORE:
+                highscore.update();
+                state = highscore.getSelectedMap();
+                highscore.renderHighScore(batch);
                 break;
             case RESULT:
                 result.setState(state);

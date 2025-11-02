@@ -72,11 +72,15 @@ public class Block {
                 if (map[row][col] == level) {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
-                    if (level == 3) {
-                        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
-                    } else {
-                        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
-                    }
+                   if (level == 3) {
+        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+    }
+    else if (level == 2) {
+        blocks[row][col] = new IronBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+    }
+    else {
+        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
+    }
                 }
             }
         }
@@ -211,22 +215,25 @@ public class Block {
         function.add(f);
     }
 
+    public boolean CheckBlock() {
+    return false;
+}
+
     public void checkAndHandleCollisions(float ballX, float ballY, float ballRadius, Ball b) {
         Rectangle ballRect = new Rectangle(ballX - ballRadius / 2, ballY - ballRadius / 2, ballRadius, ballRadius);
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
                 Block block = blocks[row][col];
                 if (block != null && block.alive && block.rect.overlaps(ballRect)) {
-                    if(map[row][col] !=2)
-                    {
+                    if (!block.CheckBlock()) {
                     fn(block.rect, b);
                     pullBall(ballRect, block.rect, b, false);
                     block.alive = false;
                     point += 10;
                     blocks[row][col] = null;
-                    } else {
-                        pullBall(ballRect, block.rect, b,true);
-                    }
+} else {
+    pullBall(ballRect, block.rect, b, true);
+}
                 }
             }
         }
