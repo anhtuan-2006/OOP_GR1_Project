@@ -24,7 +24,7 @@ public class Level12 extends LevelBase {
 
     // ====== Dữ liệu bản đồ ======
     // Bản đồ khối: 1 = khối thường, 2 = khối sắt, 3 = khối di chuyển, 0 = trống
-    private static int[][] map = {
+    private int[][] map = {
         { 0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0 },
         { 0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0 },
         { 0,0,0,0,0,0,0,3,0,3,0,3,0,0,0,0,0,0,0,0 },
@@ -77,11 +77,12 @@ public class Level12 extends LevelBase {
         Ball b = new Ball(bar, ballTexture);
         b.started = false;
         ball.add(b);
-
+        int ROW = map[0].length;
+        int COL = map.length;
         // Khởi tạo khối
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64, blockTexture);
-        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, ironblockTexture);
-        movingBlock = new Block(0, 0, ball, 12, 10, map, 100, 64, blockTexture);
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, blockTexture);
+        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, ironblockTexture);
+        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/ROW, (int) WORLD_W/ROW * 64 / 100, blockTexture);
 
         // Gán texture cho từng loại block
         block.initializeBlocks(1, blockTexture);
