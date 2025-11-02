@@ -14,63 +14,97 @@ import anhtuannguyen.oop.Object.Ball;
 import anhtuannguyen.oop.Object.Bar;
 import anhtuannguyen.oop.Object.Block;
 
+/**
+ * Lớp đại diện cho màn chơi Level 2.
+ * Quản lý các đối tượng như bóng, thanh chắn, khối thường, khối sắt, khối di chuyển,
+ * điểm số, mạng sống và trạng thái chơi.
+ */
 public class Level2 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
-    private Texture background;
-    List<Ball> ball = new ArrayList<>();
-    Bar bar;
-    Block block; // block thuong
-    Block ironblock; // block sat
-    Block movingBlock; // khối di chuyển ngang
-    Score score = new Score();
 
-    boolean playing = true;
-    Pause play_pause;
-     private  boolean win;
-    private boolean end = false;
+    private Texture background; // Hình nền màn chơi
+    List<Ball> ball = new ArrayList<>(); // Danh sách bóng
+    Bar bar; // Thanh chắn
+    Block block; // Khối thường
+    Block ironblock; // Khối sắt
+    Block movingBlock; // Khối di chuyển ngang
+    Score score = new Score(); // Đối tượng điểm số
 
-    Life life;
+    boolean playing = true; // Trạng thái đang chơi
+    Pause play_pause; // Đối tượng tạm dừng
+    private boolean win; // Trạng thái thắng
+    private boolean end = false; // Trạng thái kết thúc màn
 
-    private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 2, 2, 2, 0, 0, 0, 0, 2, 2, 2 },
-            { 2, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-            { 2, 0, 1, 1, 0, 3, 0, 0, 1, 2 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 0, 3, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 2, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-            { 2, 0, 1, 1, 0, 3, 0, 0, 1, 2 },
-            { 2, 2, 2, 0, 0, 0, 0, 2, 2, 2 },
+    Life life; // Đối tượng mạng sống
+
+    // Bản đồ khối: 1 = khối thường, 2 = khối sắt, 3 = khối di chuyển, 0 = trống
+    private static int[][] map = {
+        { 2, 2, 2, 0, 0, 0, 0, 2, 2, 2 },
+        { 2, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+        { 2, 0, 1, 1, 0, 3, 0, 0, 1, 2 },
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 0, 0, 3, 0, 1, 1, 0, 1, 1 },
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+        { 2, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+        { 2, 0, 1, 1, 0, 3, 0, 0, 1, 2 },
+        { 2, 2, 2, 0, 0, 0, 0, 2, 2, 2 },
     };
 
+    /**
+     * Hàm khởi tạo màn chơi Level2.
+     * @param _play_pause Đối tượng Pause để kiểm soát trạng thái tạm dừng.
+     */
     public Level2(Pause _play_pause) {
         play_pause = _play_pause;
     }
 
+    /**
+     * Trả về điểm hiện tại từ khối thường.
+     * @return Điểm số hiện tại.
+     */
     public int getScore() {
-    return block.getScore();
+        return block.getScore();
     }
 
+    /**
+     * Thiết lập số mạng sống ban đầu.
+     * @param _life Số mạng sống.
+     */
     public void setLife(int _life) {
         life = new Life(_life);
     }
-        public Boolean getend() {
+
+    /**
+     * Kiểm tra màn chơi đã kết thúc chưa.
+     * @return true nếu kết thúc hoặc không còn khối sống.
+     */
+    public Boolean getend() {
         return end || !block.checkBlockAlive();
     }
 
+    /**
+     * Thiết lập trạng thái kết thúc màn chơi.
+     * @param end true nếu kết thúc.
+     */
     public void setend(Boolean end) {
         this.end = end;
     }
 
+    /**
+     * Kiểm tra người chơi có thắng không.
+     * @return true nếu thắng.
+     */
     public Boolean getwin() {
         return win;
     }
 
-
+    /**
+     * Khởi tạo các đối tượng trong màn chơi.
+     */
     public void create() {
         bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("Bar_level2.png"));
 
@@ -89,10 +123,14 @@ public class Level2 {
         background = new Texture("background_level2.png");
     }
 
+    /**
+     * Vẽ toàn bộ màn chơi lên màn hình.
+     * @param batch SpriteBatch dùng để vẽ.
+     */
     public void render(SpriteBatch batch) {
+        score.setScore(block.getScore()); // Cập nhật điểm từ khối thường
 
-        score.setScore(block.getScore());
-
+        // Kiểm tra trạng thái chơi/tạm dừng
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
             bar.isPlaying();
@@ -100,6 +138,7 @@ public class Level2 {
                 b.isPlaying();
         }
 
+        // Xử lý bóng chết
         int i = 0;
         while (i < ball.size()) {
             if (ball.get(i).alive == false) {
@@ -110,26 +149,28 @@ public class Level2 {
             }
         }
 
+        // Nếu không còn bóng, kiểm tra mạng sống
         if (ball.size() == 0) {
             if (life.die() == true) {
                 Ball b = new Ball(bar, new Texture("Ball_level2.png"));
                 b.started = false;
                 ball.add(b);
-            } else
-                // Gdx.app.exit();
-                 end = true;
+            } else {
+                end = true;
                 win = false;
+            }
         }
 
-        for (Ball b : new ArrayList<>(ball)) { // chụp snapshot
+        // Kiểm tra va chạm giữa bóng và các khối
+        for (Ball b : new ArrayList<>(ball)) { // chụp snapshot để tránh lỗi khi xóa phần tử
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 movingBlock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
-
             }
         }
 
+        // Vẽ các đối tượng lên màn hình
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
 
         for (Ball b : ball)
@@ -144,19 +185,26 @@ public class Level2 {
         life.render(batch);
     }
 
+    /**
+     * Trả về kết quả thắng/thua của màn chơi.
+     * @return true nếu thắng, false nếu thua.
+     */
     public boolean getresult() {
         if (block.getwin()) {
             return true;
-        }        
+        }
         return win;
     }
 
+    /**
+     * Giải phóng tài nguyên khi thoát màn chơi.
+     */
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
         movingBlock.dispose();
-        // life.dispose();
+        // life.dispose(); // nếu cần giải phóng mạng sống
         ball.clear();
     }
 }

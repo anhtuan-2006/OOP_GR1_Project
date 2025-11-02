@@ -1,6 +1,5 @@
 package anhtuannguyen.oop.Menu;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,10 +7,16 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import anhtuannguyen.oop.Level.*;
 
+/**
+ * Lớp InGame quản lý toàn bộ trạng thái của trò chơi khi đang trong màn chơi.
+ * Bao gồm các Level, trạng thái tạm dừng (Pause), chọn map (SelectMap),
+ * cập nhật trạng thái (update), và vẽ nội dung (render).
+ */
 public class InGame {
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
+    // Các level của trò chơi (Level1 -> Level12)
     private Level1 level1;
     private Level2 level2;
     private Level3 level3;
@@ -25,45 +30,70 @@ public class InGame {
     private Level11 level11;
     private Level12 level12;
 
-    private int life;
+    private int life; // Số mạng hiện tại của người chơi
 
-    private final Viewport viewport;
-    private Pause pause;
-    private SelectMap selectmap;
-    private GameState state = GameState.IN_GAME;
-    private boolean win;
+    private final Viewport viewport; // Viewport để xác định vùng hiển thị game
+    private Pause pause; // Màn hình tạm dừng
+    private SelectMap selectmap; // Chọn bản đồ
+    private GameState state = GameState.IN_GAME; // Trạng thái trò chơi hiện tại
+    private boolean win; // Kết quả thắng/thua
 
-    // Constructor
+    /**
+     * Constructor khởi tạo InGame với viewport tương ứng.
+     * @param _v Viewport của game.
+     */
     public InGame(Viewport _v) {
         this.viewport = _v;
     }
 
-    // Getters and Setters
+    // ==============================
+    // Getter / Setter
+    // ==============================
+
+    /** @return đối tượng Pause hiện tại */
     public Pause getPause() {
         return pause;
     }
 
+    /** @return đối tượng SelectMap hiện tại */
     public SelectMap getSelectMap() {
         return selectmap;
     }
 
+    /** @return trạng thái trò chơi hiện tại */
     public GameState getState() {
         return state;
     }
 
+    /**
+     * Cập nhật trạng thái của game (IN_GAME, PAUSE, RESULT).
+     * @param _state trạng thái mới.
+     */
     public void setState(GameState _state) {
         state = _state;
         System.out.println("InGame state updated to: " + state); // Debug log
     }
 
+    /**
+     * Gán màn hình tạm dừng cho trò chơi.
+     * @param _pause đối tượng Pause.
+     */
     public void setPause(Pause _pause) {
         this.pause = _pause;
     }
 
+    /**
+     * Gán SelectMap cho trò chơi.
+     * @param _selectmap đối tượng SelectMap.
+     */
     public void setSelectMap(SelectMap _selectmap) {
         this.selectmap = _selectmap;
     }
 
+    /**
+     * Lấy kết quả thắng/thua của Level hiện tại.
+     * @return true nếu người chơi thắng, false nếu chưa hoặc thua.
+     */
     public boolean getresult() {
         if (selectmap == null) return false;
         int map = selectmap.getMap();
@@ -82,10 +112,15 @@ public class InGame {
         return false;
     }
 
+    /** Gán kết quả thắng/thua. */
     public void setresult(boolean win) {
         this.win = win;
     }
 
+    /**
+     * Cập nhật số mạng hiện tại và đồng bộ đến tất cả các Level.
+     * @param _life số mạng.
+     */
     public void setLife(int _life) {
         life = _life;
         if (level1 != null) level1.setLife(_life);
@@ -102,6 +137,9 @@ public class InGame {
         if (level12 != null) level12.setLife(_life);
     }
 
+    /**
+     * Khởi tạo tất cả các Level và màn hình Pause.
+     */
     public void create() {
         pause = new Pause(viewport);
         pause.create();
@@ -143,12 +181,18 @@ public class InGame {
         level12.create();
     }
 
+    /**
+     * Hàm cập nhật trạng thái trò chơi mỗi frame.
+     * Gọi xử lý input và kiểm tra chuyển sang màn hình kết quả.
+     */
     public void update() {
-        handleInput(); // Xử lý input từ phím ESC
-        toResult();
+        handleInput(); // Xử lý phím ESC để pause/resume
+        toResult();    // Kiểm tra nếu level kết thúc
     }
 
-    // Hàm con để xử lý input
+    /**
+     * Xử lý đầu vào từ bàn phím, đặc biệt phím ESCAPE để pause hoặc resume game.
+     */
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if (state == GameState.PAUSE) {
@@ -159,8 +203,11 @@ public class InGame {
         }
     }
 
+    /**
+     * Chuyển sang trạng thái RESULT khi level kết thúc.
+     * Đồng thời cập nhật điểm hiện tại vào kết quả.
+     */
     private void toResult() {
-
         if ((level1 != null && level1.getend())
         || (level2 != null && level2.getend())
         || (level3 != null && level3.getend())
@@ -184,6 +231,10 @@ public class InGame {
         }
     }
 
+    /**
+     * Hàm vẽ nội dung màn chơi tương ứng với map đang chọn.
+     * @param batch SpriteBatch dùng để vẽ.
+     */
     public void render(SpriteBatch batch) {
         int map_number = (selectmap != null) ? selectmap.getMap() : 0;
 
@@ -214,6 +265,10 @@ public class InGame {
         }
     }
 
+    /**
+     * Lấy điểm số hiện tại của Level đang chơi.
+     * @return điểm số của Level tương ứng.
+     */
     public int getScore() {
         if (selectmap == null) return 0;
         int map = selectmap.getMap();
@@ -232,6 +287,10 @@ public class InGame {
         return 0;
     }
 
+    /**
+     * Reset lại trạng thái của Level hiện tại.
+     * Thiết lập lại mạng, khởi tạo lại Level và đưa Pause về trạng thái IN_GAME.
+     */
     public void reset() {
         setLife(life);
 
@@ -303,6 +362,9 @@ public class InGame {
         }
     }
 
+    /**
+     * Giải phóng tài nguyên của tất cả đối tượng khi thoát game.
+     */
     public void dispose() {
         if (pause != null) pause.dispose();
         if (level1 != null) level1.dispose();
