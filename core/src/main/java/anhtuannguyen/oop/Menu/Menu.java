@@ -36,6 +36,10 @@ public class Menu {
 
     Rectangle logo_size;       // Kích thước vùng logo
 
+    Texture highscore;;
+    Rectangle highscore_size;
+    boolean touch_highscore = false;
+
     /**
      * Constructor khởi tạo menu với viewport.
      * @param _viewport Viewport hiện tại.
@@ -53,11 +57,13 @@ public class Menu {
         setting = new Texture("setting_buttom.png");
         exit = new Texture("exit_buttom.png");
         logo = new Texture("Arkanoid.png");
+        highscore = new Texture("HighScoreIcon.png");
 
         play_size = new Rectangle(WORLD_W / 2 - 200, WORLD_H / 2 - 100, 400, 200);
         setting_size = new Rectangle(WORLD_W / 2 - 200, WORLD_H / 2 - 350, 400, 200);
         exit_size = new Rectangle(WORLD_W / 2 - 200, WORLD_H / 2 - 600, 400, 200);
         logo_size = new Rectangle(WORLD_W / 2 - 600, WORLD_H / 3 * 2, 1200, 600);
+        highscore_size = new Rectangle(WORLD_W - 250, 250, 200, 200);
     }
 
     /**
@@ -70,6 +76,7 @@ public class Menu {
         touch_play = play_size.contains(v.x, v.y);
         touch_setting = setting_size.contains(v.x, v.y);
         touch_exit = exit_size.contains(v.x, v.y);
+        touch_highscore = highscore_size.contains(v.x, v.y);
     }
 
     /**
@@ -101,6 +108,15 @@ public class Menu {
             viewport.unproject(v);
             if (exit_size.contains(v.x, v.y)) {
                 com.badlogic.gdx.Gdx.app.exit();
+            }
+        }
+
+        if(touch_highscore && com.badlogic.gdx.Gdx.input.justTouched()) {
+            Vector3 v = new Vector3(com.badlogic.gdx.Gdx.input.getX(), com.badlogic.gdx.Gdx.input.getY(), 0);
+            viewport.unproject(v);
+            if (highscore_size.contains(v.x, v.y)) {
+                state = GameState.HIGHSCORE;
+                press = true;
             }
         }
 
@@ -137,6 +153,11 @@ public class Menu {
             }
         }
 
+        if(!touch_highscore)
+            batch.draw(highscore, highscore_size.x, highscore_size.y, highscore_size.width, highscore_size.height);
+        else
+            batch.draw(highscore, highscore_size.x - 10, highscore_size.y - 10, highscore_size.width + 20, highscore_size.height + 20);
+
         // Vẽ logo
         batch.draw(logo, logo_size.x, logo_size.y, logo_size.width, logo_size.height);
     }
@@ -150,5 +171,6 @@ public class Menu {
         exit.dispose();
         setting.dispose();
         logo.dispose();
+        highscore.dispose();
     }
 }

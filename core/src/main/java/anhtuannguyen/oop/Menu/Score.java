@@ -39,6 +39,7 @@ public class Score {
 
     /**
      * Thiết lập điểm số cần hiển thị.
+     * 
      * @param _score Điểm số mới.
      */
     public void setScore(int _score) {
@@ -47,6 +48,7 @@ public class Score {
 
     /**
      * Thiết lập vị trí bắt đầu để vẽ điểm số.
+     * 
      * @param x Tọa độ X.
      * @param y Tọa độ Y.
      */
@@ -58,7 +60,17 @@ public class Score {
     }
 
     /**
+     * Lấy điểm cao
+     * 
+     * @param score Điểm số cần hiển thị.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
      * Vẽ điểm số lên màn hình bằng SpriteBatch.
+     * 
      * @param batch SpriteBatch để vẽ.
      */
     public void render(SpriteBatch batch) {

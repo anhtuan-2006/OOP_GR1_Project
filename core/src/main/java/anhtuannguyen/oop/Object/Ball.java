@@ -84,146 +84,90 @@ public class Ball {
         playing = !playing;
     }
 
+    private final float MAX_BOUNCE_DEG = 75f; // góc nảy tối đa khi va chạm với thanh
+    private float vx = 0;
+    private float vy = SPEED;
+
     // Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính
-    private static final float MAX_BOUNCE_DEG = 75f;
-
+    // ======= Hàm di chuyển mới =======
     public void Move() {
-
-        if (playing == false) {
+        if (!playing)
             return;
-        }
 
         float dt = Gdx.graphics.getDeltaTime();
 
-        if (effectTimer >= 0) {
-            effectTimer += dt;
-            if (effectTimer >= 5f) {
-                radius = originalRadius;
-                effectTimer = -1;
-            }
-        }
-
-        if (started == false) {
-            x = bar.getx() + bar.getWidth() / 2;
-            y = bar.gety() + RADIUS;
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        // nếu chưa bắt đầu, bám theo thanh
+        if (!started) {
+            x = bar.getx() + bar.getWidth() / 2f;
+            y = bar.gety() + radius;
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 started = true;
-            angle = Math.PI / 2; // bay thẳng lên
-            dy = 1; // đảm bảo hướng đi lên
+                angle = (float) Math.PI / 2;
+                vx = 0;
+                vy = SPEED;
+            }
             return;
         }
 
-        // Lưu vị trí trước bước cập nhật
-        double prevX = x;
-        double prevY = y;
-
-        // Vận tốc từ góc hiện tại
-        double vx = Math.cos(angle) * SPEED * dx;
-        double vy = Math.sin(angle) * SPEED * dy;
-
-        // Cập nhật vị trí
+        // cập nhật vị trí
         x += vx * dt;
         y += vy * dt;
 
-        // Bật tường trái/phải theo bán kính
+        // kiểm tra va tường
         if (x <= radius) {
-            sound.play_ball_block();
             x = radius;
-            dx = -dx;
+            vx = Math.abs(vx);
+            sound.play_ball_block();
         } else if (x >= WORLD_W - radius) {
-            sound.play_ball_block();
             x = WORLD_W - radius;
-            dx = -dx;
-        }
-
-        // Bật trần
-        if (y >= WORLD_H - radius) {
+            vx = -Math.abs(vx);
             sound.play_ball_block();
+        }
+        if (y >= WORLD_H - radius) {
             y = WORLD_H - radius;
-            dy = -dy;
+            vy = -Math.abs(vy);
+            sound.play_ball_block();
         }
 
-        // Rơi khỏi đáy
-        if (y <= radius) {
+        // rơi khỏi màn hình
+        if (y <= -radius) {
             alive = false;
             return;
         }
 
-        // Va chạm với thanh
+        // va chạm với thanh
         if (bar != null) {
             com.badlogic.gdx.math.Rectangle p = bar.getBounds();
             float paddleTop = p.y + p.height;
+            if (y - radius <= paddleTop && y + radius >= p.y &&
+                    x >= p.x && x <= p.x + p.width && vy < 0) {
 
-            boolean goingDown = (vy < 0);
-            boolean crossTop = (prevY - radius >= paddleTop) && (y - radius <= paddleTop);
-            boolean overlapX = (x >= p.x - radius) && (x <= p.x + p.width + radius);
-
-            // 1) Bật mép trên thanh (đang đi xuống, cắt qua mép trên)
-            if (stickyToBar && overlapX && goingDown && crossTop) {
-                started = false; // dừng bóng
-                stickyToBar = false; // tắt hiệu ứng
-                setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
-                return;
-            }
-
-            if (goingDown && crossTop && overlapX) {
                 sound.play_ball_bar();
-                y = paddleTop + radius / 2;
+                y = paddleTop + radius; // đặt bóng lên trên
 
+                // tính góc bật dựa theo vị trí va chạm
                 float paddleCenter = p.x + p.width / 2f;
                 float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
+                float bounceAngle = hitRel * MAX_BOUNCE_DEG;
 
-                float outDeg = (float) Math.toDegrees(angle) - hitRel * MAX_BOUNCE_DEG;
-                if (outDeg >= 160)
-                    outDeg = 165f;
-                if (outDeg <= 20)
-                    outDeg = 15f;
-                angle = Math.toRadians(outDeg);
-
-                dy = +1;
-            } else {
-                // 2) Bật cạnh trái/phải của thanh
-                boolean overlapY = (y + radius >= p.y) && (y - radius <= paddleTop);
-
-                double leftSideX = p.x - radius;
-                double rightSideX = p.x + p.width + radius;
-
-                boolean goingRight = (vx > 0);
-                boolean goingLeft = (vx < 0);
-
-                boolean crossLeftSide = (prevX <= leftSideX) && (x >= leftSideX);
-                boolean crossRightSide = (prevX >= rightSideX) && (x <= rightSideX);
-
-                if (overlapY && goingRight && crossLeftSide) {
-                    x = (float) leftSideX; // kẹp sát biên để tránh dính
-                    dx = -dx; // bật theo trục dọc (đổi hướng ngang)
-                    // giữ nguyên dy và angle (mô hình hiện tại dùng dx/dy để tạo góc)
-                } else if (overlapY && goingLeft && crossRightSide) {
-                    x = (float) rightSideX;
-                    dx = -dx;
-                }
+                float speed = (float) Math.sqrt(vx * vx + vy * vy);
+                vx = speed * (float) Math.sin(Math.toRadians(bounceAngle));
+                vy = speed * (float) Math.cos(Math.toRadians(bounceAngle));
             }
         }
-
-        // Chuẩn hóa góc về [0, π) vì dùng dx/dy cho hướng
-        angle = angle % (Math.PI);
-        if (angle < 0)
-            angle += Math.PI;
-
-        return;
     }
 
-    // Đổi hướng: 1=left, 2=right → lật trục X; 3=up, 4=down → lật trục Y
+    // ======= Hàm đổi hướng (nếu cần gọi thủ công) =======
     public void Change_Direction(int c) {
         sound.play_ball_block();
         switch (c) {
-            case 1:
-            case 2:
-                dx = -dx;
+            case 1: // trái
+            case 2: // phải
+                vx = -vx;
                 break;
-            case 3:
-            case 4:
-                dy = -dy;
+            case 3: // trên
+            case 4: // dưới
+                vy = -vy;
                 break;
             default:
                 break;
