@@ -1,10 +1,12 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Object;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+
+import anhtuannguyen.oop.Menu.Screen;
 
 public class Bar {
     // Phắc

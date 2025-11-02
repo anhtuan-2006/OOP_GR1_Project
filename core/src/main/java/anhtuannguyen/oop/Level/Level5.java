@@ -1,10 +1,18 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import anhtuannguyen.oop.Menu.Life;
+import anhtuannguyen.oop.Menu.Pause;
+import anhtuannguyen.oop.Menu.Score;
+import anhtuannguyen.oop.Menu.Screen;
+import anhtuannguyen.oop.Object.Ball;
+import anhtuannguyen.oop.Object.Bar;
+import anhtuannguyen.oop.Object.Block;
 
 public class Level5 {
     private static final float WORLD_H = Screen.WORLD_H;
@@ -38,7 +46,7 @@ public class Level5 {
     };
     static int ROW = map.length;
     static int COL = map[0].length;
-    Level5(Pause _play_pause)
+    public Level5(Pause _play_pause)
     {
         play_pause = _play_pause;
     }

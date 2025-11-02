@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Object;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

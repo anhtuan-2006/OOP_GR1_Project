@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Object;
 
 import java.lang.*;
 
@@ -6,6 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import anhtuannguyen.oop.Menu.Screen;
+import anhtuannguyen.oop.Menu.Sound;
 
 public class Ball {
 

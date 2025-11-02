@@ -8,6 +8,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import anhtuannguyen.oop.Menu.GameState;
+import anhtuannguyen.oop.Menu.InGame;
+import anhtuannguyen.oop.Menu.Menu;
+import anhtuannguyen.oop.Menu.Pause;
+import anhtuannguyen.oop.Menu.Result;
+import anhtuannguyen.oop.Menu.Screen;
+import anhtuannguyen.oop.Menu.SelectMap;
+import anhtuannguyen.oop.Menu.Setting;
+import anhtuannguyen.oop.Menu.Sound;
+
 public class main extends ApplicationAdapter {
 
     private static final float WORLD_W = Screen.WORLD_W;

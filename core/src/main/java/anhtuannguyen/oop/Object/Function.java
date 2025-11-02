@@ -1,10 +1,12 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Object;
 
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+
+import anhtuannguyen.oop.Menu.Screen;
 
 public class Function {
     private static final float WORLD_H = Screen.WORLD_H;

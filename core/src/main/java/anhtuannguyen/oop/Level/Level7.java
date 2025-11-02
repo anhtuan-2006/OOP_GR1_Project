@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,40 +6,48 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Level4 {
+import anhtuannguyen.oop.Menu.Life;
+import anhtuannguyen.oop.Menu.Pause;
+import anhtuannguyen.oop.Menu.Score;
+import anhtuannguyen.oop.Menu.Screen;
+import anhtuannguyen.oop.Object.Ball;
+import anhtuannguyen.oop.Object.Bar;
+import anhtuannguyen.oop.Object.Block;
+
+public class Level7 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
     private Texture background;
     List<Ball> ball = new ArrayList<>();
     Bar bar;
-    Block block; // block thuong
+    Block block; //
     Block ironblock; // block sat
-    Block movingBlock; // khối di chuyển ngang 
-
+    Block movingBlock; // khối di chuyển ngang
     Score score = new Score();
-
     boolean playing = true;
-    Pause play_pause;
      private  boolean win;
     private boolean end = false;
+    Pause play_pause;
+
     Life life;
-
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 0, 0, 2, 2, 2, 2, 2, 2, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 3, 0, 0, 0, 3, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 3, 0, 0, 0, 3, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 1, 0, 1, 0, 0, 0, 1, 0, 1, 0 },
+    { 0, 1, 0, 0, 2, 2, 0, 1, 0, 1 },
+    { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 },
+    { 0, 1, 0, 0, 2, 2, 0, 1, 0, 1 },
+    { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 },
+    { 0, 1, 0, 0, 2, 2, 0, 1, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 2, 2, 2, 2, 2, 2, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 1, 0, 0, 2, 2, 0, 1, 0, 1 },
+    { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 },
+    { 0, 1, 0, 3, 0, 3, 0, 3, 0, 1 }
     };
-
-    Level4(Pause _play_pause) {
+    static int ROW = map.length;
+    static int COL = map[0].length;
+    public Level7(Pause _play_pause)
+    {
         play_pause = _play_pause;
     }
 
@@ -47,10 +55,10 @@ public class Level4 {
     return block.getScore();
     }
 
-    public void setLife(int _life) {
+    public void  setLife(int _life) {
         life = new Life(_life);
-    }
-    public Boolean getend() {
+    } 
+        public Boolean getend() {
         return end || !block.checkBlockAlive();
     }
 
@@ -62,27 +70,28 @@ public class Level4 {
         return win;
     }
     public void create() {
-        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 30, new Texture("Bar_Level4.png"));
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level7.png"));
 
-        Ball b = new Ball(bar, new Texture("Ball_Level4.png"));
+        Ball b = new Ball(bar, new Texture("ball_level7.png"));
         b.started = false;
         ball.add(b);
+        
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level7.png"));
+        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block_lv7.jpg"));
 
-        block = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("Block_Level4.png"));
-        ironblock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("Iron_block_lv4.png"));
+        block.initializeBlocks(1, new Texture("Block_Level7.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv7.jpg"));
 
-        block.initializeBlocks(1, new Texture("Block_Level4.png"));
-        ironblock.initializeBlocks(2, new Texture("Iron_block_lv4.png"));
+        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level7.png"));
+        movingBlock.initializeBlocks(3, new Texture("Block_Level7.png"));
 
-        movingBlock = new Block(0, 0, ball, 12, 10, map, 100, 64, new Texture("Block_Level4.png"));
-        movingBlock.initializeBlocks(3, new Texture("Block_Level4.png"));
-
-        background = new Texture("Background_Level4.png");
+        background = new Texture("Background_Level7.jpg");
+        if (background == null || bar == null || ball == null || block == null) {
+            System.out.println("Failed to load texture!");
+        }
     }
 
     public void render(SpriteBatch batch) {
-
-        score.setScore(block.getScore());
 
         if (playing != play_pause.isPlaying()) {
             playing = !playing;
@@ -102,17 +111,20 @@ public class Level4 {
         }
 
         if (ball.size() == 0) {
-            if (life.die() == true) {
-                Ball b = new Ball(bar, new Texture("Ball_Level4.png"));
+            
+            if(life.die() == true) {
+                Ball b = new Ball(bar, new Texture("Ball_Level5"));
                 b.started = false;
                 ball.add(b);
-            } else
+            }
+            else{ 
                 // Gdx.app.exit();
                  end = true;
                 win = false;
+            }
         }
 
-        for (Ball b : new ArrayList<>(ball)) { // chụp snapshot
+        for (Ball b : new ArrayList<>(ball)) {           // chụp snapshot
             if (b.alive) {
                 block.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
                 ironblock.checkAndHandleCollisions((float) b.getx(), (float) b.gety(), b.getRADIUS(), b);
@@ -125,28 +137,29 @@ public class Level4 {
         for (Ball b : ball)
             if (b.alive == true)
                 b.render(batch);
-
+        score.setScore(block.getScore());
+        score.render(batch);
         bar.render(batch);
         block.renderBlocks(batch);
         ironblock.renderBlocks(batch);
         movingBlock.renderBlocks(batch);
-        score.render(batch);
         life.render(batch);
+        
     }
-
-     public boolean getresult() {
+    public boolean getresult() {
         if (block.getwin()) {
             return true;
         }        
         return win;
     }
 
+
     public void dispose() {
         bar.dispose();
         block.dispose();
         ironblock.dispose();
-        movingBlock.dispose(); 
-        ball.clear();
+        movingBlock.dispose();
         // life.dispose();
+        ball.clear();
     }
 }

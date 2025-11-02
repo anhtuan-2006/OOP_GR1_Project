@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Menu;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,7 +30,7 @@ public class Menu {
 
     Rectangle logo_size;
 
-    Menu(Viewport _viewport) {
+    public Menu(Viewport _viewport) {
         viewport = _viewport;
     }
 

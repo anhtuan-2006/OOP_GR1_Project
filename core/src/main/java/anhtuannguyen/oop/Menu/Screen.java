@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Menu;
 
 public class Screen {
 

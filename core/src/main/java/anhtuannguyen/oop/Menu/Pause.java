@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

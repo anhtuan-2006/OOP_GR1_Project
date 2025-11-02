@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+
+import anhtuannguyen.oop.Menu.Screen;
 
 public class Block {
     private int blockWidth;

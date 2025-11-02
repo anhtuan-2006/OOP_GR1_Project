@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class Setting {
     Rectangle right_size = new Rectangle(950, WORLD_W / 2 - 175, 200, 650);
     Rectangle left_size = new Rectangle(WORLD_W - 950 - 200, WORLD_W / 2 - 175, 200, 650);
 
-    Setting(Viewport _viewport, Sound _music) {
+    public Setting(Viewport _viewport, Sound _music) {
         viewport = _viewport;
         MusicSound = _music;
     }

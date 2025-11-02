@@ -1,4 +1,4 @@
-package anhtuannguyen.oop;
+package anhtuannguyen.oop.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,15 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Level11 {
+import anhtuannguyen.oop.Menu.Life;
+import anhtuannguyen.oop.Menu.Pause;
+import anhtuannguyen.oop.Menu.Score;
+import anhtuannguyen.oop.Menu.Screen;
+import anhtuannguyen.oop.Object.Ball;
+import anhtuannguyen.oop.Object.Bar;
+import anhtuannguyen.oop.Object.Block;
+
+public class Level9 {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
     private Texture background;
@@ -19,40 +27,38 @@ public class Level11 {
     boolean playing = true;
 
     Pause play_pause;
-  private  boolean win;
+      private  boolean win;
     private boolean end = false;
-
     Life life;
     private static int[][] map = { // Bản đồ tĩnh: 1 = có khối, 0 = không
-            { 0, 0, 3, 0, 0, 3, 0, 0, 3, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 2, 0, 0, 1, 0, 2, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 2, 0, 1, 0, 0, 2, 0, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 2, 2, 0, 0, 0, 0, 2, 2, 0 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 2, 1, 1, 2, 0, 0, 1 },
+    { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1 },
+    { 0, 1, 0, 1, 1, 1, 1, 0, 1, 0 },
+    { 0, 0, 1, 0, 1, 1, 0, 1, 0, 0 },
+    { 0, 0, 0, 1, 1, 1, 1, 0, 0, 0 },
+    { 0, 2, 2, 0, 0, 0, 0, 2, 2, 0 },
+    { 0, 0, 0, 0, 1, 1, 0, 0, 0, 0 },
+    { 0, 0, 3, 0, 0, 0, 0, 3, 0, 0 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 0, 0, 0, 2, 2, 2, 2, 0, 0, 0 },
     };
     static int ROW = map.length;
     static int COL = map[0].length;
-    Level11(Pause _play_pause)
+    public Level9(Pause _play_pause)
     {
         play_pause = _play_pause;
     }
 
-
     public int getScore() {
     return block.getScore();
     }
-    
-    public void setLife(int _life) {
+
+    public void setLife(int _life){
         life = new Life(_life);
     }
-    public Boolean getend() {
+     public Boolean getend() {
         return end || !block.checkBlockAlive();
     }
 
@@ -64,22 +70,22 @@ public class Level11 {
         return win;
     }
     public void create() {
-        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level11.png"));
+        bar = new Bar(WORLD_W / 2 - 150, 200, 300, 50, new Texture("Bar_Level9.png"));
 
-        Ball b = new Ball(bar, new Texture("Ball_level11.png"));
+        Ball b = new Ball(bar, new Texture("Ball_level9.png"));
         b.started = false;
         ball.add(b);
         
-        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level11.png"));
-        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block_lv11.jpg"));
+        block = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level9.png"));
+        ironblock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("iron_block_lv9.png"));
 
-        block.initializeBlocks(1, new Texture("Block_Level11.png"));
-        ironblock.initializeBlocks(2, new Texture("iron_block_lv11.jpg"));
+        block.initializeBlocks(1, new Texture("Block_Level9.png"));
+        ironblock.initializeBlocks(2, new Texture("iron_block_lv9.png"));
 
-        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level11.png"));
-        movingBlock.initializeBlocks(3, new Texture("Block_Level11.png"));
+        movingBlock = new Block(0, 0, ball, ROW, COL, map, (int) WORLD_W/COL, (int) WORLD_H/(2*ROW), new Texture("Block_Level9.png"));
+        movingBlock.initializeBlocks(3, new Texture("Block_Level9.png"));
 
-        background = new Texture("Background_Level11 (2).png");
+        background = new Texture("Background_Level9.jpg");
         if (background == null || bar == null || ball == null || block == null) {
             System.out.println("Failed to load texture!");
         }
@@ -106,13 +112,12 @@ public class Level11 {
 
         if (ball.size() == 0) {
             if(life.die() == true) {
-                Ball b = new Ball(bar, new Texture("Ball_level11.png"));
+                Ball b = new Ball(bar, new Texture("Ball_level9.png"));
                 b.started = false;
                 ball.add(b);
-            }
-            else {
+            } else {
                 // Gdx.app.exit();
-                   end = true;
+                 end = true;
                 win = false;
             }
         }
@@ -138,12 +143,13 @@ public class Level11 {
         movingBlock.renderBlocks(batch);
         life.render(batch);
     }
-    public boolean getresult() {
+     public boolean getresult() {
         if (block.getwin()) {
             return true;
         }        
         return win;
     }
+
     public void dispose() {
         bar.dispose();
         block.dispose();
