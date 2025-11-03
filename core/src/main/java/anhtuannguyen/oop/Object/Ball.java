@@ -132,31 +132,42 @@ public class Ball extends Object {
         }
 
         // va chạm với thanh
-        if (bar != null) {
-            Rectangle p = bar.getBounds();
-             float paddleTop = p.y + p.height;
-             if (stickyToBar  &&  (vy < 0) && (prevY - radius >= paddleTop) && (y - radius <= paddleTop) && (x >= p.x - radius) && (x <= p.x + p.width + radius)) {
+        Rectangle p = bar.getBounds();
+        float paddleTop = p.y + p.height;
+        if (stickyToBar && (vy < 0) && (prevY - radius >= paddleTop) && (y - radius <= paddleTop) && (x >= p.x - radius)
+                && (x <= p.x + p.width + radius)) {
             started = false; // dừng bóng
             stickyToBar = false; // tắt hiệu ứng
             setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
             return;
-            }
-           
-            if (y - radius <= paddleTop && y + radius >= p.y &&
-                    x >= p.x && x <= p.x + p.width && vy < 0) {
+        }
 
-                sound.play_ball_bar();
-                y = paddleTop + radius; // đặt bóng lên trên
+        // va chạm 2 bên
+        if (y < paddleTop && y + radius / 2 >= p.y && x + radius / 2 >= p.x && x < p.x) {
+            x = p.x - radius / 2;
+            Change_Direction(2);
+        }
 
-                // tính góc bật dựa theo vị trí va chạm
-                float paddleCenter = p.x + p.width / 2f;
-                float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
-                float bounceAngle = hitRel * MAX_BOUNCE_DEG;
+        else if (y < paddleTop && y + radius / 2 >= p.y && x - radius / 2 <= p.x + p.width && x > p.x + p.width) {
+            x = p.x + p.width + radius / 2;
+            Change_Direction(1);
+        }
 
-                float speed = (float) Math.sqrt(vx * vx + vy * vy);
-                vx = speed * (float) Math.sin(Math.toRadians(bounceAngle));
-                vy = speed * (float) Math.cos(Math.toRadians(bounceAngle));
-            }
+        // va chạm trên mặt thanh
+        else if (y - radius / 2f <= paddleTop && y > paddleTop &&
+                x + radius / 2 >= p.x && x - radius / 2 <= p.x + p.width && vy < 0) {
+
+            sound.play_ball_bar();
+            y = paddleTop + radius / 2; // đặt bóng lên trên
+
+            // tính góc bật dựa theo vị trí va chạm
+            float paddleCenter = p.x + p.width / 2f;
+            float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
+            float bounceAngle = hitRel * MAX_BOUNCE_DEG;
+
+            float speed = (float) Math.sqrt(vx * vx + vy * vy);
+            vx = speed * (float) Math.sin(Math.toRadians(bounceAngle));
+            vy = speed * (float) Math.cos(Math.toRadians(bounceAngle));
         }
     }
 
