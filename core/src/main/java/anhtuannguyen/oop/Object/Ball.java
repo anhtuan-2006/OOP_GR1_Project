@@ -11,62 +11,79 @@ import com.badlogic.gdx.math.Rectangle;
 import anhtuannguyen.oop.Menu.Screen;
 import anhtuannguyen.oop.Menu.Sound;
 
+/**
+ * Lớp Ball mô tả quả bóng trong trò chơi Arkanoid.
+ * Quả bóng có thể di chuyển, nảy, và tương tác với thanh Bar.
+ */
 public class Ball extends Object {
 
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
 
-    // Các thuộc tính của quả bóng
+    // Texture của quả bóng
     private Texture texture;
     private Texture FIRE = new Texture("Ball_fire.png");
-    // private double x; // Cần chuyển hàng số kích thước cửa sổ thành biến static
-    // private double y;
+
+    // Vận tốc theo 2 trục
     private double dx = 1;
     private double dy = 1;
     private double angle = Math.PI / 2;
+
+    // Liên kết với thanh Bar
     public Bar bar;
+
+    // Góc quay để hiệu ứng xoay bóng
     private float angle_role = 45f;
     private float ROLE_SPEED = 400f;
     private float prevY;
 
     public boolean started = true;
     boolean playing = true;
-
     public boolean alive = true;
-
     public boolean fire = false;
     public int Time_fire = 0;
 
-    private static final float RADIUS = 48f; // Bán kính quả bóng
-    private static final float SPEED = 700f; // Tốc độ di chuyển (pixel/giây)
+    // Bán kính và tốc độ bóng
+    private static final float RADIUS = 48f;
+    private static final float SPEED = 700f;
 
     public float radius = RADIUS;
     public float originalRadius = RADIUS;
     public float effectTimer = -1;
 
-    public boolean stickyToBar = false; // hiệu ứng dính vào thanh
+    public boolean stickyToBar = false; // hiệu ứng dính thanh
 
     Sound sound = new Sound();
 
+    /** @return Bán kính hiện tại của bóng */
     public float getRADIUS() {
         return radius;
     }
 
+    /**
+     * Constructor sao chép từ một quả bóng khác.
+     * 
+     * @param src Quả bóng gốc
+     */
     public Ball(Ball src) {
         this.bar = src.bar;
-        this.texture = src.texture; // dùng chung texture OK
+        this.texture = src.texture;
         x = (float) src.getx();
         y = (float) src.gety();
-        // nếu Ball có getter cho dx, dy, angle thì dùng; không thì copy trực tiếp nếu
-        // cùng file
-        this.dx = 1; // hoặc src.dx nếu để cùng package/đặt accessor
-        this.dy = 1; // đảm bảo không bằng 0
-        this.angle = src.angle; // giữ hướng
-        this.started = true; // bóng mới tự chạy
+        this.dx = 1;
+        this.dy = 1;
+        this.angle = src.angle;
+        this.started = true;
         this.playing = true;
         this.alive = true;
     }
 
+    /**
+     * Constructor khởi tạo bóng theo thanh bar và texture.
+     * 
+     * @param _bar Thanh điều khiển
+     * @param _tex Texture của bóng
+     */
     public Ball(Bar _bar, Texture _tex) {
         bar = _bar;
         texture = _tex;
@@ -74,16 +91,17 @@ public class Ball extends Object {
         y = bar.getBounds().y + bar.getBounds().height + radius / 2;
     }
 
+    /** Đảo trạng thái chơi/tạm dừng */
     public void isPlaying() {
         playing = !playing;
     }
 
-    private final float MAX_BOUNCE_DEG = 75f; // góc nảy tối đa khi va chạm với thanh
+    private final float MAX_BOUNCE_DEG = 75f; // Góc bật tối đa
     private float vx = 0;
     private float vy = SPEED;
 
     /**
-     * Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính.
+     * Cập nhật vị trí và xử lý va chạm của bóng mỗi frame.
      */
     public void Move() {
         if (!playing)
@@ -91,7 +109,7 @@ public class Ball extends Object {
 
         float dt = Gdx.graphics.getDeltaTime();
 
-        // nếu chưa bắt đầu, bám theo thanh
+        // Nếu chưa bắt đầu, bóng bám theo thanh
         if (!started) {
             x = bar.getx() + bar.getWidth() / 2f;
             y = bar.gety() + radius;
@@ -104,12 +122,12 @@ public class Ball extends Object {
             return;
         }
 
-        // cập nhật vị trí
+        // Cập nhật vị trí
         prevY = y;
         x += vx * dt;
         y += vy * dt;
 
-        // kiểm tra va tường
+        // Va chạm tường trái/phải
         if (x <= radius) {
             x = radius;
             vx = Math.abs(vx);
@@ -119,48 +137,50 @@ public class Ball extends Object {
             vx = -Math.abs(vx);
             sound.play_ball_block();
         }
+
+        // Va trần
         if (y >= WORLD_H - radius) {
             y = WORLD_H - radius;
             vy = -Math.abs(vy);
             sound.play_ball_block();
         }
 
-        // rơi khỏi màn hình
+        // Rơi khỏi màn
         if (y <= -radius) {
             alive = false;
             return;
         }
 
-        // va chạm với thanh
+        // Va chạm với thanh bar
         Rectangle p = bar.getBounds();
         float paddleTop = p.y + p.height;
-        if (stickyToBar && (vy < 0) && (prevY - radius >= paddleTop) && (y - radius <= paddleTop) && (x >= p.x - radius)
-                && (x <= p.x + p.width + radius)) {
-            started = false; // dừng bóng
-            stickyToBar = false; // tắt hiệu ứng
+
+        // Hiệu ứng dính thanh
+        if (stickyToBar && (vy < 0) && (prevY - radius >= paddleTop) && (y - radius <= paddleTop)
+                && (x >= p.x - radius) && (x <= p.x + p.width + radius)) {
+            started = false;
+            stickyToBar = false;
             setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
             return;
         }
 
-        // va chạm 2 bên
+        // Va chạm hai bên
         if (y < paddleTop && y + radius / 2 >= p.y && x + radius / 2 >= p.x && x < p.x) {
             x = p.x - radius / 2;
             Change_Direction(2);
-        }
-
-        else if (y < paddleTop && y + radius / 2 >= p.y && x - radius / 2 <= p.x + p.width && x > p.x + p.width) {
+        } else if (y < paddleTop && y + radius / 2 >= p.y && x - radius / 2 <= p.x + p.width && x > p.x + p.width) {
             x = p.x + p.width + radius / 2;
             Change_Direction(1);
         }
 
-        // va chạm trên mặt thanh
+        // Va chạm trên mặt thanh
         else if (y - radius / 2f <= paddleTop && y > paddleTop &&
                 x + radius / 2 >= p.x && x - radius / 2 <= p.x + p.width && vy < 0) {
 
             sound.play_ball_bar();
-            y = paddleTop + radius / 2; // đặt bóng lên trên
+            y = paddleTop + radius / 2;
 
-            // tính góc bật dựa theo vị trí va chạm
+            // Tính góc bật theo vị trí va chạm
             float paddleCenter = p.x + p.width / 2f;
             float hitRel = (float) ((x - paddleCenter) / (p.width / 2f));
             float bounceAngle = hitRel * MAX_BOUNCE_DEG;
@@ -171,16 +191,20 @@ public class Ball extends Object {
         }
     }
 
-    // ======= Hàm đổi hướng (nếu cần gọi thủ công) =======
+    /**
+     * Thay đổi hướng bóng thủ công.
+     * 
+     * @param c Mã hướng (1: trái, 2: phải, 3: trên, 4: dưới)
+     */
     public void Change_Direction(int c) {
         sound.play_ball_block();
         switch (c) {
-            case 1: // trái
-            case 2: // phải
+            case 1:
+            case 2:
                 vx = -vx;
                 break;
-            case 3: // trên
-            case 4: // dưới
+            case 3:
+            case 4:
                 vy = -vy;
                 break;
             default:
@@ -190,41 +214,58 @@ public class Ball extends Object {
 
     private float currentSpeed = SPEED;
 
+    /**
+     * Tăng tốc bóng theo hệ số.
+     * 
+     * @param multiplier Hệ số nhân tốc độ
+     */
     public void increaseSpeed(float multiplier) {
         currentSpeed *= multiplier;
     }
 
-    // Xuất ra màn hình
+    /**
+     * Vẽ bóng lên màn hình.
+     * 
+     * @param batch SpriteBatch để vẽ
+     */
     public void render(SpriteBatch batch) {
         if (Time_fire > 0)
             Time_fire--;
         if (Time_fire == 0)
             fire = false;
-        angle_role += ROLE_SPEED * com.badlogic.gdx.Gdx.graphics.getDeltaTime();
 
-        if (fire == true) {
-            batch.draw(FIRE, (float) (x - radius / 2f - 10), (float) (y - radius / 2f - 10), (float) (radius + 20),
-                    (float) (RADIUS + 20));
+        angle_role += ROLE_SPEED * Gdx.graphics.getDeltaTime();
+
+        // Hiệu ứng bóng lửa
+        if (fire) {
+            batch.draw(FIRE, (float) (x - radius / 2f - 10), (float) (y - radius / 2f - 10),
+                    (float) (radius + 20), (float) (RADIUS + 20));
         }
 
-        batch.draw(texture, (float) (x - radius / 2f), (float) (y - radius / 2f), (float) (radius / 2f),
-                (float) (radius / 2f), (float) radius, (float) radius, 1f, 1f, angle_role, 0, 0, texture.getWidth(),
-                texture.getHeight(), false, false);
+        // Vẽ bóng chính
+        batch.draw(texture, (float) (x - radius / 2f), (float) (y - radius / 2f),
+                (float) (radius / 2f), (float) (radius / 2f),
+                (float) radius, (float) radius,
+                1f, 1f, angle_role, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 
+    /** Đặt vị trí bóng */
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
+    /** Đặt góc hướng bóng */
     public void setAngle(float angleRad) {
         this.angle = angleRad;
     }
 
+    /** @return Thanh bar hiện tại */
     public Bar getBar() {
         return bar;
     }
 
+    /** Giải phóng texture */
     public void dispose() {
         texture.dispose();
     }

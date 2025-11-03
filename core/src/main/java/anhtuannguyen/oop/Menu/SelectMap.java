@@ -13,18 +13,29 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class SelectMap extends Screen {
 
+    /** Texture nút quay lại menu */
     private Texture back_button;
+
+    /** Vị trí và kích thước nút quay lại */
     private Rectangle back_button_size = new Rectangle(WORLD_W / 2 - 150, 100, 300, 150);
+
+    /** Trạng thái hover của nút quay lại */
     private boolean touch_back_button = false;
 
+    /** Texture nền giao diện chọn map */
     private Texture background;
+
+    /** Mảng texture đại diện cho từng màn chơi */
     private Texture[] maps;
+
+    /** Mảng trạng thái hover của từng map */
     private boolean[] touch_maps;
+
+    /** Mảng vị trí và kích thước của từng map */
     private Rectangle[] map_size = new Rectangle[12];
 
-    private int selectedMap = -1; // Chỉ số map được chọn
-
-    
+    /** Chỉ số map được chọn (-1 nếu chưa chọn) */
+    private int selectedMap = -1;
 
     /**
      * Constructor khởi tạo giao diện chọn map với viewport.
@@ -33,9 +44,6 @@ public class SelectMap extends Screen {
     public SelectMap(Viewport _viewport) {
         viewport = _viewport;
     }
-
-    // Getters và Setters
-
 
     /**
      * Khởi tạo các texture và vị trí bản đồ.
@@ -54,6 +62,7 @@ public class SelectMap extends Screen {
         float count_row = 300f;
         float spacing = 20f;
 
+        // Tính toán vị trí từng map theo dạng lưới 3 cột
         for (int i = 0; i < maps.length; i++) {
             float x, y = count_row;
             float width = (8 * WORLD_W) / 30;
@@ -86,6 +95,7 @@ public class SelectMap extends Screen {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
 
+        // Nếu nhấn nút quay lại
         if (touch_back_button && Gdx.input.justTouched() && !Menu.press) {
             Menu.press = true;
             if (ingame != null) {
@@ -94,6 +104,7 @@ public class SelectMap extends Screen {
             return GameState.MENU;
         }
 
+        // Nếu đã chọn map
         if (selectedMap != -1) {
             return GameState.IN_GAME;
         }
@@ -108,12 +119,15 @@ public class SelectMap extends Screen {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
 
+        // Kiểm tra hover từng map
         for (int i = 0; i < map_size.length; i++) {
             touch_maps[i] = map_size[i].contains(v.x, v.y);
         }
 
+        // Kiểm tra hover nút quay lại
         touch_back_button = back_button_size.contains(v.x, v.y);
 
+        // Xử lý chọn map khi click
         if (Gdx.input.justTouched() && !Menu.press) {
             for (int i = 0; i < map_size.length; i++) {
                 if (map_size[i].contains(v.x, v.y)) {
@@ -126,6 +140,7 @@ public class SelectMap extends Screen {
             }
         }
 
+        // Reset trạng thái nhấn chuột
         if (!Gdx.input.isTouched()) {
             Menu.press = false;
         }
@@ -138,6 +153,7 @@ public class SelectMap extends Screen {
     public void render(SpriteBatch batch) {
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
 
+        // Vẽ từng map, phóng to nếu đang hover
         for (int i = 0; i < maps.length; i++) {
             if (maps[i] != null && map_size[i] != null) {
                 if (touch_maps[i]) {
@@ -156,6 +172,7 @@ public class SelectMap extends Screen {
             }
         }
 
+        // Vẽ nút quay lại, phóng to nếu đang hover
         if (back_button != null) {
             if (touch_back_button) {
                 batch.draw(back_button,

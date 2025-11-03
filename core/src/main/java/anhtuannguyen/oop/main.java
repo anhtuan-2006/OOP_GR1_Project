@@ -22,11 +22,10 @@ import anhtuannguyen.oop.Menu.Setting;
 import anhtuannguyen.oop.Menu.Sound;
 
 /**
- * Lớp main là điểm khởi đầu của trò chơi.
+ * Lớp {@code main} là điểm khởi đầu của trò chơi.
  * <p>
  * Quản lý toàn bộ vòng đời game (create, render, resize, dispose)
- * và điều phối giữa các màn hình (menu, chọn map, gameplay, pause, cài đặt, kết
- * quả).
+ * và điều phối giữa các màn hình như menu, chọn map, gameplay, pause, cài đặt và kết quả.
  * </p>
  */
 public class main extends ApplicationAdapter {
@@ -36,18 +35,18 @@ public class main extends ApplicationAdapter {
     /** Chiều cao logic của thế giới game. */
     private static final float WORLD_H = Screen.WORLD_H;
 
-    /** Camera dùng để hiển thị vùng nhìn. */
+    /** Camera dùng để hiển thị vùng nhìn trong game. */
     private OrthographicCamera cam;
-    /** Viewport để đảm bảo tỉ lệ khung hình cố định. */
+    /** Viewport đảm bảo tỉ lệ khung hình cố định khi thay đổi kích thước cửa sổ. */
     private Viewport viewport;
-    /** Batch để vẽ hình ảnh. */
+    /** Đối tượng vẽ các thành phần hình ảnh. */
     private SpriteBatch batch;
 
     /** Màn hình cài đặt. */
     Setting setting;
-    /** Quản lý âm thanh nền và hiệu ứng. */
+    /** Quản lý âm thanh nền và hiệu ứng trong game. */
     Sound music;
-    /** Số mạng của người chơi. */
+    /** Số mạng hiện tại của người chơi. */
     int lifes;
 
     /** Trạng thái hiện tại của trò chơi. */
@@ -61,13 +60,13 @@ public class main extends ApplicationAdapter {
     private InGame ingame;
     /** Màn hình tạm dừng. */
     private Pause pause;
-    /** Màn hình kết quả. */
+    /** Màn hình kết quả sau khi chơi xong. */
     private Result result;
-
+    /** Màn hình hiển thị điểm cao. */
     private HighScore highscore;
 
     /**
-     * Hàm khởi tạo game. Được gọi một lần khi game bắt đầu chạy.
+     * Phương thức khởi tạo game. Được gọi một lần khi trò chơi bắt đầu.
      */
     @Override
     public void create() {
@@ -78,13 +77,13 @@ public class main extends ApplicationAdapter {
         cam.position.set(WORLD_W / 2f, WORLD_H / 2f, 0f);
         cam.update();
 
-        // Khởi tạo batch dùng để vẽ
+        // Khởi tạo batch để vẽ hình ảnh
         batch = new SpriteBatch();
 
-        // Tạo âm thanh
+        // Khởi tạo hệ thống âm thanh
         music = new Sound();
 
-        // Tạo các màn hình game
+        // Khởi tạo các màn hình game
         highscore = new HighScore(viewport);
         highscore.Input();
         menu = new Menu(viewport, highscore);
@@ -98,8 +97,7 @@ public class main extends ApplicationAdapter {
         pause = new Pause(viewport);
         pause.create();
 
-        // Liên kết giữa các màn hình
-
+        // Khởi tạo và liên kết màn hình kết quả
         result = new Result(viewport, highscore);
         result.create();
         selectmap.setResult(result);
@@ -112,28 +110,31 @@ public class main extends ApplicationAdapter {
         pause.setIngame(ingame);
         pause.setSelectMap(selectmap);
 
-        // Lấy số mạng từ setting và gán vào ingame
+        // Lấy số mạng mặc định từ setting
         lifes = setting.getlife();
         ingame.setLife(lifes);
 
         result.setIngame(ingame);
         result.setSelectMap(selectmap);
 
-        // Các gán tham chiếu lặp lại (đảm bảo chắc chắn không null)
+        // Gán lại tham chiếu đảm bảo không null
         selectmap.setIngame(ingame);
         selectmap.setPause(pause);
         ingame.setSelectMap(selectmap);
         ingame.setPause(pause);
         pause.setIngame(ingame);
         pause.setSelectMap(selectmap);
-        lifes = setting.getlife(); // Lấy số mạng mặc định từ setting
-        ingame.setLife(lifes); // Đặt số mạng cho ingame
+        lifes = setting.getlife();
+        ingame.setLife(lifes);
         result.setIngame(ingame);
         result.setSelectMap(selectmap);
     }
 
     /**
-     * Cập nhật lại viewport khi cửa sổ bị thay đổi kích thước.
+     * Cập nhật lại viewport khi thay đổi kích thước cửa sổ.
+     *
+     * @param width  chiều rộng mới
+     * @param height chiều cao mới
      */
     @Override
     public void resize(int width, int height) {
@@ -141,11 +142,11 @@ public class main extends ApplicationAdapter {
     }
 
     /**
-     * Hàm vẽ chính, được gọi liên tục trong vòng lặp game.
+     * Vòng lặp chính của game, được gọi liên tục để vẽ và cập nhật logic.
      */
     @Override
     public void render() {
-        // Xóa màn hình trước mỗi khung hình
+        // Xóa màn hình cũ trước khi vẽ khung hình mới
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -153,14 +154,10 @@ public class main extends ApplicationAdapter {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
 
-        // Điều hướng giữa các màn hình dựa trên trạng thái game
+        // Cập nhật trạng thái hiển thị của menu
+        menu.inwindown = (state == GameState.MENU);
 
-        if(state == GameState.MENU) {
-            menu.inwindown = true;
-        } else {
-            menu.inwindown = false;
-        }
-
+        // Điều hướng giữa các màn hình
         switch (state) {
             case MENU:
                 music.playMusic();
@@ -175,9 +172,9 @@ public class main extends ApplicationAdapter {
                 break;
             case IN_GAME:
                 ingame.setState(state);
-                music.decreaseMusic(); // tắt nhạc nền khi vào game
+                music.decreaseMusic(); // giảm âm lượng hoặc tắt nhạc nền khi vào game
                 if (ingame != null) {
-                    ingame.update(); // cập nhật logic trong game
+                    ingame.update();
                     ingame.render(batch);
                 }
                 state = ingame.getState();
@@ -193,7 +190,7 @@ public class main extends ApplicationAdapter {
                 lifes = setting.getlife();
                 state = setting.getSelectedMap();
                 setting.render(batch);
-                ingame.setLife(lifes); // cập nhật lại số mạng khi thay đổi
+                ingame.setLife(lifes);
                 break;
             case HIGHSCORE:
                 highscore.update();
@@ -207,13 +204,14 @@ public class main extends ApplicationAdapter {
                 result.update();
                 result.render(batch);
                 state = result.getState();
+                break;
         }
 
         batch.end();
     }
 
     /**
-     * Giải phóng tài nguyên khi game thoát.
+     * Giải phóng tài nguyên khi trò chơi kết thúc.
      */
     @Override
     public void dispose() {
