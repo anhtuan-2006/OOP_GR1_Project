@@ -24,7 +24,7 @@ public class Result {
     private Viewport viewport;
     private Rectangle bounds;
 
-    public HighScore highScore = new HighScore(viewport);
+    public HighScore highScore;
 
     private boolean playing = true;
     private boolean back_touch = false;
@@ -60,8 +60,9 @@ public class Result {
      * Constructor khởi tạo giao diện kết quả với viewport.
      * @param _viewport Viewport hiện tại.
      */
-    public Result(Viewport _viewport) {
+    public Result(Viewport _viewport, HighScore _highScore) {
         viewport = _viewport;
+        highScore = _highScore;
     }
 
     // Getters và Setters
@@ -144,13 +145,20 @@ public class Result {
             if (back_touch) {
                 ingame.reset();
                 selectmap.reset();
-                highScore.highestScore = highestScore;
                 state = GameState.MENU;
+                if(wingame) {
+                    highScore.ChangeHighScore(currentScore);
+                    System.out.println("Changed High Score");
+                }
             }
             if (nextlevel_touch) {
                 ingame.reset();
                 selectmap.nextlevel();
                 state = GameState.IN_GAME;
+                if(wingame) {
+                    highScore.ChangeHighScore(currentScore);
+                    System.out.println("Changed High Score");
+                }
             }
         }
     }

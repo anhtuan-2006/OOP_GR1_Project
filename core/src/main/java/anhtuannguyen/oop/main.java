@@ -1,5 +1,7 @@
 package anhtuannguyen.oop;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,8 +24,9 @@ import anhtuannguyen.oop.Menu.Sound;
 /**
  * Lớp main là điểm khởi đầu của trò chơi.
  * <p>
- * Quản lý toàn bộ vòng đời game (create, render, resize, dispose) 
- * và điều phối giữa các màn hình (menu, chọn map, gameplay, pause, cài đặt, kết quả).
+ * Quản lý toàn bộ vòng đời game (create, render, resize, dispose)
+ * và điều phối giữa các màn hình (menu, chọn map, gameplay, pause, cài đặt, kết
+ * quả).
  * </p>
  */
 public class main extends ApplicationAdapter {
@@ -82,7 +85,9 @@ public class main extends ApplicationAdapter {
         music = new Sound();
 
         // Tạo các màn hình game
-        menu = new Menu(viewport);
+        highscore = new HighScore(viewport);
+        highscore.Input();
+        menu = new Menu(viewport, highscore);
         menu.create();
         selectmap = new SelectMap(viewport);
         selectmap.create();
@@ -92,11 +97,12 @@ public class main extends ApplicationAdapter {
         ingame.create();
         pause = new Pause(viewport);
         pause.create();
-        result = new Result(viewport);
-        result.create();
 
         // Liên kết giữa các màn hình
-        selectmap.setResult(result);   
+
+        result = new Result(viewport, highscore);
+        result.create();
+        selectmap.setResult(result);
         selectmap.setIngame(ingame);
         selectmap.setPause(pause);
 
@@ -107,12 +113,12 @@ public class main extends ApplicationAdapter {
         pause.setSelectMap(selectmap);
 
         // Lấy số mạng từ setting và gán vào ingame
-        lifes = setting.getlife(); 
+        lifes = setting.getlife();
         ingame.setLife(lifes);
 
         result.setIngame(ingame);
         result.setSelectMap(selectmap);
-        
+
         // Các gán tham chiếu lặp lại (đảm bảo chắc chắn không null)
         selectmap.setIngame(ingame);
         selectmap.setPause(pause);
@@ -124,8 +130,6 @@ public class main extends ApplicationAdapter {
         ingame.setLife(lifes); // Đặt số mạng cho ingame
         result.setIngame(ingame);
         result.setSelectMap(selectmap);
-
-        highscore = new HighScore(viewport);
     }
 
     /**
@@ -150,6 +154,13 @@ public class main extends ApplicationAdapter {
         batch.begin();
 
         // Điều hướng giữa các màn hình dựa trên trạng thái game
+
+        if(state == GameState.MENU) {
+            menu.inwindown = true;
+        } else {
+            menu.inwindown = false;
+        }
+
         switch (state) {
             case MENU:
                 music.playMusic();
@@ -188,6 +199,7 @@ public class main extends ApplicationAdapter {
                 highscore.update();
                 state = highscore.getSelectedMap();
                 highscore.renderHighScore(batch);
+                highscore.Output();
                 break;
             case RESULT:
                 result.setState(state);
