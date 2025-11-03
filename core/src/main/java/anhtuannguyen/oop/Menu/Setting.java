@@ -38,7 +38,7 @@ public class Setting extends Screen {
     int volume_type = 5;
     int heart_type = 3;
 
-    Viewport viewport; // Đối tượng viewport để chuyển đổi tọa độ chuột
+
 
     Rectangle setting_size;
     Rectangle logo_size;

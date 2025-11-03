@@ -20,9 +20,6 @@ public class Life extends Screen {
     /** Texture trái tim biểu tượng mạng sống */
     private Texture texture;
 
-    /** Vị trí vẽ trái tim */
-    private float x;
-    private float y;
 
     /** Khoảng cách giữa các trái tim */
     private float spacing = 10f;
@@ -39,7 +36,7 @@ public class Life extends Screen {
      */
     public Life(int _lifes) {
         lifes = _lifes;
-        System.out.println("Life created with: " + lifes);
+
         texture = new Texture("heart.png");
 
         for (int i = 0; i <= lifes; i++) {

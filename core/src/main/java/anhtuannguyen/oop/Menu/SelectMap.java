@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class SelectMap extends Screen {
 
-    private Viewport viewport;
     private Texture back_button;
     private Rectangle back_button_size = new Rectangle(WORLD_W / 2 - 150, 100, 300, 150);
     private boolean touch_back_button = false;
@@ -25,10 +24,7 @@ public class SelectMap extends Screen {
 
     private int selectedMap = -1; // Chỉ số map được chọn
 
-    private InGame ingame; // Tham chiếu đến InGame
-    private Pause pause;   // Tham chiếu đến Pause
-    private GameState gamestate;
-    private Result result;
+    
 
     /**
      * Constructor khởi tạo giao diện chọn map với viewport.
@@ -39,37 +35,7 @@ public class SelectMap extends Screen {
     }
 
     // Getters và Setters
-    public InGame getIngame() {
-        return ingame;
-    }
 
-    public Pause getPause() {
-        return pause;
-    }
-
-    public void setIngame(InGame _ingame) {
-        this.ingame = _ingame;
-    }
-
-    public void setPause(Pause _pause) {
-        this.pause = _pause;
-    }
-
-    public void setState(GameState _gamestate) {
-        gamestate = _gamestate;
-    }
-
-    public GameState getState() {
-        return gamestate;
-    }
-
-    public Result getResult() {
-        return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
-    }
 
     /**
      * Khởi tạo các texture và vị trí bản đồ.

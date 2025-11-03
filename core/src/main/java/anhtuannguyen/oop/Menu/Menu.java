@@ -22,7 +22,6 @@ public class Menu extends Screen {
     /** Biến tĩnh để đánh dấu người chơi đã nhấn nút nào đó */
     public static boolean press = false;
 
-    Viewport viewport;
 
     Rectangle play_size;       // Kích thước vùng nút Play
     boolean touch_play = false;

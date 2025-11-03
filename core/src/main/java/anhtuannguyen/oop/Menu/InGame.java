@@ -18,23 +18,11 @@ public class InGame extends Screen {
     private LevelBase[] levels = new LevelBase[12];
     private int life;
 
-    private final Viewport viewport;
-    private Pause pause;
-    private SelectMap selectmap;
-    private GameState state = GameState.IN_GAME;
-    private boolean win;
+   
 
     public InGame(Viewport _v) {
         this.viewport = _v;
     }
-
-    public Pause getPause() { return pause; }
-    public SelectMap getSelectMap() { return selectmap; }
-    public GameState getState() { return state; }
-    public void setState(GameState _state) { state = _state; }
-    public void setPause(Pause _pause) { this.pause = _pause; }
-    public void setSelectMap(SelectMap _selectmap) { this.selectmap = _selectmap; }
-    public void setresult(boolean win) { this.win = win; }
 
     public boolean getresult() {
         if (selectmap == null) return false;

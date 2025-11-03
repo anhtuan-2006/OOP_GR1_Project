@@ -21,8 +21,6 @@ public class Result extends Screen {
     private final Texture lose = new Texture("lose.png");
     private final Texture highscore = new Texture("highscore.png");
     private final Texture yourscore = new Texture("yourscore.png");
-    private Viewport viewport;
-    private Rectangle bounds;
 
     public HighScore highScore = new HighScore(viewport);
 
@@ -46,9 +44,6 @@ public class Result extends Screen {
 
     private boolean wingame = false;
 
-    private InGame ingame;
-    private SelectMap selectmap;
-    private GameState state;
 
     private Score currentScoreDisplay = new Score();
     private Score highestScoreDisplay = new Score();
@@ -65,33 +60,8 @@ public class Result extends Screen {
     }
 
     // Getters và Setters
-    public void setState(GameState state) {
-        this.state = state;
-    }
-
-    public GameState getState() {
-        return state;
-    }
-
     public void setresult(boolean wingame) {
-        System.out.println(wingame);
         this.wingame = wingame;
-    }
-
-    public void setIngame(InGame ingame) {
-        this.ingame = ingame;
-    }
-
-    public InGame getIngame() {
-        return ingame;
-    }
-
-    public void setSelectMap(SelectMap selectmap) {
-        this.selectmap = selectmap;
-    }
-
-    public SelectMap getSelectMap() {
-        return selectmap;
     }
 
     /**
