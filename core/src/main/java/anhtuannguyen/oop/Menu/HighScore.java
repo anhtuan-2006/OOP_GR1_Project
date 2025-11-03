@@ -57,7 +57,6 @@ public class HighScore {
 
     public void Input() {
         File f = new File("D:\\OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
-        System.out.println("Trying file: " + f.getAbsolutePath());
         if (!f.exists()) {
             return;
         }
