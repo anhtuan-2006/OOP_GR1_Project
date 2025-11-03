@@ -24,6 +24,8 @@ public class Result {
     private Viewport viewport;
     private Rectangle bounds;
 
+    public HighScore highScore = new HighScore(viewport);
+
     private boolean playing = true;
     private boolean back_touch = false;
     private boolean restart_touch = false;
@@ -142,6 +144,7 @@ public class Result {
             if (back_touch) {
                 ingame.reset();
                 selectmap.reset();
+                highScore.highestScore = highestScore;
                 state = GameState.MENU;
             }
             if (nextlevel_touch) {

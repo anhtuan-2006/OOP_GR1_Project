@@ -1,17 +1,5 @@
 package anhtuannguyen.oop.Menu;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-
-import org.w3c.dom.Text;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,50 +11,43 @@ public class HighScore {
 
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
-    private Texture exit;
-    private Rectangle back_button_size = new Rectangle((float) (WORLD_W) / 2 - 150, 100, 300, 150);
-    private boolean touch_back_button = false;
+
     private Texture back_button = new Texture("back_button.png");
-    Viewport viewport;
     private Texture highscore_board = new Texture("HighScoreBoard.png");
+    private Texture background = new Texture("Menu_background.jpg");
+
+    private Rectangle back_button_size = new Rectangle(WORLD_W / 2 - 150, 100, 300, 150);
     private Rectangle highscore_board_size = new Rectangle(10, 300, WORLD_W - 20, 1500);
 
-    Map<String, Integer> highScores = new HashMap<>();
+    private boolean touch_back_button = false;
+    private Viewport viewport;
 
-    private Texture background = new Texture("Menu_background.jpg");
+    private Text textRenderer = new Text();
+    public int highestScore = 0;
 
     public HighScore(Viewport viewport) {
         this.viewport = viewport;
+        readHighestScore(); // đọc điểm cao khi khởi tạo
     }
 
-    public void Input() throws IOException {
-        InputStream file = new FileInputStream("HighScore.txt");
-        Scanner inp = new Scanner(new BufferedInputStream(file));
-        while (inp.hasNextLine()) {
-            String Name = inp.next();
-            int Score = inp.nextInt();
-            highScores.put(Name, Score);
-        }
-        inp.close();
-    }
-
-    public void ChangeHighScore(String Name, int Score) {
-        if (highScores.containsKey(Name)) {
-            if (highScores.get(Name) < Score) {
-                highScores.put(Name, Score);
+    public void readHighestScore() {
+        try {
+            com.badlogic.gdx.files.FileHandle file = Gdx.files.local("highest_score.txt");
+            if (!file.exists()) {
+                file.writeString("0", false);
+                highestScore = 0;
+            } else {
+                highestScore = Integer.parseInt(file.readString().trim());
             }
-        } else {
-            highScores.put(Name, Score);
+        } catch (Exception e) {
+            highestScore = 0;
         }
     }
 
-    public void Output() throws IOException {
-        BufferedOutputStream file = new BufferedOutputStream(new FileOutputStream("HighScore.txt"));
-        for (String Name : highScores.keySet()) {
-            String line = Name + " " + highScores.get(Name) + "\n";
-            file.write(line.getBytes());
-        }
-        file.close();
+    public void saveHighestScore(int score) {
+        com.badlogic.gdx.files.FileHandle file = Gdx.files.local("highest_score.txt");
+        file.writeString(String.valueOf(score), false);
+        highestScore = score;
     }
 
     public GameState getSelectedMap() {
@@ -78,31 +59,36 @@ public class HighScore {
         return GameState.HIGHSCORE;
     }
 
-    /**
-     * Cập nhật trạng thái đầu vào của người chơi và xử lý lựa chọn.
-     */
     public void update() {
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         viewport.unproject(v);
-
-        // Kiểm tra chạm nút Back
-        if (back_button_size.contains(v.x, v.y)) {
-            touch_back_button = true;
-        } else
-            touch_back_button = false;
-
+        touch_back_button = back_button_size.contains(v.x, v.y);
     }
 
+    
+
     public void renderHighScore(SpriteBatch batch) {
-        // Vẽ nền
+        // Vẽ nền và bảng
         batch.draw(background, 0, 0, WORLD_W, WORLD_H);
-        batch.draw(highscore_board, highscore_board_size.x, highscore_board_size.y, highscore_board_size.width,
-                highscore_board_size.height);
+        batch.draw(highscore_board, highscore_board_size.x, highscore_board_size.y,
+                   highscore_board_size.width, highscore_board_size.height);
+
+        // Vẽ nút Back
         if (touch_back_button)
-            batch.draw(back_button, back_button_size.x - 20, back_button_size.y - 20, back_button_size.width + 40,
-                    back_button_size.height + 40);
+            batch.draw(back_button, back_button_size.x - 20, back_button_size.y - 20,
+                       back_button_size.width + 40, back_button_size.height + 40);
         else
-            batch.draw(back_button, back_button_size.x, back_button_size.y, back_button_size.width,
-                    back_button_size.height);
+            batch.draw(back_button, back_button_size.x, back_button_size.y,
+                       back_button_size.width, back_button_size.height);
+
+        // Vẽ điểm cao nhất
+    
+        textRenderer.renderText(batch, "HIGH SCORE", 100, 1200, 2.0f);
+
+        String line = "" + highestScore;
+        float startX = highscore_board_size.x + 500;
+        float startY = highscore_board_size.y + 600;
+        float scale = 0.5f;
+        textRenderer.renderText(batch, line, startX, startY, scale);
     }
 }
