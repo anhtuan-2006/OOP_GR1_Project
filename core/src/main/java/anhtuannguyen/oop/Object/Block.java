@@ -11,11 +11,16 @@ import com.badlogic.gdx.math.Rectangle;
 
 import anhtuannguyen.oop.Menu.Screen;
 
+/**
+ * Lớp Block đại diện cho khối gạch trong trò chơi Arkanoid.
+ * 
+ * Một Block có thể là khối bình thường, khối sắt (IronBlock) hoặc khối di chuyển (MovingBlock),
+ * và có thể sinh ra hiệu ứng (Function) khi bị phá hủy.
+ */
 public class Block extends Object {
-    private int blockWidth;
-    private int blockHeight;
-    private int gridRows;
-    private int gridCols;
+
+    private int blockWidth, blockHeight;
+    private int gridRows, gridCols;
     private int[][] map;
     private Block[][] blocks;
     private Rectangle rect;
@@ -30,8 +35,9 @@ public class Block extends Object {
     private static final int MAP_SIZE = 64;
     private boolean win = false;
 
-
-    // Constructor chính cho instance Block của level
+    /**
+     * Khởi tạo khối cho bản đồ (dạng level, chứa mảng các block con).
+     */
     public Block(int x, int y, List<Ball> _ball, int ROW, int COL, int[][] _map, int width, int height, Texture _tex) {
         blockWidth = width;
         blockHeight = height;
@@ -44,11 +50,12 @@ public class Block extends Object {
         alive = true;
         texture = _tex;
         ball = _ball;
-        basic = new Ball(ball.get(0));
+        basic = new Ball(ball.get(0)); // sao chép bóng mẫu
     }
 
-
-    // Constructor cho các khối riêng lẻ trong lưới
+    /**
+     * Khởi tạo block riêng lẻ (dùng cho từng ô trong map).
+     */
     public Block(int x, int y, int width, int height, Texture _tex) {
         blockWidth = width;
         blockHeight = height;
@@ -57,39 +64,55 @@ public class Block extends Object {
         texture = _tex;
     }
 
+    /** @return true nếu người chơi đã thắng (không còn block nào sống) */
     public boolean getwin() {
         return win;
     }
 
+    /** Cập nhật trạng thái thắng/thua */
     public void setwin(Boolean win) {
         this.win = win;
     }
 
+    /**
+     * Khởi tạo lưới các block trong bản đồ theo dữ liệu map và level.
+     * 
+     * @param level Mức độ (giá trị trên map)
+     * @param _tex  Texture mặc định cho block
+     */
     public void initializeBlocks(int level, Texture _tex) {
         blocks = new Block[MAP_SIZE][MAP_SIZE];
         float startX = (WORLD_W - gridCols * blockWidth) / 2;
         float startY = WORLD_H - gridRows * blockHeight - 200;
+
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
                 if (map[row][col] == level) {
                     float x = startX + col * blockWidth;
                     float y = startY + row * blockHeight;
-                   if (level == 3) {
-        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
-    }
-    else if (level == 2) {
-        blocks[row][col] = new IronBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
-    }
-    else {
-        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
-    }
+
+                    // Tạo khối theo loại level
+                    if (level == 3)
+                        blocks[row][col] = new MovingBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+                    else if (level == 2)
+                        blocks[row][col] = new IronBlock((int) x, (int) y, blockWidth, blockHeight, _tex);
+                    else
+                        blocks[row][col] = new Block((int) x, (int) y, blockWidth, blockHeight, _tex);
                 }
             }
         }
     }
 
+    /**
+     * Cập nhật hiệu ứng (Function) khi ăn item.
+     * 
+     * @param x Loại hiệu ứng
+     * @param f Đối tượng Function tương ứng
+     */
     public void update(int x, Function f) {
         if (x == 0) return;
+
+        // Nhân đôi bóng
         if (x == 1) {
             if (!f.ball.alive) return;
             Ball b1 = new Ball(basic);
@@ -100,34 +123,43 @@ public class Block extends Object {
             b2.setAngle((float) (2 * Math.PI / 3));
             ball.add(b1);
             ball.add(b2);
-        } else if (x == 2) {
+        }
+
+        // Bật chế độ bắn lửa
+        else if (x == 2) {
             if (!f.ball.alive) return;
             f.ball.fire = true;
             f.ball.Time_fire = 500;
-        } else if (x == 3) {
+        }
+
+        // Mở rộng thanh đỡ
+        else if (x == 3) {
             Rectangle barBounds = f.ball.bar.getBounds();
             barBounds.x = barBounds.x - barBounds.width / 4;
             barBounds.width *= 1.5f;
             f.ball.bar.effectTimer = 0;
-            if (barBounds.x + barBounds.width > WORLD_W) {
+            if (barBounds.x + barBounds.width > WORLD_W)
                 barBounds.x = WORLD_W - barBounds.width;
-            }
-        }
-             else if (x == 4) {
-            if (f.ball.alive == false)
-                return;
-            if(f.ball.radius < f.ball.originalRadius * 1.5f)f.  ball.radius = f.ball.radius * 1.5f;
-            f.ball.effectTimer = 0; // Bắt đầu đếm
-        }
-        else if(x==5)
-        {
-            if (!f.ball.alive) return ;
-            f.ball.stickyToBar = true; // bật hiệu ứng chờ dính
-
         }
 
+        // Tăng kích thước bóng
+        else if (x == 4) {
+            if (!f.ball.alive) return;
+            if (f.ball.radius < f.ball.originalRadius * 1.5f)
+                f.ball.radius = f.ball.radius * 1.5f;
+            f.ball.effectTimer = 0;
+        }
+
+        // Hiệu ứng bóng dính
+        else if (x == 5) {
+            if (!f.ball.alive) return;
+            f.ball.stickyToBar = true;
+        }
     }
 
+    /**
+     * Vẽ toàn bộ block và các Function (hiệu ứng rơi xuống).
+     */
     public void renderBlocks(SpriteBatch batch) {
         int i = 0;
         while (i < function.size()) {
@@ -142,53 +174,49 @@ public class Block extends Object {
         for (Function f : function) {
             if (f.alive) f.render(batch);
         }
+
         float dt = Gdx.graphics.getDeltaTime();
 
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
                 if (blocks[row][col] != null && blocks[row][col].alive) {
-                    if (blocks[row][col] instanceof MovingBlock) {
+                    if (blocks[row][col] instanceof MovingBlock)
                         ((MovingBlock) blocks[row][col]).updateMovement(dt);
-                    }
                     blocks[row][col].render(batch);
-
                 }
             }
         }
     }
+
+    /** Kiểm tra xem còn khối nào chưa bị phá chưa */
     public boolean checkBlockAlive() {
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
-                if (blocks[row][col] != null && blocks[row][col].alive) {
-
+                if (blocks[row][col] != null && blocks[row][col].alive)
                     return true;
-                }
-
             }
         }
-        win = true; 
+        win = true;
         return false;
     }
 
+    /**
+     * Xử lý va chạm giữa bóng và block.
+     */
+    private void pullBall(Rectangle bal, Rectangle block, Ball ball, boolean check) {
+        if (ball.fire && !check) return;
 
-
-    private void pullBall(Rectangle bal, Rectangle block, Ball ball , boolean check) {
-        if (ball.fire  && !check) return;
-        float balLeft = bal.x;
-        float balRight = bal.x + bal.width;
-        float balBottom = bal.y;
-        float balTop = bal.y + bal.height;
-
-        float blkLeft = block.x;
-        float blkRight = block.x + block.width;
-        float blkBottom = block.y;
-        float blkTop = block.y + block.height;
+        float balLeft = bal.x, balRight = bal.x + bal.width;
+        float balBottom = bal.y, balTop = bal.y + bal.height;
+        float blkLeft = block.x, blkRight = block.x + block.width;
+        float blkBottom = block.y, blkTop = block.y + block.height;
 
         float overlapX = Math.min(balRight, blkRight) - Math.max(balLeft, blkLeft);
         float overlapY = Math.min(balTop, blkTop) - Math.max(balBottom, blkBottom);
 
         if (overlapX <= 0 || overlapY <= 0) return;
-        
+
+        // Va chạm ngang
         if (overlapX < overlapY) {
             if (bal.x + bal.width / 2f < block.x + block.width / 2f) {
                 bal.x = blkLeft - bal.width;
@@ -198,6 +226,7 @@ public class Block extends Object {
                 ball.Change_Direction(1);
             }
         } else {
+            // Va chạm dọc
             if (bal.y + bal.height / 2f < block.y + block.height / 2f) {
                 bal.y = blkBottom - bal.height;
                 ball.Change_Direction(3);
@@ -209,6 +238,7 @@ public class Block extends Object {
         ball.setPosition(bal.x + bal.width / 2f, bal.y + bal.height / 2f);
     }
 
+    /** Sinh ngẫu nhiên Function khi phá block */
     void fn(Rectangle r, Ball b) {
         Random rand = new Random();
         int x = rand.nextInt(10);
@@ -217,10 +247,14 @@ public class Block extends Object {
         function.add(f);
     }
 
+    /** Kiểm tra khối đặc biệt (ghi đè ở lớp con) */
     public boolean CheckBlock() {
-    return false;
-}
+        return false;
+    }
 
+    /**
+     * Kiểm tra va chạm giữa tất cả các block và bóng, xử lý điểm & hiệu ứng.
+     */
     public void checkAndHandleCollisions(float ballX, float ballY, float ballRadius, Ball b) {
         Rectangle ballRect = new Rectangle(ballX - ballRadius / 2, ballY - ballRadius / 2, ballRadius, ballRadius);
         for (int row = 0; row < map.length; row++) {
@@ -228,29 +262,32 @@ public class Block extends Object {
                 Block block = blocks[row][col];
                 if (block != null && block.alive && block.rect.overlaps(ballRect)) {
                     if (!block.CheckBlock()) {
-                    fn(block.rect, b);
-                    pullBall(ballRect, block.rect, b, false);
-                    block.alive = false;
-                    point += 10;
-                    blocks[row][col] = null;
-} else {
-    pullBall(ballRect, block.rect, b, true);
-}
+                        fn(block.rect, b);
+                        pullBall(ballRect, block.rect, b, false);
+                        block.alive = false;
+                        point += 10;
+                        blocks[row][col] = null;
+                    } else {
+                        pullBall(ballRect, block.rect, b, true);
+                    }
                 }
             }
         }
     }
 
-    
+    /** @return Tổng điểm hiện tại */
     public int getScore() {
         return point;
     }
+
+    /** Vẽ khối đơn lẻ */
     private void render(SpriteBatch batch) {
         if (alive && texture != null) {
             batch.draw(texture, rect.x, rect.y, rect.width, rect.height);
         }
     }
 
+    /** Giải phóng toàn bộ texture block */
     public void disposeBlocks() {
         for (int row = 0; row < map.length; row++) {
             for (int col = 0; col < map[row].length; col++) {
@@ -261,13 +298,14 @@ public class Block extends Object {
             }
         }
     }
+
+    /** @return Hình chữ nhật bao quanh block */
     public Rectangle getRect() {
-    return rect;
-}
+        return rect;
+    }
 
+    /** Giải phóng tài nguyên texture */
     public void dispose() {
-
-            texture.dispose();
-        
+        texture.dispose();
     }
 }

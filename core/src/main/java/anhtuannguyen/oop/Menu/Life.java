@@ -9,17 +9,15 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Lớp Life quản lý số mạng sống của người chơi và hiển thị biểu tượng trái tim trên màn hình.
+ * Mỗi mạng sống được biểu diễn bằng một hình trái tim nằm ở góc dưới bên phải màn hình.
  */
 public class Life extends Screen {
-    // private static final float WORLD_W = Screen.WORLD_W;
-    // private static final float WORLD_H = Screen.WORLD_H;
 
     /** Số mạng hiện tại của người chơi */
     public int lifes;
 
     /** Texture trái tim biểu tượng mạng sống */
     private Texture texture;
-
 
     /** Khoảng cách giữa các trái tim */
     private float spacing = 10f;
@@ -39,6 +37,7 @@ public class Life extends Screen {
 
         texture = new Texture("heart.png");
 
+        // Tính toán vị trí vẽ từng trái tim từ phải sang trái
         for (int i = 0; i <= lifes; i++) {
             Rectangle lifeRect = new Rectangle();
             lifeRect.width = heartsize;
