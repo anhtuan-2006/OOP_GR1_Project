@@ -60,6 +60,9 @@ Nhóm phát triển
 + Ngô Hoàng Anh
 + Đặng Minh Phúc
 
+Video giới thiệu
+https://l.facebook.com/l.php?u=https%3A%2F%2Fyoutu.be%2Fas2zHnwUawc%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExOWE0V1NVQmd6NG1xOXpEdAEe9Yn2ALaNG4YmoGDKm3nXoMo7oIMj8qGWWBx8pLF2_QKV6jaJZVhYXqIGZh4_aem_IZXPNXMkmAvbJmYoFFO1XA&h=AT1Q1aIsEJrJFOQdwHbfq7xjnJUIV_xV5DnhrA8cD2EEe5mVxnK0zN-icJd279jdBB40mvdd2WD0K77tCkcSVf3VNm65yHAh2nAbCcJkATD1BSC1T50j1w7q7FTn7B12FTRYGQ
+
  Ghi chú
 •	Tất cả hình ảnh và âm thanh được sử dụng trong game là do nhóm tự thiết kế hoặc lấy từ nguồn miễn phí.
 •	Game được phát triển như một đồ án môn học Lập trình Hướng Đối Tượng.

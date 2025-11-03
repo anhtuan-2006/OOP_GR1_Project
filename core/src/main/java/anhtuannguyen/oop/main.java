@@ -157,7 +157,7 @@ public class main extends ApplicationAdapter {
         // Cập nhật trạng thái hiển thị của menu
         menu.inwindown = (state == GameState.MENU);
 
-        // Điều hướng giữa các màn hình
+        // Điều=-0hướng giữa các màn hình
         switch (state) {
             case MENU:
                 music.playMusic();
