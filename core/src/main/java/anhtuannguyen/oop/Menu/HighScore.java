@@ -56,7 +56,7 @@ public class HighScore {
     }
 
     public void Input() {
-        File f = new File("D:\\OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
+        File f = new File("D:\\PROJECT_BT_OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
         System.out.println("Trying file: " + f.getAbsolutePath());
         if (!f.exists()) {
             return;
@@ -84,7 +84,7 @@ public class HighScore {
     }
 
     public void Output() {
-        File f = new File("D:\\OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
+        File f = new File("D:\\PROJECT_BT_OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
 
         try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f))) {
             // Sắp xếp giảm dần theo điểm
