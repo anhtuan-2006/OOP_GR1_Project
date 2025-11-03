@@ -140,7 +140,7 @@ public class Pause extends Screen {
         }
 
         batch.draw(texture, x, y, width, height);
-        System.out.println("drawed");
+
     }
 
     /**

@@ -118,7 +118,6 @@ public class Result extends Screen {
                 state = GameState.MENU;
                 if(wingame) {
                     highScore.ChangeHighScore(currentScore);
-                    System.out.println("Changed High Score");
                 }
             }
             if (nextlevel_touch) {
@@ -127,7 +126,7 @@ public class Result extends Screen {
                 state = GameState.IN_GAME;
                 if(wingame) {
                     highScore.ChangeHighScore(currentScore);
-                    System.out.println("Changed High Score");
+
                 }
             }
         }
