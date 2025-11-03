@@ -11,7 +11,7 @@ import anhtuannguyen.oop.Object.Bar;
 import anhtuannguyen.oop.Object.Block;
 
 /**
- * Màn chơi Level 1.
+ * Màn chơi Level 2.
  * Kế thừa từ LevelBase để dùng chung logic cơ bản.
  */
 public class Level2 extends LevelBase {

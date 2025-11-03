@@ -4,12 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import java.lang.String;
 
+/**
+ * Lớp {@code Text} dùng để hiển thị văn bản trong game bằng hình ảnh từng ký tự.
+ * <p>
+ * Mỗi chữ cái, số và ký tự đặc biệt được lưu trong một {@link Texture} riêng biệt.
+ * Lớp này cho phép:
+ * <ul>
+ *   <li>Vẽ văn bản tại vị trí xác định</li>
+ *   <li>Căn giữa văn bản trên trục X</li>
+ *   <li>Giải phóng tài nguyên hình ảnh khi không còn sử dụng</li>
+ * </ul>
+ */
 public class Text {
+
+    // Texture của các ký tự số
     private Texture ZERO = new Texture("0.png");
     private Texture ONE = new Texture("1.png");
     private Texture TWO = new Texture("2.png");
@@ -20,10 +29,12 @@ public class Text {
     private Texture SEVEN = new Texture("7.png");
     private Texture EIGHT = new Texture("8.png");
     private Texture NINE = new Texture("9.png");
+
+    // Texture của các ký tự chữ cái A–Z
     private Texture A = new Texture("Text/A.png");
     private Texture B = new Texture("Text/B.png");
     private Texture C = new Texture("Text/C.png");
-    private Texture D = new Texture("Text/D.png");  
+    private Texture D = new Texture("Text/D.png");
     private Texture E = new Texture("Text/E.png");
     private Texture F = new Texture("Text/F.png");
     private Texture G = new Texture("Text/G.png");
@@ -46,11 +57,20 @@ public class Text {
     private Texture X = new Texture("Text/X.png");
     private Texture Y = new Texture("Text/Y.png");
     private Texture Z = new Texture("Text/Z.png");
+
+    // Texture của các ký tự đặc biệt
     private Texture SPACE = new Texture("Text/space.png");
     private Texture COLON = new Texture("Text/colon.png");
 
+    // Vùng vẽ ký tự hiện tại
     private Rectangle bounds = new Rectangle(0, 0, 100, 100);
 
+    /**
+     * Trả về {@link Texture} tương ứng với ký tự được truyền vào.
+     *
+     * @param c ký tự cần lấy hình ảnh
+     * @return texture tương ứng hoặc {@code null} nếu không tồn tại
+     */
     public Texture getTexture(char c) {
         switch (c) {
             case 'A': return A;
@@ -93,82 +113,87 @@ public class Text {
             case ':': return COLON;
             default: return null;
         }
-    }   
+    }
 
+    /**
+     * Vẽ chuỗi văn bản tại vị trí xác định trên màn hình.
+     *
+     * @param batch đối tượng {@link SpriteBatch} dùng để vẽ
+     * @param text chuỗi văn bản cần hiển thị
+     * @param x vị trí X bắt đầu vẽ
+     * @param y vị trí Y của văn bản
+     * @param Size chiều cao mong muốn của ký tự
+     * @param scale độ giãn giữa các ký tự
+     */
     public void renderText(SpriteBatch batch, String text, float x, float y, float Size, float scale) {
         bounds.y = y;
-        bounds.height = (int)Size;
+        bounds.height = (int) Size;
+
         for (int i = 0; i < text.length(); i++) {
             bounds.x = x;
             char c = text.charAt(i);
             Texture charTexture = getTexture(c);
+
             if (charTexture != null) {
-                bounds.width = (int)((1.0 * charTexture.getWidth() / charTexture.getHeight()) * bounds.height);
+                // Giữ tỷ lệ gốc của ký tự theo chiều cao
+                bounds.width = (int) ((1.0 * charTexture.getWidth() / charTexture.getHeight()) * bounds.height);
+
+                // Vẽ ký tự
                 batch.draw(charTexture, bounds.x, bounds.y, bounds.width, bounds.height);
-                x += bounds.width + scale * 2 + 5; // Cộng thêm khoảng cách giữa các chữ cái
+
+                // Dịch chuyển vị trí vẽ cho ký tự kế tiếp
+                x += bounds.width + scale * 2 + 5;
             }
         }
     }
 
+    /**
+     * Vẽ chuỗi văn bản được căn giữa theo trục X.
+     * <p>
+     * Nếu chuỗi rỗng, mặc định hiển thị "YOUR NAME".
+     *
+     * @param batch đối tượng {@link SpriteBatch} dùng để vẽ
+     * @param text chuỗi văn bản cần hiển thị
+     * @param centerX tọa độ X trung tâm của vùng cần căn giữa
+     * @param y vị trí Y để vẽ văn bản
+     * @param Size chiều cao mong muốn của ký tự
+     * @param scale độ giãn giữa các ký tự
+     */
     public void renderTextName(SpriteBatch batch, String text, float centerX, float y, float Size, float scale) {
-        // Tính tổng chiều rộng của chuỗi
-        if(text.length() == 0) text = "YOUR NAME";
+        if (text.length() == 0) text = "YOUR NAME";
+
+        // Tính tổng chiều rộng của toàn bộ chuỗi
         float totalWidth = 0;
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             Texture charTexture = getTexture(c);
             if (charTexture != null) {
                 float charWidth = (1.0f * charTexture.getWidth() / charTexture.getHeight()) * Size;
-                totalWidth += charWidth + scale * 2 + 5; // Cộng thêm khoảng cách giữa các chữ cái
+                totalWidth += charWidth + scale * 2 + 5;
             }
         }
-        totalWidth -= (scale * 2 + 5); // Loại bỏ khoảng cách sau ký tự cuối cùng
+        totalWidth -= (scale * 2 + 5); // Loại bỏ khoảng cách dư ở cuối
 
-        // Tính vị trí bắt đầu để căn giữa
+        // Xác định vị trí bắt đầu để căn giữa
         float startX = centerX - totalWidth / 2;
 
-        // Vẽ chuỗi từ vị trí bắt đầu
+        // Vẽ văn bản tại vị trí đã căn chỉnh
         renderText(batch, text, startX, y, Size, scale);
     }
 
+    /**
+     * Giải phóng tài nguyên của tất cả {@link Texture} để tránh rò rỉ bộ nhớ.
+     * <p>
+     * Cần gọi phương thức này khi màn hình hoặc game kết thúc.
+     */
     public void dispose() {
-        ZERO.dispose();
-        ONE.dispose();
-        TWO.dispose();
-        THREE.dispose();
-        FOUR.dispose();
-        FIVE.dispose();
-        SIX.dispose();
-        SEVEN.dispose();
-        EIGHT.dispose();
-        NINE.dispose();
-        A.dispose();
-        B.dispose();
-        C.dispose();
-        D.dispose();
-        E.dispose();
-        F.dispose();
-        G.dispose();
-        H.dispose();
-        I.dispose();
-        J.dispose();
-        K.dispose();
-        L.dispose();
-        M.dispose();
-        N.dispose();
-        O.dispose();
-        P.dispose();
-        Q.dispose();
-        R.dispose();
-        S.dispose();
-        T.dispose();
-        U.dispose();
-        V.dispose();
-        W.dispose();
-        X.dispose();
-        Y.dispose();
-        Z.dispose();
-        SPACE.dispose();
-        COLON.dispose();
+        ZERO.dispose(); ONE.dispose(); TWO.dispose(); THREE.dispose(); FOUR.dispose();
+        FIVE.dispose(); SIX.dispose(); SEVEN.dispose(); EIGHT.dispose(); NINE.dispose();
+
+        A.dispose(); B.dispose(); C.dispose(); D.dispose(); E.dispose(); F.dispose();
+        G.dispose(); H.dispose(); I.dispose(); J.dispose(); K.dispose(); L.dispose();
+        M.dispose(); N.dispose(); O.dispose(); P.dispose(); Q.dispose(); R.dispose();
+        S.dispose(); T.dispose(); U.dispose(); V.dispose(); W.dispose(); X.dispose();
+        Y.dispose(); Z.dispose(); SPACE.dispose(); COLON.dispose();
     }
 }
