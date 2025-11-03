@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 import anhtuannguyen.oop.Menu.Screen;
 
-public class Function {
+public class Function extends Object {
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
 
-    private float x;
-    private float y;
+    // private float x;
+    // private float y;
     private int SPEED = 3;
     private Texture texture;
     boolean alive = true;

@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import anhtuannguyen.oop.Menu.Screen;
 
-public class Bar {
+public class Bar extends Object{
     // Phắc
     // Toạ độ của bóng
     // Hình ảnh của bóng
@@ -27,6 +27,8 @@ public class Bar {
     public float effectTimer = -1; // Bộ đếm thời gian (-1 nghĩa là không chạy)
 
     public Bar(float x, float y, float width, float height, Texture _tex) {
+        super.x = x;
+        super.y = y;
         texture = _tex; // ảnh thanh đỡ
         bounds = new Rectangle(x, y, width, height);
         originalWidth = width; // Lưu chiều rộng ban đầu
@@ -47,13 +49,6 @@ public class Bar {
         playing = !playing;
     }
 
-    public float getx() {
-        return bounds.x;
-    }
-
-    public float gety() {
-        return bounds.y;
-    }
 
     public float getWidth() {
         return bounds.width;
@@ -67,22 +62,23 @@ public class Bar {
         if (effectTimer >= 0) {
             effectTimer += deltaTime;
             if (effectTimer >= 10f) {
-                bounds.x = bounds.x + bounds.width / 2 - originalWidth / 2;
+                x = x + bounds.width / 2 - originalWidth / 2;
                 bounds.width = originalWidth; // Gán lại chiều rộng ban đầu
                 effectTimer = -1; // Tắt bộ đếm
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
-            bounds.x -= speed;
+            x -= speed;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
-            bounds.x += speed;
+            x += speed;
 
         // Giữ thanh đỡ trong màn hình
-        if (bounds.x < 0)
-            bounds.x = 0;
-        if (bounds.x + bounds.width > WORLD_W)
-            bounds.x = WORLD_W - bounds.width;
+        if (x < 0)
+            x = 0;
+        if (x + bounds.width > WORLD_W)
+            x = WORLD_W - bounds.width;
+        bounds.x = x;
     }
 
     public void render(SpriteBatch batch) {

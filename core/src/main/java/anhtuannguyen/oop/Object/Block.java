@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import anhtuannguyen.oop.Menu.Screen;
 
-public class Block {
+public class Block extends Object {
     private int blockWidth;
     private int blockHeight;
     private int gridRows;
@@ -38,6 +38,8 @@ public class Block {
         gridRows = ROW;
         gridCols = COL;
         map = _map;
+        super.x = x;
+        super.y = y;
         rect = new Rectangle(x, y, blockWidth, blockHeight);
         alive = true;
         texture = _tex;

@@ -2,7 +2,7 @@ package anhtuannguyen.oop.Menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp Result quản lý giao diện kết quả sau khi người chơi hoàn thành màn chơi.
  * Hiển thị trạng thái thắng/thua, điểm số hiện tại, điểm cao nhất và các nút điều hướng.
  */
-public class Result {
+public class Result extends Screen {
     private final Texture background = new Texture("Menu_background.jpg");
     private final Texture back_button = new Texture("back_button.png");
     private final Texture restart_button = new Texture("restart_button.png");
@@ -21,8 +21,6 @@ public class Result {
     private final Texture lose = new Texture("lose.png");
     private final Texture highscore = new Texture("highscore.png");
     private final Texture yourscore = new Texture("yourscore.png");
-    private Viewport viewport;
-    private Rectangle bounds;
 
     public HighScore highScore;
 
@@ -46,9 +44,6 @@ public class Result {
 
     private boolean wingame = false;
 
-    private InGame ingame;
-    private SelectMap selectmap;
-    private GameState state;
 
     private Score currentScoreDisplay = new Score();
     private Score highestScoreDisplay = new Score();
@@ -66,33 +61,8 @@ public class Result {
     }
 
     // Getters và Setters
-    public void setState(GameState state) {
-        this.state = state;
-    }
-
-    public GameState getState() {
-        return state;
-    }
-
     public void setresult(boolean wingame) {
-        System.out.println(wingame);
         this.wingame = wingame;
-    }
-
-    public void setIngame(InGame ingame) {
-        this.ingame = ingame;
-    }
-
-    public InGame getIngame() {
-        return ingame;
-    }
-
-    public void setSelectMap(SelectMap selectmap) {
-        this.selectmap = selectmap;
-    }
-
-    public SelectMap getSelectMap() {
-        return selectmap;
     }
 
     /**

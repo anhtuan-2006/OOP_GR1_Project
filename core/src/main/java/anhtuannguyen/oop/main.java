@@ -175,7 +175,7 @@ public class main extends ApplicationAdapter {
                 break;
             case IN_GAME:
                 ingame.setState(state);
-                music.stopMusic(); // tắt nhạc nền khi vào game
+                music.decreaseMusic(); // tắt nhạc nền khi vào game
                 if (ingame != null) {
                     ingame.update(); // cập nhật logic trong game
                     ingame.render(batch);

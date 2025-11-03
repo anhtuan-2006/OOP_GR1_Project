@@ -12,15 +12,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp Pause quản lý giao diện và logic khi trò chơi đang tạm dừng.
  * Bao gồm các nút Resume, Restart và Back để điều hướng trạng thái trò chơi.
  */
-public class Pause {
+public class Pause extends Screen {
     private final Texture pause = new Texture("pause.png");
     private final Texture play = new Texture("play.png");
     private final Texture background = new Texture("Menu_background.jpg");
     private final Texture back_button = new Texture("back_button.png");
     private final Texture restart_button = new Texture("restart_button.png");
     private final Texture resume_button = new Texture("resume_button.png");
-
-    private Viewport viewport;
 
     private Rectangle bounds; // Vị trí nút pause/play
     private boolean playing = true;
@@ -39,9 +37,6 @@ public class Pause {
     private final float border = 50f;
     private final float buttonSize = 80f;
 
-    private InGame ingame;
-    private SelectMap selectmap;
-    private GameState state = GameState.IN_GAME;
 
     /**
      * Constructor khởi tạo lớp Pause với viewport.
@@ -62,34 +57,10 @@ public class Pause {
         resumeRect = new Rectangle((Screen.WORLD_W - button_w) / 2, (Screen.WORLD_H - button_h) / 2 + button_h * 1.5f, button_w, button_h);
 
         if (bounds != null && backgroundRect != null && backRect != null && restartRect != null && resumeRect != null) {
-            System.out.println("loaded texture");
+
         }
     }
 
-    // Getters and Setters
-    public InGame getIngame() {
-        return ingame;
-    }
-
-    public SelectMap getSelectMap() {
-        return selectmap;
-    }
-
-    public GameState getState() {
-        return state;
-    }
-
-    public void setState(GameState _state) {
-        state = _state;
-    }
-
-    public void setIngame(InGame _ingame) {
-        this.ingame = _ingame;
-    }
-
-    public void setSelectMap(SelectMap _selectmap) {
-        this.selectmap = _selectmap;
-    }
 
     /**
      * Cập nhật trạng thái giao diện Pause và xử lý các tương tác người dùng.
@@ -139,7 +110,6 @@ public class Pause {
      * @param batch SpriteBatch để vẽ.
      */
     public void render(SpriteBatch batch) {
-        System.out.println("rendered");
         batch.draw(background, backgroundRect.x, backgroundRect.y, backgroundRect.width, backgroundRect.height);
         float hoverScale = 1.1f;
         drawButton(batch, resume_button, resumeRect, resume_touch, hoverScale);

@@ -10,9 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Lớp Life quản lý số mạng sống của người chơi và hiển thị biểu tượng trái tim trên màn hình.
  */
-public class Life {
-    private static final float WORLD_W = Screen.WORLD_W;
-    private static final float WORLD_H = Screen.WORLD_H;
+public class Life extends Screen {
+    // private static final float WORLD_W = Screen.WORLD_W;
+    // private static final float WORLD_H = Screen.WORLD_H;
 
     /** Số mạng hiện tại của người chơi */
     public int lifes;
@@ -20,9 +20,6 @@ public class Life {
     /** Texture trái tim biểu tượng mạng sống */
     private Texture texture;
 
-    /** Vị trí vẽ trái tim */
-    private float x;
-    private float y;
 
     /** Khoảng cách giữa các trái tim */
     private float spacing = 10f;
@@ -39,7 +36,7 @@ public class Life {
      */
     public Life(int _lifes) {
         lifes = _lifes;
-        System.out.println("Life created with: " + lifes);
+
         texture = new Texture("heart.png");
 
         for (int i = 0; i <= lifes; i++) {
