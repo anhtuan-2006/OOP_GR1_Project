@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 import anhtuannguyen.oop.Menu.Screen;
 import anhtuannguyen.oop.Menu.Sound;
@@ -80,8 +81,9 @@ public class Ball extends Object {
     private float vx = 0;
     private float vy = SPEED;
 
-    // Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính
-    // ======= Hàm di chuyển mới =======
+    /**
+     * Bóng di chuyển: dùng vector vận tốc từ góc, phản xạ theo bán kính.
+     */
     public void Move() {
         if (!playing)
             return;
@@ -129,7 +131,7 @@ public class Ball extends Object {
 
         // va chạm với thanh
         if (bar != null) {
-            com.badlogic.gdx.math.Rectangle p = bar.getBounds();
+            Rectangle p = bar.getBounds();
             float paddleTop = p.y + p.height;
             if (y - radius <= paddleTop && y + radius >= p.y &&
                     x >= p.x && x <= p.x + p.width && vy < 0) {
