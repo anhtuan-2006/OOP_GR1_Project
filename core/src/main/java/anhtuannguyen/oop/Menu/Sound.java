@@ -26,6 +26,7 @@ public class Sound {
      * Thiết lập nhạc nền phát lặp lại và gán âm lượng mặc định.
      */
     public Sound() {
+        
         music1.setLooping(true);  // Lặp lại vô hạn
         music1.setVolume(volume); // Đặt âm lượng cho nhạc 1
 
@@ -67,6 +68,9 @@ public class Sound {
      * Phát nhạc nền hiện tại, đảm bảo chỉ có một bản nhạc phát cùng lúc.
      */
     public void playMusic() {
+        volume = 1f;
+        music1.setVolume(volume); 
+        music2.setVolume(volume); 
         if (type == 1) {
             if (music2.isPlaying()) {
                 music2.stop();
@@ -87,14 +91,15 @@ public class Sound {
     /**
      * Dừng phát nhạc nền hiện tại.
      */
-    public void stopMusic() {
+    public void decreaseMusic() {
+        volume = 0.3f;  
         if (type == 1) {
-            if (music1.isPlaying()) {
-                music1.stop();
+            if (music1.isPlaying()) {     
+                music1.setVolume(volume); 
             }
         } else {
             if (music2.isPlaying()) {
-                music2.stop();
+                music1.setVolume(volume);
             }
         }
     }
