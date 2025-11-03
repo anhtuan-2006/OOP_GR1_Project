@@ -17,12 +17,12 @@ import anhtuannguyen.oop.Object.Block;
  */
 public class Level5 extends LevelBase {
 
-    // ====== Hằng số màn hình ======
+
     private int mapnumber = 5;
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    // ====== Dữ liệu bản đồ ======
+
     // Bản đồ khối: 1 = khối thường, 2 = khối sắt, 3 = khối di chuyển, 0 = trống
     private static int[][] map = {
         { 2, 1, 0, 3, 0, 1, 0, 3, 0, 2 },
@@ -38,12 +38,12 @@ public class Level5 extends LevelBase {
         { 1, 0, 0, 1, 0, 3, 0, 1, 0, 1 },
         { 2, 0, 0, 1, 0, 0, 0, 1, 0, 2 },
     };
-   // ====== Constructor ======
+
     public Level5(Pause pause) {
         super(pause); // gọi constructor của LevelBase
     }
 
-    // ====== Hàm khởi tạo ======
+
     @Override
     public int getMapNumber() {
         return mapnumber;
@@ -82,7 +82,7 @@ public class Level5 extends LevelBase {
         movingBlock.initializeBlocks(3, blockTexture);
     }
 
-    // ====== Hàm vẽ ======
+
     @Override
     public void render(SpriteBatch batch) {
         super.updateGameplay(); // dùng logic chung trong LevelBase

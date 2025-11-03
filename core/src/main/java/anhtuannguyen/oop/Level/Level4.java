@@ -17,12 +17,12 @@ import anhtuannguyen.oop.Object.Block;
  */
 public class Level4 extends LevelBase {
 
-    // ====== Hằng số màn hình ======
+
     private int mapnumber = 4;
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    // ====== Dữ liệu bản đồ ======
+
     // Bản đồ khối: 1 = khối thường, 2 = khối sắt, 3 = khối di chuyển, 0 = trống
     private static int[][] map = {
         { 0, 0, 2, 2, 2, 2, 2, 2, 0, 0 },
@@ -38,12 +38,12 @@ public class Level4 extends LevelBase {
         { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1 },
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
-   // ====== Constructor ======
+
     public Level4(Pause pause) {
         super(pause); // gọi constructor của LevelBase
     }
 
-    // ====== Hàm khởi tạo ======
+
     @Override
     public int getMapNumber() {
         return mapnumber;
