@@ -27,6 +27,7 @@ public class Ball extends Object {
     public Bar bar;
     private float angle_role = 45f;
     private float ROLE_SPEED = 400f;
+    private float prevY;
 
     public boolean started = true;
     boolean playing = true;
@@ -104,6 +105,7 @@ public class Ball extends Object {
         }
 
         // cập nhật vị trí
+        prevY = y;
         x += vx * dt;
         y += vy * dt;
 
@@ -132,7 +134,14 @@ public class Ball extends Object {
         // va chạm với thanh
         if (bar != null) {
             Rectangle p = bar.getBounds();
-            float paddleTop = p.y + p.height;
+             float paddleTop = p.y + p.height;
+             if (stickyToBar  &&  (vy < 0) && (prevY - radius >= paddleTop) && (y - radius <= paddleTop) && (x >= p.x - radius) && (x <= p.x + p.width + radius)) {
+            started = false; // dừng bóng
+            stickyToBar = false; // tắt hiệu ứng
+            setPosition(bar.getx() + bar.getWidth() / 2, bar.gety() + RADIUS);
+            return;
+            }
+           
             if (y - radius <= paddleTop && y + radius >= p.y &&
                     x >= p.x && x <= p.x + p.width && vy < 0) {
 
