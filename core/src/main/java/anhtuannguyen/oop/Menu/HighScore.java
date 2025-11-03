@@ -93,8 +93,7 @@ public class HighScore {
      * Dữ liệu được lưu dưới dạng "Tên Điểm".
      */
     public void Input() {
-        File f = new File("D:\\PROJECT_BT_OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
-        System.out.println("Trying file: " + f.getAbsolutePath());
+        File f = new File("D:\\OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
         if (!f.exists()) {
             return;
         }

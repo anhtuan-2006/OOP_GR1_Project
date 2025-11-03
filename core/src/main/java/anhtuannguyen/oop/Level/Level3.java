@@ -12,17 +12,17 @@ import anhtuannguyen.oop.Object.Bar;
 import anhtuannguyen.oop.Object.Block;
 
 /**
- * Màn chơi Level 3.
+
  * Kế thừa từ LevelBase để dùng chung logic cơ bản.
  */
 public class Level3 extends LevelBase {
 
-    // ====== Hằng số màn hình ======
+
     private int mapnumber = 3;
     private static final float WORLD_W = Screen.WORLD_W;
     private static final float WORLD_H = Screen.WORLD_H;
 
-    // ====== Dữ liệu bản đồ ======
+
     // Bản đồ khối: 1 = khối thường, 2 = khối sắt, 3 = khối di chuyển, 0 = trống
     private static int[][] map = {
         { 0, 0, 2, 2, 2, 2, 2, 2, 0, 0 },
@@ -39,12 +39,12 @@ public class Level3 extends LevelBase {
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
-    // ====== Constructor ======
+
     public Level3(Pause pause) {
         super(pause); // gọi constructor của LevelBase
     }
 
-    // ====== Hàm khởi tạo ======
+
     @Override
     public int getMapNumber() {
         return mapnumber;
@@ -83,7 +83,7 @@ public class Level3 extends LevelBase {
         movingBlock.initializeBlocks(3, blockTexture);
     }
 
-    // ====== Hàm vẽ ======
+
     @Override
     public void render(SpriteBatch batch) {
         super.updateGameplay(); // dùng logic chung trong LevelBase
