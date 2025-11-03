@@ -246,50 +246,52 @@ public class Setting extends Screen {
 
         // Vẽ nút Back với hiệu ứng khi chạm
         if (touch_back_button)
-            batch.draw(back_button, back_button_size.x - 20, back_button_size.y - 20, back_button_size.width + 40,
-                    back_button_size.height + 40);
+            hoverDraw(batch, back_button, back_button_size);
+
         else
-            batch.draw(back_button, back_button_size.x, back_button_size.y, back_button_size.width,
-                    back_button_size.height);
+            normalDraw(batch, back_button, back_button_size);
 
         // Vẽ mục Nhạc
         if (touch_music)
-            batch.draw(music.get(music_type - 1), music_size.x - 50, music_size.y - 50, music_size.width + 100,
-                    music_size.height + 100);
+            hoverDraw(batch, music.get(music_type - 1), music_size);
         else
-            batch.draw(music.get(music_type - 1), music_size.x, music_size.y, music_size.width, music_size.height);
-
+            normalDraw(batch, music.get(music_type - 1), music_size);
         // Vẽ mục Âm lượng
         if (touch_volume)
-            batch.draw(volume.get(volume_type - 1), volume_size.x - 50, volume_size.y - 50, volume_size.width + 100,
-                    volume_size.height + 100);
-        else
-            batch.draw(volume.get(volume_type - 1), volume_size.x, volume_size.y, volume_size.width,
-                    volume_size.height);
+            hoverDraw(batch, volume.get(volume_type - 1), volume_size);
 
+        else
+            normalDraw(batch, volume.get(volume_type - 1), volume_size);
         // Vẽ mục Tim (số mạng)
         if (touch_heart)
-            batch.draw(heart.get(heart_type - 1), heart_size.x - 50, heart_size.y - 50, heart_size.width + 100,
-                    heart_size.height + 100);
+            hoverDraw(batch, heart.get(heart_type - 1), heart_size);
         else
-            batch.draw(heart.get(heart_type - 1), heart_size.x, heart_size.y, heart_size.width, heart_size.height);
+            normalDraw(batch, heart.get(heart_type - 1), heart_size);
 
         // Vẽ nút phải
         if (touch_right) {
-            batch.draw(right, right_size.x - 30, right_size.y - 30, right_size.width + 60, right_size.height + 60);
+            hoverDraw(batch, right, right_size);
         } else {
-            batch.draw(right, right_size.x, right_size.y, right_size.width, right_size.height);
+            normalDraw(batch, right, right_size);
         }
 
         // Vẽ nút trái
         if (touch_left) {
-            batch.draw(left, left_size.x - 30, left_size.y - 30, left_size.width + 60, left_size.height + 60);
+            hoverDraw(batch, left, left_size);
         } else {
-            batch.draw(left, left_size.x, left_size.y, left_size.width, left_size.height);
+            normalDraw(batch, left, left_size);
         }
 
         // Vẽ logo game
         batch.draw(logo, logo_size.x, logo_size.y, logo_size.width, logo_size.height);
+    }
+
+    private void normalDraw(SpriteBatch batch, Texture texture, Rectangle rect) {
+        batch.draw(texture, rect.x - 30, rect.y - 30, rect.width + 60, rect.height + 60);
+    }
+
+    private void hoverDraw(SpriteBatch batch, Texture texture, Rectangle rect) {
+        batch.draw(texture, rect.x, rect.y, rect.width, rect.height);
     }
 
     /**

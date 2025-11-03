@@ -59,19 +59,16 @@ public class HighScore {
         File f = new File("D:\\OOP\\OOP_GR1_Project\\core\\src\\main\\java\\anhtuannguyen\\oop\\Menu\\HighScore.txt");
         System.out.println("Trying file: " + f.getAbsolutePath());
         if (!f.exists()) {
-            System.err.println("File does not exist.");
             return;
         }
         try (InputStream file = new FileInputStream(f);
                 Scanner inp = new Scanner(new BufferedInputStream(file), "UTF-8")) {
-            System.out.println("High Scores:");
             while (inp.hasNext()) {
                 String name = inp.next();
                 if (!inp.hasNextInt())
                     break;
                 int score = inp.nextInt();
                 highScores.put(name, score);
-                System.out.println(name + " " + score);
             }
         } catch (IOException e) {
             e.printStackTrace();

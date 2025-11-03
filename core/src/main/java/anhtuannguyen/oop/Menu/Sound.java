@@ -75,7 +75,7 @@ public class Sound {
             if (music2.isPlaying()) {
                 music2.stop();
             }
-            if (!music1.isPlaying()) {
+            if (! music1.isPlaying()) {
                 music1.play();
             }
         } else {
