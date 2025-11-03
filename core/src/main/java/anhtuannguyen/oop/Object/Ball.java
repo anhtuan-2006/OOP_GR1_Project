@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import anhtuannguyen.oop.Menu.Screen;
 import anhtuannguyen.oop.Menu.Sound;
 
-public class Ball {
+public class Ball extends Object {
 
     private static final float WORLD_H = Screen.WORLD_H;
     private static final float WORLD_W = Screen.WORLD_W;
@@ -18,8 +18,8 @@ public class Ball {
     // Các thuộc tính của quả bóng
     private Texture texture;
     private Texture FIRE = new Texture("Ball_fire.png");
-    private double x; // Cần chuyển hàng số kích thước cửa sổ thành biến static
-    private double y;
+    // private double x; // Cần chuyển hàng số kích thước cửa sổ thành biến static
+    // private double y;
     private double dx = 1;
     private double dy = 1;
     private double angle = Math.PI / 2;
@@ -46,14 +46,6 @@ public class Ball {
 
     Sound sound = new Sound();
 
-    public double getx() {
-        return x;
-    }
-
-    public double gety() {
-        return y;
-    }
-
     public float getRADIUS() {
         return radius;
     }
@@ -61,8 +53,8 @@ public class Ball {
     public Ball(Ball src) {
         this.bar = src.bar;
         this.texture = src.texture; // dùng chung texture OK
-        this.x = src.getx();
-        this.y = src.gety();
+        x = (float) src.getx();
+        y = (float) src.gety();
         // nếu Ball có getter cho dx, dy, angle thì dùng; không thì copy trực tiếp nếu
         // cùng file
         this.dx = 1; // hoặc src.dx nếu để cùng package/đặt accessor

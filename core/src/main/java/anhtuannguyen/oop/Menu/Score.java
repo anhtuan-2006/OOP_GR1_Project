@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
  * Lớp Score dùng để hiển thị điểm số của người chơi bằng hình ảnh các chữ số.
  * Mỗi chữ số được vẽ bằng một texture riêng biệt từ 0.png đến 9.png.
  */
-public class Score {
+public class Score extends Screen {
     /** Mảng texture chứa hình ảnh từ 0 đến 9 */
     private Texture[] scoreTexture = new Texture[10];
     private Texture whiteTexture;
@@ -18,8 +18,6 @@ public class Score {
     private Rectangle[] scoreRect = new Rectangle[10];
     private Rectangle whiteRect;
 
-    private static final float WORLD_H = Screen.WORLD_H;
-    private static final float WORLD_W = Screen.WORLD_W;
 
     /** Khoảng cách giữa các chữ số */
     private int space = 55;

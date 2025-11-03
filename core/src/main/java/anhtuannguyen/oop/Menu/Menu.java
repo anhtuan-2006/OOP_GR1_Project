@@ -10,9 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp Menu quản lý giao diện menu chính của trò chơi.
  * Bao gồm các nút Play, Setting, Exit và logo trò chơi.
  */
-public class Menu {
-    private static final float WORLD_W = Screen.WORLD_W;
-    private static final float WORLD_H = Screen.WORLD_H;
+public class Menu extends Screen {
+  
 
     private Texture background; // Hình nền menu
     private Texture play;       // Nút Play

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp Pause quản lý giao diện và logic khi trò chơi đang tạm dừng.
  * Bao gồm các nút Resume, Restart và Back để điều hướng trạng thái trò chơi.
  */
-public class Pause {
+public class Pause extends Screen {
     private final Texture pause = new Texture("pause.png");
     private final Texture play = new Texture("play.png");
     private final Texture background = new Texture("Menu_background.jpg");

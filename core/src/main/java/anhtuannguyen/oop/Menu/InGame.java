@@ -12,9 +12,8 @@ import anhtuannguyen.oop.Level.LevelBase;
 /**
  * Quản lý toàn bộ trạng thái khi đang chơi game.
  */
-public class InGame {
-    private static final float WORLD_W = Screen.WORLD_W;
-    private static final float WORLD_H = Screen.WORLD_H;
+public class InGame extends Screen {
+
 
     private LevelBase[] levels = new LevelBase[12];
     private int life;

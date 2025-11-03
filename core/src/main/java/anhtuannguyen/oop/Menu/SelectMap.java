@@ -11,9 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp SelectMap quản lý giao diện chọn màn chơi.
  * Hiển thị danh sách các bản đồ và xử lý tương tác người dùng để chọn map hoặc quay lại menu.
  */
-public class SelectMap {
-    private static final float WORLD_W = Screen.WORLD_W;
-    private static final float WORLD_H = Screen.WORLD_H;
+public class SelectMap extends Screen {
 
     private Viewport viewport;
     private Texture back_button;

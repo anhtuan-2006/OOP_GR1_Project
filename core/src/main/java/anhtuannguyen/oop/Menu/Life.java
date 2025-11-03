@@ -10,9 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Lớp Life quản lý số mạng sống của người chơi và hiển thị biểu tượng trái tim trên màn hình.
  */
-public class Life {
-    private static final float WORLD_W = Screen.WORLD_W;
-    private static final float WORLD_H = Screen.WORLD_H;
+public class Life extends Screen {
+    // private static final float WORLD_W = Screen.WORLD_W;
+    // private static final float WORLD_H = Screen.WORLD_H;
 
     /** Số mạng hiện tại của người chơi */
     public int lifes;

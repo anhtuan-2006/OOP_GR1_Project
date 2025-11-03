@@ -15,9 +15,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Người chơi có thể thay đổi nhạc nền, âm lượng và số mạng (tim).
  * Quản lý giao diện, xử lý thao tác chuột và vẽ các phần tử.
  */
-public class Setting {
-    private static final float WORLD_W = Screen.WORLD_W; // Chiều rộng thế giới game
-    private static final float WORLD_H = Screen.WORLD_H; // Chiều cao thế giới game
+public class Setting extends Screen {
+
 
     // Các texture hiển thị giao diện
     private Texture background;

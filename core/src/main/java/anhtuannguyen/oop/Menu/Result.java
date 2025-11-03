@@ -2,7 +2,7 @@ package anhtuannguyen.oop.Menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Lớp Result quản lý giao diện kết quả sau khi người chơi hoàn thành màn chơi.
  * Hiển thị trạng thái thắng/thua, điểm số hiện tại, điểm cao nhất và các nút điều hướng.
  */
-public class Result {
+public class Result extends Screen {
     private final Texture background = new Texture("Menu_background.jpg");
     private final Texture back_button = new Texture("back_button.png");
     private final Texture restart_button = new Texture("restart_button.png");
